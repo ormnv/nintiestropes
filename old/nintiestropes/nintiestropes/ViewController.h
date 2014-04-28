@@ -27,7 +27,7 @@ UINavigationControllerDelegate, UIPopoverControllerDelegate> {
 @property (nonatomic, retain) UIPopoverController *popoverController;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *loadButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *postcardButton;
+//@property (weak, nonatomic) IBOutlet UIBarButtonItem *postcardButton;
 
 -(IBAction)loadButtonPressed:(id)sender;
 -(IBAction)saveButtonPressed:(id)sender;
