@@ -1,12 +1,18 @@
 OpenCV App
 
-The app uses an existing tutorial of opencv examples from 2012 found here https://github.com/BloodAxe/OpenCV-Tutorial. My version of the app uses the UI as a base while making my own samples that mimic 90s music video effects. To make the tutorial work on arm64, I removed cvneon.h, cvneon.cpp and made the file extensions mm. For the time being, neon is not used to enhance perofrmance since the methods need to be replaced. It may be possible to implement the methods dependent on getGray to use neon for arm64 within the individual sample files themselves. OpenCv for iOS by Kornyakov and Shishkov contains an example where a filter is optimized by neon. Since this project will be using filters, the version provided there can be used. Comparing the original version of the app in the tutorial running with cvneon to my version running on arm64 without neon, there is no noticable difference in rendering the effects. The app is faster for some effects on arm64 even without cvneon. The Object Tracking sample does not with in the old version nor the new version. 
+The app uses an existing tutorial of opencv examples from 2012 found here https://github.com/BloodAxe/OpenCV-Tutorial. My version of the app uses the UI as a base while making my own samples that mimic 90s music video effects. To make the tutorial work on arm64, I removed cvneon.h, cvneon.cpp and made the file extensions mm. For the time being, neon is not used to enhance perofrmance since the methods need to be replaced. It may be possible to implement the methods dependent on getGray to use neon for arm64 within the individual sample files themselves. OpenCv for iOS by Kornyakov and Shishkov contains an example where a filter is optimized by neon. Since this project will be using filters, the version provided there can be used. Comparing the original version of the app in the tutorial running with cvneon to my version running on arm64 without neon, there is no noticable difference in rendering the effects. The app is faster for some effects on arm64 even without cvneon. The Object Tracking sample does not with in the old version nor the new version. The original tutorial did not use automatic reference counting, so this current example is updated to use it. 
 
 TODO:
 
 -Update UI 
 
+-Fix toolbar alignment
+
+-Integrate CoreImage filters  
+
 -Get Assets 
+
+-Change dimensions of UIImage displayed. Looks stretched out. Does it save stretched out? 
 
 -Update methods converting to and from mat to be simular to this? The example has cvMatFromUIImage, cvMatGrayFromUIImage, and UIImageFromCVMat for images. 
 	http://docs.opencv.org/doc/tutorials/ios/image_manipulation/image_manipulation.html#opencviosimagemanipulation
@@ -35,6 +41,7 @@ FeatureDetectionSample.cpp
 ObjectTrackingSample.cpp
 VideoTracking.cpp
 	all call getGray
+
 
 Resources:
 	-OpenCv iOS Tutorial

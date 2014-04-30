@@ -1,9 +1,8 @@
 //
 //  nintiestropes1-Prefix.pch
-//  nintiestropes1
+//  nintiestropes
 //
-//  Created by Olga Romanova on 4/29/14.
-//  Copyright (c) 2014 Olga Romanova. All rights reserved.
+//  Built using https://github.com/BloodAxe/OpenCV-Tutorial as a template.
 //
 
 #ifndef nintiestropes1_nintiestropes1_Prefix_pch

@@ -106,6 +106,7 @@
     return _sample->processFrame(inputFrame, outputFrame);
 }
 
+//converts back to UIImage
 - (UIImage*) processFrame:(UIImage*) source
 {
     cv::Mat inputImage = [source toMat];

@@ -2,8 +2,7 @@
 //  AppDelegate.m
 //  nintiestropes
 //
-//  Created by Olga Romanova on 4/28/14.
-//  Copyright (c) 2014 Olga Romanova. All rights reserved.
+//  Built using https://github.com/BloodAxe/OpenCV-Tutorial as a template.
 //
 
 #import "AppDelegate.h"
@@ -15,6 +14,8 @@
 #import "FeatureDetectionSample.h"
 #import "ObjectTrackingSample.h"
 #import "DrawingCanvas.h"
+#import "GlowFilter.h""
+
 
 @implementation AppDelegate
 
@@ -31,7 +32,8 @@
     allSamples.push_back([[SampleFacade alloc] initWithSample:  new FeatureDetectionSample()]);
     allSamples.push_back([[SampleFacade alloc] initWithSample:  new ObjectTrackingSample()]);
     allSamples.push_back([[SampleFacade alloc] initWithSample:  new DrawingCanvasSample()]);
-    
+    allSamples.push_back([[SampleFacade alloc] initWithSample:  new GlowFilter()]);
+
     //original samples
     
     // Override point for customization after application launch.

@@ -109,6 +109,11 @@
 		77D404631910900C007D097B /* ObjectTrackingSample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77D404601910900C007D097B /* ObjectTrackingSample.cpp */; };
 		77D4046819109687007D097B /* CartoonFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77D4046619109687007D097B /* CartoonFilter.cpp */; };
 		77D4046C191097E2007D097B /* DrawingCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77D4046A191097E2007D097B /* DrawingCanvas.cpp */; };
+		77EA4BBD1911325400BDA905 /* GlowFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77EA4BBC1911325400BDA905 /* GlowFilter.cpp */; };
+		77EA4BC31911616A00BDA905 /* FaceAnimator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77EA4BBE1911616A00BDA905 /* FaceAnimator.cpp */; };
+		77EA4BC41911616A00BDA905 /* haarcascade_mcs_eyepair_big.xml in Resources */ = {isa = PBXBuildFile; fileRef = 77EA4BC01911616A00BDA905 /* haarcascade_mcs_eyepair_big.xml */; };
+		77EA4BC51911616A00BDA905 /* haarcascade_mcs_mouth.xml in Resources */ = {isa = PBXBuildFile; fileRef = 77EA4BC11911616A00BDA905 /* haarcascade_mcs_mouth.xml */; };
+		77EA4BC61911616A00BDA905 /* lbpcascade_frontalface.xml in Resources */ = {isa = PBXBuildFile; fileRef = 77EA4BC21911616A00BDA905 /* lbpcascade_frontalface.xml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -262,6 +267,13 @@
 		77D4046719109687007D097B /* CartoonFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartoonFilter.h; sourceTree = "<group>"; };
 		77D4046A191097E2007D097B /* DrawingCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DrawingCanvas.cpp; sourceTree = "<group>"; };
 		77D4046B191097E2007D097B /* DrawingCanvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingCanvas.h; sourceTree = "<group>"; };
+		77EA4BBB191131E100BDA905 /* GlowFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlowFilter.h; sourceTree = "<group>"; };
+		77EA4BBC1911325400BDA905 /* GlowFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GlowFilter.cpp; sourceTree = "<group>"; };
+		77EA4BBE1911616A00BDA905 /* FaceAnimator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FaceAnimator.cpp; sourceTree = "<group>"; };
+		77EA4BBF1911616A00BDA905 /* FaceAnimator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FaceAnimator.hpp; sourceTree = "<group>"; };
+		77EA4BC01911616A00BDA905 /* haarcascade_mcs_eyepair_big.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_mcs_eyepair_big.xml; sourceTree = "<group>"; };
+		77EA4BC11911616A00BDA905 /* haarcascade_mcs_mouth.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_mcs_mouth.xml; sourceTree = "<group>"; };
+		77EA4BC21911616A00BDA905 /* lbpcascade_frontalface.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = lbpcascade_frontalface.xml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -434,6 +446,8 @@
 		7779B08C190E94CC00A0BB25 /* Samples */ = {
 			isa = PBXGroup;
 			children = (
+				77EA4BBA19112EE800BDA905 /* Glow Filter */,
+				77EA4BB919112CFE00BDA905 /* Face Detection */,
 				77D4046D191097E8007D097B /* Drawing Canvas */,
 				77D4046919109694007D097B /* Cartoon Filter */,
 				77D4046519109033007D097B /* Object Tracking */,
@@ -630,6 +644,27 @@
 			name = "Drawing Canvas";
 			sourceTree = "<group>";
 		};
+		77EA4BB919112CFE00BDA905 /* Face Detection */ = {
+			isa = PBXGroup;
+			children = (
+				77EA4BBE1911616A00BDA905 /* FaceAnimator.cpp */,
+				77EA4BBF1911616A00BDA905 /* FaceAnimator.hpp */,
+				77EA4BC01911616A00BDA905 /* haarcascade_mcs_eyepair_big.xml */,
+				77EA4BC11911616A00BDA905 /* haarcascade_mcs_mouth.xml */,
+				77EA4BC21911616A00BDA905 /* lbpcascade_frontalface.xml */,
+			);
+			name = "Face Detection";
+			sourceTree = "<group>";
+		};
+		77EA4BBA19112EE800BDA905 /* Glow Filter */ = {
+			isa = PBXGroup;
+			children = (
+				77EA4BBB191131E100BDA905 /* GlowFilter.h */,
+				77EA4BBC1911325400BDA905 /* GlowFilter.cpp */,
+			);
+			name = "Glow Filter";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -724,6 +759,7 @@
 				77D3E77F190F65650025F74A /* EdgeDetectionSampleIcon.png in Resources */,
 				77D4043C1910858B007D097B /* refresh.png in Resources */,
 				77D4042F1910858B007D097B /* ContourDetectionSampleIcon@2x.png in Resources */,
+				77EA4BC51911616A00BDA905 /* haarcascade_mcs_mouth.xml in Resources */,
 				77D4043E1910858B007D097B /* repeat.png in Resources */,
 				77D4042C1910858B007D097B /* cog_02.png in Resources */,
 				7729A697190E1650002BF4C5 /* Main_iPhone.storyboard in Resources */,
@@ -734,6 +770,7 @@
 				77D3E779190F64680025F74A /* EnumTableViewCell.xib in Resources */,
 				77D4042A1910858B007D097B /* cog_01.png in Resources */,
 				77D4043B1910858B007D097B /* refresh_straight_arrows@2x.png in Resources */,
+				77EA4BC61911616A00BDA905 /* lbpcascade_frontalface.xml in Resources */,
 				77D4040E191081D9007D097B /* DefaultSampleIcon.png in Resources */,
 				77D3E76E190F64240025F74A /* BooleanTableViewCell.xib in Resources */,
 				77D404411910858B007D097B /* switchCamera.png in Resources */,
@@ -742,6 +779,7 @@
 				77D404301910858B007D097B /* DetectTrackSampleIcon.png in Resources */,
 				77D404331910858B007D097B /* FeatureDetectionSampleIcon.png in Resources */,
 				77D404401910858B007D097B /* ROFSampleIcon.png in Resources */,
+				77EA4BC41911616A00BDA905 /* haarcascade_mcs_eyepair_big.xml in Resources */,
 				77D4043F1910858B007D097B /* repeat@2x.png in Resources */,
 				7729A68E190E1650002BF4C5 /* InfoPlist.strings in Resources */,
 				77D404321910858B007D097B /* EdgeDetectionSampleIcon~ipad.png in Resources */,
@@ -766,6 +804,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77EA4BBD1911325400BDA905 /* GlowFilter.cpp in Sources */,
+				77EA4BC31911616A00BDA905 /* FaceAnimator.cpp in Sources */,
 				7732711B190EBFAA0098F27F /* VideoSource.mm in Sources */,
 				77D404631910900C007D097B /* ObjectTrackingSample.cpp in Sources */,
 				7779B09A190E95C300A0BB25 /* SampleOptions.cpp in Sources */,
