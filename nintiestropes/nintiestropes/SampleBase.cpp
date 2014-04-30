@@ -81,6 +81,7 @@ void SampleBase::getGray(const cv::Mat& input, cv::Mat& gray)
     cv::cvtColor(input, gray, CV_BGRA2GRAY);    
 #else
       cv::cvtColor(input, gray, CV_BGRA2GRAY);
+    //need to convert to new one
    // cv::neon_cvtColorBGRA2GRAY(input, gray);
 #endif
     

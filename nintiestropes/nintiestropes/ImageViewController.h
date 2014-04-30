@@ -11,6 +11,7 @@
 #import "OptionsTableView.h"
 #import "OptionCell.h"
 #import "BaseSampleViewController.h"
+#import <opencv2/highgui/ios.h>
 
 
 @interface ImageViewController : BaseSampleViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, OptionCellDelegate, UIActionSheetDelegate>

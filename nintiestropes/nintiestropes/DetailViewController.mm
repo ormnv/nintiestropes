@@ -50,6 +50,7 @@
     
     if (currentSample)
     {
+        NSLog(@"in sample");
         self.sampleDescriptionTextView.text = [currentSample description];
         self.title = [currentSample title];
         self.sampleIconView.image = [currentSample largeIcon];

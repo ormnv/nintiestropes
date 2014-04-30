@@ -7,6 +7,7 @@
 //
 
 #import "UIImage2OpenCV.h"
+//use this instead?
 
 @implementation UIImage (OpenCV)
 

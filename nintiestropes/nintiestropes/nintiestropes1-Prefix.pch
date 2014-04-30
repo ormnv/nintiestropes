@@ -1,8 +1,13 @@
 //
-//  Prefix header
+//  nintiestropes1-Prefix.pch
+//  nintiestropes1
 //
-//  The contents of this file are implicitly included at the beginning of every source file.
+//  Created by Olga Romanova on 4/29/14.
+//  Copyright (c) 2014 Olga Romanova. All rights reserved.
 //
+
+#ifndef nintiestropes1_nintiestropes1_Prefix_pch
+#define nintiestropes1_nintiestropes1_Prefix_pch
 
 #import <Availability.h>
 
@@ -10,16 +15,16 @@
 #warning "This project uses features only available in iOS SDK 5.0 and later."
 #endif
 
-#ifdef __OBJC__
-    #import <UIKit/UIKit.h>
-    #import <Foundation/Foundation.h>
-    #import <CoreData/CoreData.h>
-    #import <QuartzCore/QuartzCore.h>
+#ifdef __cplusplus
+#include <opencv2/opencv.hpp>
+#include <opencv2/nonfree/nonfree.hpp>
 #endif
 
-#ifdef __cplusplus
-    #include <opencv2/opencv.hpp>
-    #include <opencv2/nonfree/nonfree.hpp>
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
 #endif
 
 #include "TargetConditionals.h"
+#endif

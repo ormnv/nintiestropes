@@ -48,7 +48,7 @@
 //  }
 //  
 //#if (!TARGET_IPHONE_SIMULATOR)
-//  
+//  //find replacement, in neon_transform_bga
 //  static void neon_asm_mat4_vec4_mul(const float* __restrict m, const int* __restrict v, int* __restrict output)
 //  {
 //    asm volatile
@@ -83,7 +83,8 @@
 //     : "memory", "q0", "q1", "q2", "q3", "q8", "q9", "q10", "q11" //clobber
 //     );
 //  }
-//  
+//
+// // in neon_cvtColorBGRA2GRAY
 //  static void neon_asm_convert(uint8_t * __restrict dest, uint8_t * __restrict src, int numPixels)
 //  {
 //    __asm__ volatile("lsr          %2, %2, #3      \n"
@@ -128,7 +129,7 @@
 //    neon_asm_convert(dest, src, numPixels);
 //  }
   
-  
+  //for imagefilters sample need to update this
 //  void neon_transform_bgra(const cv::Mat& input, cv::Mat& result, const cv::Mat_<float>& m)
 //  {
 //    assert(input.type() == CV_8UC4);

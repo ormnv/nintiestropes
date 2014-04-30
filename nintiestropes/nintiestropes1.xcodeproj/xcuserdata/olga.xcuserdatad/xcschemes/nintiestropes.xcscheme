@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7729A67D190E1650002BF4C5"
-               BuildableName = "nintiestropes.app"
+               BuildableName = "nintiestropes1.app"
                BlueprintName = "nintiestropes1"
                ReferencedContainer = "container:nintiestropes1.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7729A6A9190E1650002BF4C5"
-               BuildableName = "nintiestropesTests.xctest"
+               BuildableName = "nintiestropes1Tests.xctest"
                BlueprintName = "nintiestropes1Tests"
                ReferencedContainer = "container:nintiestropes1.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7729A67D190E1650002BF4C5"
-            BuildableName = "nintiestropes.app"
+            BuildableName = "nintiestropes1.app"
             BlueprintName = "nintiestropes1"
             ReferencedContainer = "container:nintiestropes1.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7729A67D190E1650002BF4C5"
-            BuildableName = "nintiestropes.app"
+            BuildableName = "nintiestropes1.app"
             BlueprintName = "nintiestropes1"
             ReferencedContainer = "container:nintiestropes1.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7729A67D190E1650002BF4C5"
-            BuildableName = "nintiestropes.app"
+            BuildableName = "nintiestropes1.app"
             BlueprintName = "nintiestropes1"
             ReferencedContainer = "container:nintiestropes1.xcodeproj">
          </BuildableReference>
