@@ -4,7 +4,6 @@
 //
 //  Created by BloodAxe on 9/4/12.
 //
-//
 
 #include "DrawingCanvas.h"
 

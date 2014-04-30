@@ -1,4 +1,3 @@
-
 //
 //  VideoSource.m
 //  OpenCV Tutorial
@@ -6,6 +5,8 @@
 //  Created by BloodAxe on 6/26/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
+
+//TODO: update this? Is it necessary? 
 
 #import "VideoSource.h"
 

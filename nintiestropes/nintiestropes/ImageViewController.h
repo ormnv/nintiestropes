@@ -1,10 +1,10 @@
 //
 //  ImageViewController.h
-//  OpenCV Tutorial
+//  nintiestropes
 //
-//  Created by BloodAxe on 7/4/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Built using https://github.com/BloodAxe/OpenCV-Tutorial as a template.
 //
+
 
 #import <UIKit/UIKit.h>
 #import "SampleBase.h"

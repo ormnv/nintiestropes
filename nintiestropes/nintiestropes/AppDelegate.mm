@@ -30,7 +30,7 @@
     allSamples.push_back([[SampleFacade alloc] initWithSample:  new VideoTrackingSample()]);
     allSamples.push_back([[SampleFacade alloc] initWithSample:  new FeatureDetectionSample()]);
     allSamples.push_back([[SampleFacade alloc] initWithSample:  new ObjectTrackingSample()]);
-    allSamples.push_back([[SampleFacade alloc] initWithSample:new DrawingCanvasSample()]);
+    allSamples.push_back([[SampleFacade alloc] initWithSample:  new DrawingCanvasSample()]);
     
     //original samples
     

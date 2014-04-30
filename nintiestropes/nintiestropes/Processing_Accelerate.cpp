@@ -26,16 +26,16 @@ int cvtColor_Accelerate(void *inData, unsigned int inStep,
                                           &buff2, &buff2, &buff2, 0);
     return err;
 }
-//
-//int equalizeHist_Accelerate(void *inData, unsigned int inStep,
-//                            void *outData, unsigned int outStep,
-//                            unsigned int height, unsigned int width)
-//{
-//    vImage_Buffer src = { inData, height, width, inStep };
-//    vImage_Buffer dest = { outData, height, width, outStep };
-//    
-//    vImage_Error err;
-//    err = vImageEqualization_Planar8( &src, &dest, 0 );
-//    
-//    return err;
-//}
+
+int equalizeHist_Accelerate(void *inData, unsigned int inStep,
+                            void *outData, unsigned int outStep,
+                            unsigned int height, unsigned int width)
+{
+    vImage_Buffer src = { inData, height, width, inStep };
+    vImage_Buffer dest = { outData, height, width, outStep };
+    
+    vImage_Error err;
+    err = vImageEqualization_Planar8( &src, &dest, 0 );
+    
+    return err;
+}

@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
+//TODO: Update to use current versions? 
 
 // This interface extension allows convert UIImage to cv::Mat representation and
 // vice versa using full data copy in both directions.

@@ -1,10 +1,10 @@
 //
 //  VideoViewController.h
-//  OpenCV Tutorial
+//  nintiestropes
 //
-//  Created by BloodAxe on 6/26/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Built using https://github.com/BloodAxe/OpenCV-Tutorial as a template.
 //
+
 
 #import <Foundation/Foundation.h>
 #import "GLESImageView.h"

@@ -8,9 +8,11 @@ TODO:
 
 -Get Assets 
 
--Update methods converting to and from mat 
+-Update methods converting to and from mat to be simular to this? The example has cvMatFromUIImage, cvMatGrayFromUIImage, and UIImageFromCVMat for images. 
+	http://docs.opencv.org/doc/tutorials/ios/image_manipulation/image_manipulation.html#opencviosimagemanipulation
 
--Rewrite sample base to be simular to 
+- Incorporate #import <opencv2/highgui/cap_ios.h>, which is not used in the original tutorial from 2012? 
+	http://docs.opencv.org/doc/tutorials/ios/video_processing/video_processing.html#opencviosvideoprocessing
 
 -CVNEON 
 The cvneon class that was part of the original OpenCV iOS tutorial does not work with the arm64 architecture. The registers are different for arm64, so the old code won't work. For the time being, the cvneon methods were replaced by Specfically affecting: 
@@ -38,3 +40,7 @@ Resources:
 	-OpenCv iOS Tutorial
 	-Explanation of grey conversion with cvneon from 2012
 	http://computer-vision-talks.com/articles/2012-11-06-maximizing-performance-grayscale-color-conversion-using-neon-and-cvparallel_for/
+	-OpenCV docs 
+	http://docs.opencv.org/doc/tutorials/ios/table_of_content_ios/table_of_content_ios.html
+	-OpenCV for iOS 
+	http://www.packtpub.com/to-build-real-time%20computer%20vision%20applications%20for-ios-using-opencv/book

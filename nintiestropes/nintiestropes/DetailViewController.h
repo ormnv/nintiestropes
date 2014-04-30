@@ -2,9 +2,9 @@
 //  DetailViewController.h
 //  nintiestropes
 //
-//  Created by Olga Romanova on 4/28/14.
-//  Copyright (c) 2014 Olga Romanova. All rights reserved.
+//  Built using https://github.com/BloodAxe/OpenCV-Tutorial as a template.
 //
+
 
 
 #import <UIKit/UIKit.h>

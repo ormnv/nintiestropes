@@ -6,8 +6,9 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
+//TODO: update to use current versions? 
+
 #import "UIImage2OpenCV.h"
-//use this instead?
 
 @implementation UIImage (OpenCV)
 

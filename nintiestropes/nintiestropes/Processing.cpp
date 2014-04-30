@@ -32,9 +32,9 @@ void alphaBlendC4(const Mat& src, Mat& dst, const Mat& alpha)
         }
 }
 
-//void ExtractAlpha(cv::Mat& rgbaSrc, cv::Mat& alpha)
-//{
-//    std::vector<Mat> channels;
-//    split(rgbaSrc, channels);
-//    channels[3].copyTo(alpha);
-//}
+void ExtractAlpha(cv::Mat& rgbaSrc, cv::Mat& alpha)
+{
+    std::vector<Mat> channels;
+    split(rgbaSrc, channels);
+    channels[3].copyTo(alpha);
+}

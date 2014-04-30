@@ -4,7 +4,6 @@
 //
 //  Created by BloodAxe on 9/4/12.
 //
-//
 
 #ifndef OpenCV_Tutorial_DrawingCanvas_h
 #define OpenCV_Tutorial_DrawingCanvas_h
