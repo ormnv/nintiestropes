@@ -93,6 +93,8 @@ static void UIImageToMat(const UIImage* image, cv::Mat& m,
 @synthesize toolbar;
 @synthesize videoCamera;
 @synthesize toggleCameraButton;
+@synthesize savevideoButton;
+
 
 - (NSInteger)supportedInterfaceOrientations
 {
@@ -118,10 +120,12 @@ static void UIImageToMat(const UIImage* image, cv::Mat& m,
     self.videoCamera.defaultAVCaptureVideoOrientation =
     AVCaptureVideoOrientationPortrait;
     self.videoCamera.defaultFPS = 30;
+    self.videoCamera.recordVideo = YES;
+
     
     isCapturing = FALSE;
     
-    //Load images
+    //Load images. Would be nice to have less code for this. 
     NSString* filePath = [[NSBundle mainBundle]
                           pathForResource:@"glasses" ofType:@"png"];
     UIImage* resImage = [UIImage imageWithContentsOfFile:filePath];
@@ -134,6 +138,17 @@ static void UIImageToMat(const UIImage* image, cv::Mat& m,
     UIImageToMat(resImage, parameters.mustache, true);
     cvtColor(parameters.mustache, parameters.mustache, CV_BGRA2RGBA);
     
+    filePath = [[NSBundle mainBundle]
+                          pathForResource:@"smiley1" ofType:@"png"];
+    resImage = [UIImage imageWithContentsOfFile:filePath];
+    UIImageToMat(resImage, parameters.smiley1, true);
+    cvtColor(parameters.smiley1, parameters.smiley1, CV_BGRA2RGBA);
+    
+    filePath = [[NSBundle mainBundle]
+                pathForResource:@"grinning" ofType:@"png"];
+    resImage = [UIImage imageWithContentsOfFile:filePath];
+    UIImageToMat(resImage, parameters.grinning, true);
+    cvtColor(parameters.grinning, parameters.grinning, CV_BGRA2RGBA);
     //Load Cascade Classisiers
     NSString* filename = [[NSBundle mainBundle]
                           pathForResource:@"lbpcascade_frontalface" ofType:@"xml"];
@@ -148,6 +163,8 @@ static void UIImageToMat(const UIImage* image, cv::Mat& m,
     parameters.mouth_cascade.load([filename UTF8String]);
 }
 
+
+
 -(IBAction)startCaptureButtonPressed:(id)sender
 {
     [videoCamera start];
@@ -159,6 +176,18 @@ static void UIImageToMat(const UIImage* image, cv::Mat& m,
 -(IBAction)stopCaptureButtonPressed:(id)sender
 {
     [videoCamera stop];
+    NSString* relativePath = [videoCamera.videoFileURL relativePath];
+    UISaveVideoAtPathToSavedPhotosAlbum(relativePath, self, nil, NULL);
+    
+    //Alert window
+    UIAlertView *alert = [UIAlertView alloc];
+    alert = [alert initWithTitle:@"Camera info"
+                         message:@"The video was saved to the Gallery!"
+                        delegate:self
+               cancelButtonTitle:@"Continue"
+               otherButtonTitles:nil];
+    [alert show];
+    
     isCapturing = FALSE;
 }
 

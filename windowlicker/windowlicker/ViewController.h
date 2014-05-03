@@ -25,12 +25,14 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *stopCaptureButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toggleCameraButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *savevideoButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *recordSwitch;
 
 
 -(IBAction)startCaptureButtonPressed:(id)sender;
 -(IBAction)stopCaptureButtonPressed:(id)sender;
 -(IBAction)toggleCameraButtonPressed:(id)sender;
 -(IBAction)savevideoButtonPressed:(id)sender;
+-(IBAction)recordSwitchFlipped:(id)sender;
 
 
 @end

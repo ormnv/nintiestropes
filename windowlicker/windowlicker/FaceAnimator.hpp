@@ -18,6 +18,8 @@ public:
     {
         cv::Mat glasses;
         cv::Mat mustache;
+        cv::Mat smiley1;
+        cv::Mat grinning;
         cv::CascadeClassifier face_cascade;
         cv::CascadeClassifier eyes_cascade;
         cv::CascadeClassifier mouth_cascade;
@@ -28,16 +30,20 @@ public:
     
     void detectAndAnimateFaces(cv::Mat& frame);
     int getFaceCount();
+    float getAvgFaceSize();
     
 private:
     Parameters parameters_;
     cv::Mat mask_orig_;
     cv::Mat mask_must_;
+    cv::Mat mask_smiley1_;
+    cv::Mat mask_grinning_;
     cv::Mat frame_gray;
     int faceCount_;
+    float avgFaceSize_;
     
     void putImage(cv::Mat& frame, const cv::Mat& image, const cv::Mat& alpha,
-                  cv::Rect face, cv::Rect facialFeature, float shift);
+                  cv::Rect face, float shift);
     void PreprocessToGray(cv::Mat& frame);
     
     //Members for optimization

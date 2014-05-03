@@ -17,24 +17,23 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gjU-6U-uHz">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="427"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="427" id="yRo-ud-GrO"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="320" id="yn7-e9-tBS"/>
+                                </constraints>
                             </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fFI-hA-UHL">
-                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="427" width="320" height="141"/>
                                 <items>
                                     <barButtonItem title="Start" id="4U3-8j-grf">
                                         <connections>
                                             <action selector="startCaptureButtonPressed:" destination="2" id="jbk-ok-E34"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Stop" id="9Mu-Tc-Pcc">
-                                        <connections>
-                                            <action selector="stopCaptureButtonPressed:" destination="2" id="QAG-gJ-aHZ"/>
-                                        </connections>
-                                    </barButtonItem>
                                     <barButtonItem title="Flip" style="plain" id="tON-AV-CNf">
                                         <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="WSO-r7-PiW">
-                                            <rect key="frame" x="110" y="6" width="73" height="33"/>
+                                            <rect key="frame" x="63" y="54" width="73" height="33"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" title="Flip">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -44,17 +43,10 @@
                                             </connections>
                                         </button>
                                     </barButtonItem>
-                                    <barButtonItem title="Save" style="plain" id="wQO-L6-WLZ">
-                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="W6P-tA-W2K">
-                                            <rect key="frame" x="193" y="6" width="73" height="33"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" title="Save">
-                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="savevideoButtonPressed:" destination="2" eventType="touchUpInside" id="lHa-MT-mcm"/>
-                                            </connections>
-                                        </button>
+                                    <barButtonItem title="Stop" id="9Mu-Tc-Pcc">
+                                        <connections>
+                                            <action selector="stopCaptureButtonPressed:" destination="2" id="QAG-gJ-aHZ"/>
+                                        </connections>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
@@ -72,7 +64,6 @@
                     </view>
                     <connections>
                         <outlet property="imageView" destination="gjU-6U-uHz" id="nst-cF-pIB"/>
-                        <outlet property="savevideoButton" destination="wQO-L6-WLZ" id="QeC-RN-LyM"/>
                         <outlet property="startCaptureButton" destination="4U3-8j-grf" id="rTX-DY-NHt"/>
                         <outlet property="stopCaptureButton" destination="9Mu-Tc-Pcc" id="X6i-hK-4oL"/>
                         <outlet property="toggleCameraButton" destination="tON-AV-CNf" id="bQL-31-21M"/>
