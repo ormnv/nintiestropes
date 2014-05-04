@@ -28,9 +28,10 @@ public:
     FaceAnimator(Parameters parameters);
     virtual ~FaceAnimator() {};
     
-    void detectAndAnimateFaces(cv::Mat& frame);
+    void detectAndAnimateFaces(cv::Mat& frame, int orientation);
     int getFaceCount();
     float getAvgFaceSize();
+    void rotate(cv::Mat& src, double angle, cv::Mat& dst);
     
 private:
     Parameters parameters_;

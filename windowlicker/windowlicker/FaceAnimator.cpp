@@ -93,8 +93,18 @@ float FaceAnimator::getAvgFaceSize(){
     return avgFaceSize_;
 }
 
-void FaceAnimator::detectAndAnimateFaces(cv::Mat& frame)
+void FaceAnimator::rotate(cv::Mat& src, double angle, cv::Mat& dst)
 {
+    int len = std::max(src.cols, src.rows);
+    Point2f pt(len/2., len/2.);
+    Mat r = cv::getRotationMatrix2D(pt, angle, 1.0);
+    
+    warpAffine(src, dst, r, cv::Size(len, len));
+}
+
+void FaceAnimator::detectAndAnimateFaces(cv::Mat& frame, int orientation)
+{
+
     TS(Preprocessing);
     PreprocessToGray_optimized(frame);
     TE(Preprocessing);
@@ -119,6 +129,8 @@ void FaceAnimator::detectAndAnimateFaces(cv::Mat& frame)
         //calculate two corner points to draw a rectangle
         cv::Point upLeftPoint(currentFace.x, currentFace.y);
         cv::Point bottomRightPoint = upLeftPoint + cv::Point(currentFace.width, currentFace.height);
+        cv::rectangle(frame, upLeftPoint, bottomRightPoint, cv::Scalar(55,0,255), 4, 8, 0);
+
         putImage(frame, parameters_.smiley1, mask_smiley1_, currentFace, 0.3f);
 
     }

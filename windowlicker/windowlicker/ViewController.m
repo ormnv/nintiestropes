@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Olga Romanova. All rights reserved.
 //
 #import "ViewController.h"
+#import <UIKit/UIKit.h>
+
 
 static UIImage* MatToUIImage(const cv::Mat& image)
 {
@@ -44,7 +46,7 @@ static UIImage* MatToUIImage(const cv::Mat& image)
     CGImageRelease(imageRef);
     CGDataProviderRelease(provider);
     CGColorSpaceRelease(colorSpace);
-    
+
     return finalImage;
 }
 
@@ -102,14 +104,18 @@ static void UIImageToMat(const UIImage* image, cv::Mat& m,
     return UIInterfaceOrientationMaskPortrait;
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    int width = imageView.frame.size.width;
-    int height = imageView.frame.size.height;
-    
-    
+    UIDevice *device = [UIDevice currentDevice];
+    //UIInterfaceOrientation deviceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+    UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+
+   [device beginGeneratingDeviceOrientationNotifications];
+
 	// Do any additional setup after loading the view, typically from a nib.
+
     self.videoCamera = [[CvVideoCamera alloc]
                         initWithParentView:imageView];
     self.videoCamera.delegate = self;
@@ -118,11 +124,30 @@ static void UIImageToMat(const UIImage* image, cv::Mat& m,
     self.videoCamera.defaultAVCaptureSessionPreset =
     AVCaptureSessionPreset352x288;
     self.videoCamera.defaultAVCaptureVideoOrientation =
-    AVCaptureVideoOrientationPortrait;
+    AVCaptureVideoOrientationLandscapeLeft;
     self.videoCamera.defaultFPS = 30;
     self.videoCamera.recordVideo = YES;
-
+    self.videoCamera.rotateVideo = NO;
     
+//    //TODO: fix orientation!
+//    self.videoCamera.videoCaptureConnection.videoPreviewLayer.frame=self.view.bounds;
+//
+//    if ( deviceOrientation == UIInterfaceOrientationLandscapeLeft )
+//        [self.videoCamera.videoCaptureConnection.videoPreviewLayer.connection
+// setVideoOrientation:AVCaptureVideoOrientationLandscapeRight];
+//    
+//    else if ( deviceOrientation == UIInterfaceOrientationLandscapeRight )
+//        [self.videoCamera.videoCaptureConnection.videoPreviewLayer.connection
+// setVideoOrientation:AVCaptureVideoOrientationLandscapeLeft];
+//    
+//    else if( deviceOrientation == UIInterfaceOrientationPortrait)
+//        [self.videoCamera.videoCaptureConnection.videoPreviewLayer.connection
+// setVideoOrientation:AVCaptureVideoOrientationLandscapeLeft];
+//
+//    else if( deviceOrientation == UIInterfaceOrientationPortraitUpsideDown)
+//        [self.videoCamera.videoCaptureConnection.videoPreviewLayer.connection
+// setVideoOrientation:AVCaptureVideoOrientationPortraitUpsideDown];
+
     isCapturing = FALSE;
     
     //Load images. Would be nice to have less code for this. 
@@ -176,6 +201,7 @@ static void UIImageToMat(const UIImage* image, cv::Mat& m,
 -(IBAction)stopCaptureButtonPressed:(id)sender
 {
     [videoCamera stop];
+
     NSString* relativePath = [videoCamera.videoFileURL relativePath];
     UISaveVideoAtPathToSavedPhotosAlbum(relativePath, self, nil, NULL);
     
@@ -202,10 +228,37 @@ static void UIImageToMat(const UIImage* image, cv::Mat& m,
 }
 
 
+void rotate(cv::Mat& src, double angle, cv::Mat& dst)
+{
+    int len = std::max(src.cols, src.rows);
+    cv::Point2f pt(len/2., len/2.);
+    cv::Mat r = cv::getRotationMatrix2D(pt, angle, 1.0);
+    
+    cv::warpAffine(src, dst, r, cv::Size(src.rows, src.cols));
+}
+
 - (void)processImage:(cv::Mat&)image
 {
+
+    UIDevice *device = [UIDevice currentDevice];
+    UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+    UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+    
+    //if
+    cv::Mat dest;
+    cv::Mat* dest2;
+    rotate(image, 90, dest);
+    //rotate(image, 0, dest2);
+    //image = dest;
+    
     int64 timeStart = cv::getTickCount();
-    faceAnimator->detectAndAnimateFaces(image);
+    
+    if(deviceOrientation== UIDeviceOrientationPortrait)
+        image = dest;
+        //faceAnimator->detectAndAnimateFaces(dest, 0);
+    faceAnimator->detectAndAnimateFaces(image, 0);
+
+        //faceAnimator->detectAndAnimateFaces(image, 1);
     //    UIImage *uiImage = MatToUIImage(image);
     //    CIImage *ciImage = [CIImage imageWithCGImage:uiImage.CGImage];
     //    CIContext *context = [CIContext contextWithOptions:nil];
@@ -266,7 +319,6 @@ static void UIImageToMat(const UIImage* image, cv::Mat& m,
     //    UIImage *imageResult = [UIImage imageWithCGImage:cgImage];
     //    CGImageRelease(cgImage);
     //    UIImageToMat(imageResult, image);
-    
     int64 timeEnd = cv::getTickCount();
     float durationMs =
     1000.f * float(timeEnd - timeStart) / cv::getTickFrequency();
