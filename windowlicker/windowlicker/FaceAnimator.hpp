@@ -28,7 +28,7 @@ public:
     FaceAnimator(Parameters parameters);
     virtual ~FaceAnimator() {};
     
-    void detectAndAnimateFaces(cv::Mat& frame, int orientation);
+    void detectAndAnimateFaces(cv::Mat& frame, cv::Mat& dest, int orientation);
     int getFaceCount();
     float getAvgFaceSize();
     void rotate(cv::Mat& src, double angle, cv::Mat& dst);
@@ -40,6 +40,7 @@ private:
     cv::Mat mask_smiley1_;
     cv::Mat mask_grinning_;
     cv::Mat frame_gray;
+    cv::Mat dest_gray;
     int faceCount_;
     float avgFaceSize_;
     

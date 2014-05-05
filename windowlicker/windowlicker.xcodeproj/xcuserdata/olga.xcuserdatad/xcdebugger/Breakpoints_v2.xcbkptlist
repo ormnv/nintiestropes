@@ -116,7 +116,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/FaceAnimator.cpp"
@@ -343,120 +343,8 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "windowlicker/FaceAnimator.cpp"
-            timestampString = "420853455.501407"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
-            landmarkName = "FaceAnimator::rotate(cv::Mat&amp; src, double angle, cv::Mat&amp; dst)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "windowlicker/FaceAnimator.cpp"
-            timestampString = "420853677.582284"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
-            landmarkName = "FaceAnimator::detectAndAnimateFaces(cv::Mat&amp; frame, int orientation)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "windowlicker/FaceAnimator.cpp"
-            timestampString = "420854725.214244"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
-            landmarkName = "FaceAnimator::detectAndAnimateFaces(cv::Mat&amp; frame, int orientation)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "windowlicker/FaceAnimator.cpp"
-            timestampString = "420854725.866306"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "129"
-            endingLineNumber = "129"
-            landmarkName = "FaceAnimator::detectAndAnimateFaces(cv::Mat&amp; frame, int orientation)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "windowlicker/FaceAnimator.cpp"
-            timestampString = "420856584.742931"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "134"
-            endingLineNumber = "134"
-            landmarkName = "FaceAnimator::detectAndAnimateFaces(cv::Mat&amp; frame, int orientation)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "windowlicker/FaceAnimator.cpp"
-            timestampString = "420854919.980247"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
-            landmarkName = "FaceAnimator::detectAndAnimateFaces(cv::Mat&amp; frame, int orientation)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.m"
-            timestampString = "420855240.04025"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "243"
-            endingLineNumber = "243"
-            landmarkName = "-processImage:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "windowlicker/ViewController.m"
-            timestampString = "420855240.917189"
+            timestampString = "420941726.415476"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "244"
@@ -472,7 +360,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.m"
-            timestampString = "420855260.839564"
+            timestampString = "420941726.415476"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "245"
@@ -484,15 +372,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.m"
-            timestampString = "420861388.288819"
+            timestampString = "420941726.415476"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "258"
-            endingLineNumber = "258"
+            startingLineNumber = "246"
+            endingLineNumber = "246"
             landmarkName = "-processImage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -504,11 +392,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.m"
-            timestampString = "420860369.447989"
+            timestampString = "420946398.131402"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "261"
-            endingLineNumber = "261"
+            startingLineNumber = "262"
+            endingLineNumber = "262"
             landmarkName = "-processImage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -516,16 +404,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/FaceAnimator.cpp"
-            timestampString = "420857095.480701"
+            timestampString = "420954191.989393"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
-            landmarkName = "FaceAnimator::detectAndAnimateFaces(cv::Mat&amp; frame, int orientation)"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
+            landmarkName = "FaceAnimator::detectAndAnimateFaces(cv::Mat&amp; frame, cv::Mat&amp; dest, int orientation)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -536,12 +424,60 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/FaceAnimator.cpp"
-            timestampString = "420857096.258356"
+            timestampString = "420963380.913362"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
-            landmarkName = "FaceAnimator::detectAndAnimateFaces(cv::Mat&amp; frame, int orientation)"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
+            landmarkName = "FaceAnimator::detectAndAnimateFaces(cv::Mat&amp; frame, cv::Mat&amp; dest, int orientation)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "windowlicker/FaceAnimator.cpp"
+            timestampString = "420961189.879848"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
+            landmarkName = "FaceAnimator::detectAndAnimateFaces(cv::Mat&amp; frame, cv::Mat&amp; dest, int orientation)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "windowlicker/FaceAnimator.cpp"
+            timestampString = "420961189.879848"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
+            landmarkName = "FaceAnimator::detectAndAnimateFaces(cv::Mat&amp; frame, cv::Mat&amp; dest, int orientation)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "windowlicker/FaceAnimator.cpp"
+            timestampString = "420961189.879848"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
+            landmarkName = "FaceAnimator::detectAndAnimateFaces(cv::Mat&amp; frame, cv::Mat&amp; dest, int orientation)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -552,12 +488,108 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/FaceAnimator.cpp"
-            timestampString = "420857167.098612"
+            timestampString = "420963380.913362"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
-            landmarkName = "FaceAnimator::detectAndAnimateFaces(cv::Mat&amp; frame, int orientation)"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
+            landmarkName = "FaceAnimator::detectAndAnimateFaces(cv::Mat&amp; frame, cv::Mat&amp; dest, int orientation)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "windowlicker/FaceAnimator.cpp"
+            timestampString = "420963380.913362"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
+            landmarkName = "FaceAnimator::detectAndAnimateFaces(cv::Mat&amp; frame, cv::Mat&amp; dest, int orientation)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "windowlicker/FaceAnimator.cpp"
+            timestampString = "420963380.913362"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "172"
+            endingLineNumber = "172"
+            landmarkName = "FaceAnimator::detectAndAnimateFaces(cv::Mat&amp; frame, cv::Mat&amp; dest, int orientation)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "windowlicker/FaceAnimator.cpp"
+            timestampString = "420963380.913362"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
+            landmarkName = "FaceAnimator::detectAndAnimateFaces(cv::Mat&amp; frame, cv::Mat&amp; dest, int orientation)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "windowlicker/FaceAnimator.cpp"
+            timestampString = "420961429.989711"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
+            landmarkName = "FaceAnimator::detectAndAnimateFaces(cv::Mat&amp; frame, cv::Mat&amp; dest, int orientation)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "windowlicker/FaceAnimator.cpp"
+            timestampString = "420963380.913362"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
+            landmarkName = "FaceAnimator::detectAndAnimateFaces(cv::Mat&amp; frame, cv::Mat&amp; dest, int orientation)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "windowlicker/FaceAnimator.cpp"
+            timestampString = "420963445.565993"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
+            landmarkName = "FaceAnimator::detectAndAnimateFaces(cv::Mat&amp; frame, cv::Mat&amp; dest, int orientation)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

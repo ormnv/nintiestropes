@@ -99,12 +99,16 @@ void FaceAnimator::rotate(cv::Mat& src, double angle, cv::Mat& dst)
     Point2f pt(len/2., len/2.);
     Mat r = cv::getRotationMatrix2D(pt, angle, 1.0);
     
-    warpAffine(src, dst, r, cv::Size(len, len));
+    warpAffine(src, dst, r, cv::Size(src.cols, src.rows));
+
 }
 
-void FaceAnimator::detectAndAnimateFaces(cv::Mat& frame, int orientation)
+void FaceAnimator::detectAndAnimateFaces(cv::Mat& frame, cv::Mat& dest, int orientation)
 {
-
+    Mat emoji;
+    Mat mask;
+    Mat face;
+    
     TS(Preprocessing);
     PreprocessToGray_optimized(frame);
     TE(Preprocessing);
@@ -127,11 +131,54 @@ void FaceAnimator::detectAndAnimateFaces(cv::Mat& frame, int orientation)
         
         const cv::Rect& currentFace = faces[i];
         //calculate two corner points to draw a rectangle
-        cv::Point upLeftPoint(currentFace.x, currentFace.y);
-        cv::Point bottomRightPoint = upLeftPoint + cv::Point(currentFace.width, currentFace.height);
-        cv::rectangle(frame, upLeftPoint, bottomRightPoint, cv::Scalar(55,0,255), 4, 8, 0);
+        switch (orientation) {
+            case 0:
+            {
+//                cv::Point upLeftPoint0(currentFace.y, currentFace.x);
+//                cv::Point boxU1 = upLeftPoint0 + cv::Point(10, 10);
+//                //cv::rectangle(dest, upLeftPoint0, boxU1, cv::Scalar(0,225,255), 4, 8, 0);
 
-        putImage(frame, parameters_.smiley1, mask_smiley1_, currentFace, 0.3f);
+                int height = frame.size().height;
+                int width = frame.size().width;
+                cv::Point upLeftPoint1(height-currentFace.y, currentFace.x);
+                cv::Point bottomRightPoint00 = upLeftPoint1 + cv::Point(-currentFace.height, currentFace.width);
+
+//                cv::Point boxU11 = upLeftPoint1 + cv::Point(10, 10);
+//                cv::Point box1 = bottomRightPoint00 + cv::Point(10, 10);
+
+
+//                cv::rectangle(dest, upLeftPoint1, boxU11, cv::Scalar(0,55,255), 4, 8, 0);
+//                cv::rectangle(dest, bottomRightPoint00, box1, cv::Scalar(0,55,255), 4, 8, 0);
+
+                cv::rectangle (dest, upLeftPoint1, bottomRightPoint00, cv::Scalar(0,225,255), 4, 8, 0);
+                cv::Rect newFace = cv::Rect(height-currentFace.y-currentFace.height, currentFace.x, currentFace.height, currentFace.width);
+//                cv::Rect newFace = cv::Rect(currentFace.y, currentFace.x, currentFace.height, currentFace.width);
+
+
+                rotate(parameters_.smiley1, -90, emoji);
+                rotate(mask_smiley1_, -90, mask);
+
+                putImage(dest, emoji, mask_smiley1_, newFace, 0.3f);
+                break;
+            }
+            case 1:
+            {
+                cv::Point upLeftPoint1(currentFace.x, currentFace.y);
+                cv::Point bottomRightPoint1 = upLeftPoint1 + cv::Point(currentFace.width, currentFace.height);
+                cv::Point bottomRightPoint000 = upLeftPoint1 + cv::Point(10, 10);
+                cv::rectangle(dest, upLeftPoint1, bottomRightPoint000, cv::Scalar(0,0,255), 4, 8, 0);
+                int heihgt = frame.size().height;
+                int width = frame.size().width;
+                cv::rectangle(dest, upLeftPoint1, bottomRightPoint1, cv::Scalar(55,0,255), 4, 8, 0);
+                putImage(dest, parameters_.smiley1, mask_smiley1_, currentFace, 0.3f);
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
+        
 
     }
     

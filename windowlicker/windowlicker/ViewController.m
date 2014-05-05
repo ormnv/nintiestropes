@@ -233,7 +233,8 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     int len = std::max(src.cols, src.rows);
     cv::Point2f pt(len/2., len/2.);
     cv::Mat r = cv::getRotationMatrix2D(pt, angle, 1.0);
-    
+    //cv::warpAffine(src, dst, r, cv::Size(len, len));
+
     cv::warpAffine(src, dst, r, cv::Size(src.rows, src.cols));
 }
 
@@ -244,19 +245,19 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
     UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
     
-    //if
     cv::Mat dest;
-    cv::Mat* dest2;
+    //cv::Mat dest = cv::Mat(image.size(),image.type());
     rotate(image, 90, dest);
-    //rotate(image, 0, dest2);
-    //image = dest;
-    
     int64 timeStart = cv::getTickCount();
     
     if(deviceOrientation== UIDeviceOrientationPortrait)
-        image = dest;
-        //faceAnimator->detectAndAnimateFaces(dest, 0);
-    faceAnimator->detectAndAnimateFaces(image, 0);
+        //rotate(image, 90, dest);
+        //image = dest;
+        faceAnimator->detectAndAnimateFaces(dest, image, 0);
+    else
+        //LandscapeLeft is default
+        faceAnimator->detectAndAnimateFaces(image, image, 1);
+
 
         //faceAnimator->detectAndAnimateFaces(image, 1);
     //    UIImage *uiImage = MatToUIImage(image);
