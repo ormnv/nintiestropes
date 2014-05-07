@@ -55,6 +55,8 @@
 		7750E6581913E0910007BF53 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7750E6331913C9DD0007BF53 /* opencv2.framework */; };
 		7750E65A1913E7520007BF53 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7750E6591913E7520007BF53 /* AssetsLibrary.framework */; };
 		7750E65C1913E7650007BF53 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7750E65B1913E7650007BF53 /* QuartzCore.framework */; };
+		77ED44A0191AAAB20024DC6A /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77ED449F191AAAB20024DC6A /* CoreMotion.framework */; };
+		77ED44A2191ABAF60024DC6A /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77ED44A1191ABAF60024DC6A /* CoreImage.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +125,8 @@
 		7750E6561913D03E0007BF53 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		7750E6591913E7520007BF53 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		7750E65B1913E7650007BF53 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		77ED449F191AAAB20024DC6A /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		77ED44A1191ABAF60024DC6A /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +134,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77ED44A2191ABAF60024DC6A /* CoreImage.framework in Frameworks */,
+				77ED44A0191AAAB20024DC6A /* CoreMotion.framework in Frameworks */,
 				7750E65C1913E7650007BF53 /* QuartzCore.framework in Frameworks */,
 				7750E6361913CA130007BF53 /* CoreVideo.framework in Frameworks */,
 				7750E6381913CA1A0007BF53 /* CoreMedia.framework in Frameworks */,
@@ -204,6 +210,8 @@
 		7750E5FA1913C92F0007BF53 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				77ED44A1191ABAF60024DC6A /* CoreImage.framework */,
+				77ED449F191AAAB20024DC6A /* CoreMotion.framework */,
 				7750E65B1913E7650007BF53 /* QuartzCore.framework */,
 				7750E6591913E7520007BF53 /* AssetsLibrary.framework */,
 				7750E6561913D03E0007BF53 /* Accelerate.framework */,

@@ -33,6 +33,8 @@ public:
     void detectAndAnimateFaces(cv::Mat& frame, cv::Mat& dest, int orientation);
     int getFaceCount();
     float getAvgFaceSize();
+    float getAvgCenterness();
+    float getCenterness(cv::Rect face, float width, float height);
     void rotate(cv::Mat& src, double angle, cv::Mat& dst);
     
 private:
@@ -47,6 +49,7 @@ private:
     cv::Mat dest_gray;
     int faceCount_;
     float avgFaceSize_;
+    float avgCenterness_;
     
     void putImage(cv::Mat& frame, const cv::Mat& image, const cv::Mat& alpha,
                   cv::Rect face, float shift);

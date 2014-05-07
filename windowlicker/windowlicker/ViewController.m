@@ -7,6 +7,7 @@
 //
 #import "ViewController.h"
 #import <UIKit/UIKit.h>
+#import <CoreMotion/CoreMotion.h>
 
 
 static UIImage* MatToUIImage(const cv::Mat& image)
@@ -104,65 +105,9 @@ static void UIImageToMat(const UIImage* image, cv::Mat& m,
     return UIInterfaceOrientationMaskPortrait;
 }
 
-
-- (void)viewDidLoad
+-(void) loadAssets
 {
-    [super viewDidLoad];
-    UIDevice *device = [UIDevice currentDevice];
-    //UIInterfaceOrientation deviceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
-    UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
-
-   //[device beginGeneratingDeviceOrientationNotifications];
-
-	// Do any additional setup after loading the view, typically from a nib.
-
-    self.videoCamera = [[CvVideoCamera alloc]
-                        initWithParentView:imageView];
-    self.videoCamera.delegate = self;
-    self.videoCamera.defaultAVCaptureDevicePosition =
-    AVCaptureDevicePositionFront;
-    self.videoCamera.defaultAVCaptureSessionPreset =
-    AVCaptureSessionPreset352x288;
-    self.videoCamera.defaultAVCaptureVideoOrientation =
-    AVCaptureVideoOrientationLandscapeLeft;
-    self.videoCamera.defaultFPS = 30;
-    self.videoCamera.recordVideo = NO;
-    self.videoCamera.rotateVideo = NO;
-    
-//    //TODO: fix orientation!
-//    self.videoCamera.videoCaptureConnection.videoPreviewLayer.frame=self.view.bounds;
-//
-//    if ( deviceOrientation == UIInterfaceOrientationLandscapeLeft )
-//        [self.videoCamera.videoCaptureConnection.videoPreviewLayer.connection
-// setVideoOrientation:AVCaptureVideoOrientationLandscapeRight];
-//    
-//    else if ( deviceOrientation == UIInterfaceOrientationLandscapeRight )
-//        [self.videoCamera.videoCaptureConnection.videoPreviewLayer.connection
-// setVideoOrientation:AVCaptureVideoOrientationLandscapeLeft];
-//    
-//    else if( deviceOrientation == UIInterfaceOrientationPortrait)
-//        [self.videoCamera.videoCaptureConnection.videoPreviewLayer.connection
-// setVideoOrientation:AVCaptureVideoOrientationLandscapeLeft];
-//
-//    else if( deviceOrientation == UIInterfaceOrientationPortraitUpsideDown)
-//        [self.videoCamera.videoCaptureConnection.videoPreviewLayer.connection
-// setVideoOrientation:AVCaptureVideoOrientationPortraitUpsideDown];
-
-    isCapturing = FALSE;
-    
-    //Load images. Would be nice to have less code for this. 
-//    NSString* filePath = [[NSBundle mainBundle]
-//                          pathForResource:@"glasses" ofType:@"png"];
-//    UIImage* resImage = [UIImage imageWithContentsOfFile:filePath];
-//    UIImageToMat(resImage, parameters.glasses, true);
-//    cvtColor(parameters.glasses, parameters.glasses, CV_BGRA2RGBA);
-//    
-//    filePath = [[NSBundle mainBundle]
-//                pathForResource:@"mustache" ofType:@"png"];
-//    resImage = [UIImage imageWithContentsOfFile:filePath];
-//    UIImageToMat(resImage, parameters.mustache, true);
-//    cvtColor(parameters.mustache, parameters.mustache, CV_BGRA2RGBA);
-    
+ 
     NSString* filePath = [[NSBundle mainBundle]
                           pathForResource:@"smileyP" ofType:@"png"];
     UIImage* resImage = [UIImage imageWithContentsOfFile:filePath];
@@ -192,16 +137,113 @@ static void UIImageToMat(const UIImage* image, cv::Mat& m,
                           pathForResource:@"lbpcascade_frontalface" ofType:@"xml"];
     parameters.face_cascade.load([filename UTF8String]);
     
-//    filename = [[NSBundle mainBundle]
-//                pathForResource:@"haarcascade_mcs_eyepair_big" ofType:@"xml"];
-//    parameters.eyes_cascade.load([filename UTF8String]);
-//    
-//    filename = [[NSBundle mainBundle]
-//                pathForResource:@"haarcascade_mcs_mouth" ofType:@"xml"];
-//    parameters.mouth_cascade.load([filename UTF8String]);
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self loadAssets];
 
+    currentMaxAccelX = 0;
+    currentMaxAccelY = 0;
+    currentMaxAccelZ = 0;
+    
+    currentMaxRotX = 0;
+    currentMaxRotY = 0;
+    currentMaxRotZ = 0;
+    
+    self.motionManager = [[CMMotionManager alloc] init];
+    self.motionManager.accelerometerUpdateInterval = .2;
+    self.motionManager.gyroUpdateInterval = .2;
+    
+    [self.motionManager startAccelerometerUpdatesToQueue:[NSOperationQueue currentQueue]
+                                             withHandler:^(CMAccelerometerData  *accelerometerData, NSError *error) {
+                                                 [self outputAccelertionData:accelerometerData.acceleration];
+                                                 if(error){
+                                                     
+                                                     NSLog(@"%@", error);
+                                                 }
+                                             }];
+    
+    [self.motionManager startGyroUpdatesToQueue:[NSOperationQueue currentQueue]
+                                    withHandler:^(CMGyroData *gyroData, NSError *error) {
+                                        [self outputRotationData:gyroData.rotationRate];
+                                    }];
+    
+
+    
+    UIDevice *device = [UIDevice currentDevice];
+    UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+    [device beginGeneratingDeviceOrientationNotifications];
+
+	// Do any additional setup after loading the view, typically from a nib.
+
+    self.videoCamera = [[CvVideoCamera alloc]
+                        initWithParentView:imageView];
+    self.videoCamera.delegate = self;
+    self.videoCamera.defaultAVCaptureDevicePosition =
+    AVCaptureDevicePositionFront;
+    self.videoCamera.defaultAVCaptureSessionPreset =
+    AVCaptureSessionPreset352x288;
+    self.videoCamera.defaultAVCaptureVideoOrientation =
+    AVCaptureVideoOrientationLandscapeLeft;
+    self.videoCamera.defaultFPS = 30;
+    self.videoCamera.recordVideo = NO;
+    self.videoCamera.rotateVideo = NO;
+
+    isCapturing = FALSE;
+    
+    
+}
+
+-(void)outputAccelertionData:(CMAcceleration)acceleration
+{
+    
+    self.accX.text = [NSString stringWithFormat:@" %.2fg",acceleration.x];
+    if(fabs(acceleration.x) > fabs(currentMaxAccelX))
+    {
+        currentMaxAccelX = acceleration.x;
+    }
+    self.accY.text = [NSString stringWithFormat:@" %.2fg",acceleration.y];
+    if(fabs(acceleration.y) > fabs(currentMaxAccelY))
+    {
+        currentMaxAccelY = acceleration.y;
+    }
+    self.accZ.text = [NSString stringWithFormat:@" %.2fg",acceleration.z];
+    if(fabs(acceleration.z) > fabs(currentMaxAccelZ))
+    {
+        currentMaxAccelZ = acceleration.z;
+    }
+    
+    self.maxAccX.text = [NSString stringWithFormat:@" %.2f",currentMaxAccelX];
+    self.maxAccY.text = [NSString stringWithFormat:@" %.2f",currentMaxAccelY];
+    self.maxAccZ.text = [NSString stringWithFormat:@" %.2f",currentMaxAccelZ];
+    
+    
+}
+-(void)outputRotationData:(CMRotationRate)rotation
+{
+    
+    self.rotX.text = [NSString stringWithFormat:@" %.2fr/s",rotation.x];
+    if(fabs(rotation.x) > fabs(currentMaxRotX))
+    {
+        currentMaxRotX = rotation.x;
+    }
+    self.rotY.text = [NSString stringWithFormat:@" %.2fr/s",rotation.y];
+    if(fabs(rotation.y) > fabs(currentMaxRotY))
+    {
+        currentMaxRotY = rotation.y;
+    }
+    self.rotZ.text = [NSString stringWithFormat:@" %.2fr/s",rotation.z];
+    if(fabs(rotation.z) > fabs(currentMaxRotZ))
+    {
+        currentMaxRotZ = rotation.z;
+    }
+    
+    self.maxRotX.text = [NSString stringWithFormat:@" %.2f",currentMaxRotX];
+    self.maxRotY.text = [NSString stringWithFormat:@" %.2f",currentMaxRotY];
+    self.maxRotZ.text = [NSString stringWithFormat:@" %.2f",currentMaxRotZ];
+}
 
 -(IBAction)startCaptureButtonPressed:(id)sender
 {
@@ -241,6 +283,38 @@ static void UIImageToMat(const UIImage* image, cv::Mat& m,
 }
 
 
+-(void)generateCVEffects: (cv::Mat&)src, int deviceOrientation
+{
+    float faceCount = faceAnimator->getFaceCount();
+    float avgCenterness = faceAnimator->getAvgCenterness();
+    float avgFaceSize = faceAnimator->getAvgFaceSize();
+    //cv::Mat imageMatrix = [self cvMatFromUIImage:src];
+    cv::GaussianBlur( src, src, cv::Size(3,3), faceCount*3, 0);
+    
+}
+
+- (IBAction)resetMaxValues:(id)sender {
+    
+    currentMaxAccelX = 0;
+    currentMaxAccelY = 0;
+    currentMaxAccelZ = 0;
+    
+    currentMaxRotX = 0;
+    currentMaxRotY = 0;
+    currentMaxRotZ = 0;
+    
+}
+
+-(void)generateCoreEffects: (cv::Mat&)src, int deviceOrientation
+{
+//    float faceCount = faceAnimator->getFaceCount();
+//    float avgCenterness = faceAnimator->getAvgCenterness();
+//    float avgFaceSize = faceAnimator->getAvgFaceSize();
+//    //cv::Mat imageMatrix = [self cvMatFromUIImage:src];
+//    cv::GaussianBlur( src, src, cv::Size(3,3), faceCount*5);
+    
+}
+
 void rotate(cv::Mat& src, double angle, cv::Mat& dst)
 {
     int len = std::max(src.cols, src.rows);
@@ -257,36 +331,44 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     UIDevice *device = [UIDevice currentDevice];
     //UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
     UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+    int orientation= -1;
     
     cv::Mat dest;
-    //cv::Mat dest = cv::Mat(image.size(),image.type());
     int64 timeStart = cv::getTickCount();
     
-    if(deviceOrientation== UIDeviceOrientationPortrait)
-    {
-        rotate(image, 90, dest);
-        faceAnimator->detectAndAnimateFaces(dest, image, 0);
-    }
-    else if(deviceOrientation== UIDeviceOrientationLandscapeRight)
-    {
-        //LandscapeLeft is default but behavior is wrong
-        faceAnimator->detectAndAnimateFaces(image, image, 1);
-    }
-    else if(deviceOrientation== UIDeviceOrientationLandscapeLeft)
-    {
-        rotate(image, 180, dest);
-        faceAnimator->detectAndAnimateFaces(dest, image, 2);
-    }
-    else if(deviceOrientation== UIDeviceOrientationPortraitUpsideDown)
-    {
-        rotate(image, 270, dest);
-        faceAnimator->detectAndAnimateFaces(dest, image, 3);
-    }
+//    if(deviceOrientation== UIDeviceOrientationPortrait)
+//    {
+//        rotate(image, 90, dest);
+//        faceAnimator->detectAndAnimateFaces(dest, image, 0);
+//        orientation =0;
+//    }
+//    else if(deviceOrientation== UIDeviceOrientationLandscapeRight)
+//    {
+//        //LandscapeLeft is default but behavior is wrong
+//        faceAnimator->detectAndAnimateFaces(image, image, 1);
+//        orientation =1;
+//
+//    }
+//    else if(deviceOrientation== UIDeviceOrientationLandscapeLeft)
+//    {
+//        rotate(image, 180, dest);
+//        faceAnimator->detectAndAnimateFaces(dest, image, 2);
+//        orientation =2;
+//
+//    }
+//    else if(deviceOrientation== UIDeviceOrientationPortraitUpsideDown)
+//    {
+//        rotate(image, 270, dest);
+//        faceAnimator->detectAndAnimateFaces(dest, image, 3);
+//        orientation =3;
+//    }
+//    
+//    [self generateCVEffects:image, orientation];
     
         //faceAnimator->detectAndAnimateFaces(image, 1);
-    //    UIImage *uiImage = MatToUIImage(image);
-    //    CIImage *ciImage = [CIImage imageWithCGImage:uiImage.CGImage];
-    //    CIContext *context = [CIContext contextWithOptions:nil];
+        UIImage *uiImage = MatToUIImage(image);
+        CIImage *ciImage = [CIImage imageWithCGImage:uiImage.CGImage];
+        CIContext *context = [CIContext contextWithOptions:nil];
     //    //CIImage *inputImage = [CIImage imageWithCGImage:[[UIImage imageNamed:@"vespa"] CGImage]];
     //
     //     //hue filter
@@ -319,14 +401,13 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     
     
     //CITwirlDistortion
-    //    CIFilter *twirl = [CIFilter filterWithName:@"CITwirlDistortion"];
-    //    [twirl setValue:ciImage forKey:kCIInputImageKey];
-    //    CIVector *vVector = [CIVector vectorWithX:150 Y:150];
-    //    [twirl setValue:vVector forKey:@"inputCenter"];
-    //    [twirl setValue:[NSNumber numberWithFloat:300.0f] forKey:@"inputRadius"];
-    //    [twirl setValue:[NSNumber numberWithFloat:3.14f] forKey:@"inputAngle"];
-    //    CIImage *result = [twirl valueForKey:kCIOutputImageKey];
-    //
+        CIFilter *twirl = [CIFilter filterWithName:@"CITwirlDistortion"];
+        [twirl setValue:ciImage forKey:kCIInputImageKey];
+//        CIVector *vVector = [CIVector vectorWithX:150 Y:150];
+//        [twirl setValue:vVector forKey:@"inputCenter"];
+//        [twirl setValue:[NSNumber numberWithFloat:300.0f] forKey:@"inputRadius"];
+//        [twirl setValue:[NSNumber numberWithFloat:3.14f] forKey:@"inputAngle"];
+        CIImage *result = [twirl valueForKey:kCIOutputImageKey];
     
     
     //bump not in iOS
@@ -339,11 +420,11 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     //    CIImage *result = [kHole valueForKey:kCIOutputImageKey];
     //    CIImage *result = [kHole outputImage];
     
-    //    CGImageRef cgImage = [context createCGImage:result fromRect:[result extent]];
-    //
-    //    UIImage *imageResult = [UIImage imageWithCGImage:cgImage];
-    //    CGImageRelease(cgImage);
-    //    UIImageToMat(imageResult, image);
+        CGImageRef cgImage = [context createCGImage:result fromRect:[result extent]];
+    
+        UIImage *imageResult = [UIImage imageWithCGImage:cgImage];
+        CGImageRelease(cgImage);
+        UIImageToMat(imageResult, image);
     int64 timeEnd = cv::getTickCount();
     float durationMs =
     1000.f * float(timeEnd - timeStart) / cv::getTickFrequency();
