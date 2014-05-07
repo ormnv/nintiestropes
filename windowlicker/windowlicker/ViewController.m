@@ -335,7 +335,7 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     
     cv::Mat dest;
     int64 timeStart = cv::getTickCount();
-    
+
 //    if(deviceOrientation== UIDeviceOrientationPortrait)
 //    {
 //        rotate(image, 90, dest);
@@ -403,10 +403,10 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     //CITwirlDistortion
         CIFilter *twirl = [CIFilter filterWithName:@"CITwirlDistortion"];
         [twirl setValue:ciImage forKey:kCIInputImageKey];
-//        CIVector *vVector = [CIVector vectorWithX:150 Y:150];
-//        [twirl setValue:vVector forKey:@"inputCenter"];
-//        [twirl setValue:[NSNumber numberWithFloat:300.0f] forKey:@"inputRadius"];
-//        [twirl setValue:[NSNumber numberWithFloat:3.14f] forKey:@"inputAngle"];
+        CIVector *vVector = [CIVector vectorWithX:150 Y:150];
+        [twirl setValue:vVector forKey:@"inputCenter"];
+        [twirl setValue:[NSNumber numberWithFloat:300.0f] forKey:@"inputRadius"];
+        [twirl setValue:[NSNumber numberWithFloat:3.14f] forKey:@"inputAngle"];
         CIImage *result = [twirl valueForKey:kCIOutputImageKey];
     
     
@@ -423,8 +423,11 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
         CGImageRef cgImage = [context createCGImage:result fromRect:[result extent]];
     
         UIImage *imageResult = [UIImage imageWithCGImage:cgImage];
-        CGImageRelease(cgImage);
+        //CGImageRelease(cgImage);
         UIImageToMat(imageResult, image);
+    cvtColor(image, image, CV_BGR2RGB);
+
+   // image = dest;
     int64 timeEnd = cv::getTickCount();
     float durationMs =
     1000.f * float(timeEnd - timeStart) / cv::getTickFrequency();
