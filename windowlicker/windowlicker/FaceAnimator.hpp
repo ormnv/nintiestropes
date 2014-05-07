@@ -18,11 +18,13 @@ public:
     {
         cv::Mat glasses;
         cv::Mat mustache;
-        cv::Mat smiley1;
-        cv::Mat grinning;
+        cv::Mat smileyP;
+        cv::Mat smileyLL;
+        cv::Mat smileyLR;
+        cv::Mat smileyPU;
         cv::CascadeClassifier face_cascade;
-        cv::CascadeClassifier eyes_cascade;
-        cv::CascadeClassifier mouth_cascade;
+//        cv::CascadeClassifier eyes_cascade;
+//        cv::CascadeClassifier mouth_cascade;
     };
     
     FaceAnimator(Parameters parameters);
@@ -37,8 +39,10 @@ private:
     Parameters parameters_;
     cv::Mat mask_orig_;
     cv::Mat mask_must_;
-    cv::Mat mask_smiley1_;
-    cv::Mat mask_grinning_;
+    cv::Mat mask_smileyP_;
+    cv::Mat mask_smileyLL_;
+    cv::Mat mask_smileyLR_;
+    cv::Mat mask_smileyPU_;
     cv::Mat frame_gray;
     cv::Mat dest_gray;
     int faceCount_;

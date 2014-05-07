@@ -112,7 +112,7 @@ static void UIImageToMat(const UIImage* image, cv::Mat& m,
     //UIInterfaceOrientation deviceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
     UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
 
-   [device beginGeneratingDeviceOrientationNotifications];
+   //[device beginGeneratingDeviceOrientationNotifications];
 
 	// Do any additional setup after loading the view, typically from a nib.
 
@@ -126,7 +126,7 @@ static void UIImageToMat(const UIImage* image, cv::Mat& m,
     self.videoCamera.defaultAVCaptureVideoOrientation =
     AVCaptureVideoOrientationLandscapeLeft;
     self.videoCamera.defaultFPS = 30;
-    self.videoCamera.recordVideo = YES;
+    self.videoCamera.recordVideo = NO;
     self.videoCamera.rotateVideo = NO;
     
 //    //TODO: fix orientation!
@@ -151,41 +151,54 @@ static void UIImageToMat(const UIImage* image, cv::Mat& m,
     isCapturing = FALSE;
     
     //Load images. Would be nice to have less code for this. 
+//    NSString* filePath = [[NSBundle mainBundle]
+//                          pathForResource:@"glasses" ofType:@"png"];
+//    UIImage* resImage = [UIImage imageWithContentsOfFile:filePath];
+//    UIImageToMat(resImage, parameters.glasses, true);
+//    cvtColor(parameters.glasses, parameters.glasses, CV_BGRA2RGBA);
+//    
+//    filePath = [[NSBundle mainBundle]
+//                pathForResource:@"mustache" ofType:@"png"];
+//    resImage = [UIImage imageWithContentsOfFile:filePath];
+//    UIImageToMat(resImage, parameters.mustache, true);
+//    cvtColor(parameters.mustache, parameters.mustache, CV_BGRA2RGBA);
+    
     NSString* filePath = [[NSBundle mainBundle]
-                          pathForResource:@"glasses" ofType:@"png"];
+                          pathForResource:@"smileyP" ofType:@"png"];
     UIImage* resImage = [UIImage imageWithContentsOfFile:filePath];
-    UIImageToMat(resImage, parameters.glasses, true);
-    cvtColor(parameters.glasses, parameters.glasses, CV_BGRA2RGBA);
+    UIImageToMat(resImage, parameters.smileyP, true);
+    cvtColor(parameters.smileyP, parameters.smileyP, CV_BGRA2RGBA);
     
     filePath = [[NSBundle mainBundle]
-                pathForResource:@"mustache" ofType:@"png"];
+                pathForResource:@"smileyLL" ofType:@"png"];
     resImage = [UIImage imageWithContentsOfFile:filePath];
-    UIImageToMat(resImage, parameters.mustache, true);
-    cvtColor(parameters.mustache, parameters.mustache, CV_BGRA2RGBA);
+    UIImageToMat(resImage, parameters.smileyLL, true);
+    cvtColor(parameters.smileyLL, parameters.smileyLL, CV_BGRA2RGBA);
     
     filePath = [[NSBundle mainBundle]
-                          pathForResource:@"smiley1" ofType:@"png"];
+                pathForResource:@"smileyLR" ofType:@"png"];
     resImage = [UIImage imageWithContentsOfFile:filePath];
-    UIImageToMat(resImage, parameters.smiley1, true);
-    cvtColor(parameters.smiley1, parameters.smiley1, CV_BGRA2RGBA);
+    UIImageToMat(resImage, parameters.smileyLR, true);
+    cvtColor(parameters.smileyLR, parameters.smileyLR, CV_BGRA2RGBA);
     
     filePath = [[NSBundle mainBundle]
-                pathForResource:@"grinning" ofType:@"png"];
+                pathForResource:@"smileyPU" ofType:@"png"];
     resImage = [UIImage imageWithContentsOfFile:filePath];
-    UIImageToMat(resImage, parameters.grinning, true);
-    cvtColor(parameters.grinning, parameters.grinning, CV_BGRA2RGBA);
+    UIImageToMat(resImage, parameters.smileyPU, true);
+    cvtColor(parameters.smileyPU, parameters.smileyPU, CV_BGRA2RGBA);
+    
     //Load Cascade Classisiers
     NSString* filename = [[NSBundle mainBundle]
                           pathForResource:@"lbpcascade_frontalface" ofType:@"xml"];
     parameters.face_cascade.load([filename UTF8String]);
     
-    filename = [[NSBundle mainBundle]
-                pathForResource:@"haarcascade_mcs_eyepair_big" ofType:@"xml"];
-    parameters.eyes_cascade.load([filename UTF8String]);
-    
-    filename = [[NSBundle mainBundle]
-                pathForResource:@"haarcascade_mcs_mouth" ofType:@"xml"];
-    parameters.mouth_cascade.load([filename UTF8String]);
+//    filename = [[NSBundle mainBundle]
+//                pathForResource:@"haarcascade_mcs_eyepair_big" ofType:@"xml"];
+//    parameters.eyes_cascade.load([filename UTF8String]);
+//    
+//    filename = [[NSBundle mainBundle]
+//                pathForResource:@"haarcascade_mcs_mouth" ofType:@"xml"];
+//    parameters.mouth_cascade.load([filename UTF8String]);
 }
 
 
@@ -202,17 +215,17 @@ static void UIImageToMat(const UIImage* image, cv::Mat& m,
 {
     [videoCamera stop];
 
-    NSString* relativePath = [videoCamera.videoFileURL relativePath];
-    UISaveVideoAtPathToSavedPhotosAlbum(relativePath, self, nil, NULL);
-    
-    //Alert window
-    UIAlertView *alert = [UIAlertView alloc];
-    alert = [alert initWithTitle:@"Camera info"
-                         message:@"The video was saved to the Gallery!"
-                        delegate:self
-               cancelButtonTitle:@"Continue"
-               otherButtonTitles:nil];
-    [alert show];
+//    NSString* relativePath = [videoCamera.videoFileURL relativePath];
+//    UISaveVideoAtPathToSavedPhotosAlbum(relativePath, self, nil, NULL);
+//    
+//    //Alert window
+//    UIAlertView *alert = [UIAlertView alloc];
+//    alert = [alert initWithTitle:@"Camera info"
+//                         message:@"The video was saved to the Gallery!"
+//                        delegate:self
+//               cancelButtonTitle:@"Continue"
+//               otherButtonTitles:nil];
+//    [alert show];
     
     isCapturing = FALSE;
 }
@@ -224,7 +237,7 @@ static void UIImageToMat(const UIImage* image, cv::Mat& m,
 
 -(IBAction)savevideoButtonPressed:(id)sender
 {
-	[videoCamera saveVideo];
+	//[videoCamera saveVideo];
 }
 
 
@@ -242,23 +255,34 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
 {
 
     UIDevice *device = [UIDevice currentDevice];
-    UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+    //UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
     UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
     
     cv::Mat dest;
     //cv::Mat dest = cv::Mat(image.size(),image.type());
-    rotate(image, 90, dest);
     int64 timeStart = cv::getTickCount();
     
     if(deviceOrientation== UIDeviceOrientationPortrait)
-        //rotate(image, 90, dest);
-        //image = dest;
+    {
+        rotate(image, 90, dest);
         faceAnimator->detectAndAnimateFaces(dest, image, 0);
-    else
-        //LandscapeLeft is default
+    }
+    else if(deviceOrientation== UIDeviceOrientationLandscapeRight)
+    {
+        //LandscapeLeft is default but behavior is wrong
         faceAnimator->detectAndAnimateFaces(image, image, 1);
-
-
+    }
+    else if(deviceOrientation== UIDeviceOrientationLandscapeLeft)
+    {
+        rotate(image, 180, dest);
+        faceAnimator->detectAndAnimateFaces(dest, image, 2);
+    }
+    else if(deviceOrientation== UIDeviceOrientationPortraitUpsideDown)
+    {
+        rotate(image, 270, dest);
+        faceAnimator->detectAndAnimateFaces(dest, image, 3);
+    }
+    
         //faceAnimator->detectAndAnimateFaces(image, 1);
     //    UIImage *uiImage = MatToUIImage(image);
     //    CIImage *ciImage = [CIImage imageWithCGImage:uiImage.CGImage];
