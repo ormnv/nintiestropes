@@ -148,6 +148,10 @@ static void UIImageToMat(const UIImage* image, cv::Mat& m,
     currentMaxAccelY = 0;
     currentMaxAccelZ = 0;
     
+    currentAccelX = 0;
+    currentAccelY = 0;
+    currentAccelZ = 0;
+    
     currentMaxRotX = 0;
     currentMaxRotY = 0;
     currentMaxRotZ = 0;
@@ -219,8 +223,13 @@ static void UIImageToMat(const UIImage* image, cv::Mat& m,
     self.maxAccY.text = [NSString stringWithFormat:@" %.2f",currentMaxAccelY];
     self.maxAccZ.text = [NSString stringWithFormat:@" %.2f",currentMaxAccelZ];
     
+    currentAccelX = acceleration.x;
+    currentAccelY = acceleration.y;
+    currentAccelZ = acceleration.z;
+    
     
 }
+
 -(void)outputRotationData:(CMRotationRate)rotation
 {
     
@@ -243,6 +252,21 @@ static void UIImageToMat(const UIImage* image, cv::Mat& m,
     self.maxRotX.text = [NSString stringWithFormat:@" %.2f",currentMaxRotX];
     self.maxRotY.text = [NSString stringWithFormat:@" %.2f",currentMaxRotY];
     self.maxRotZ.text = [NSString stringWithFormat:@" %.2f",currentMaxRotZ];
+}
+
+-(float) getAccelertionDataX
+{
+    return currentAccelX;
+}
+
+-(float) getAccelertionDataY
+{
+    return currentAccelY;
+}
+
+-(float) getAccelertionDataZ
+{
+    return currentAccelZ;
 }
 
 -(IBAction)startCaptureButtonPressed:(id)sender
@@ -299,10 +323,65 @@ static void UIImageToMat(const UIImage* image, cv::Mat& m,
     currentMaxAccelY = 0;
     currentMaxAccelZ = 0;
     
+    currentAccelX = 0;
+    currentAccelY = 0;
+    currentAccelZ = 0;
+    
     currentMaxRotX = 0;
     currentMaxRotY = 0;
     currentMaxRotZ = 0;
     
+}
+
+-(UIImage*)generateColors: (UIImage*)src
+{
+    
+    //    float faceCount = faceAnimator->getFaceCount();
+    //    float avgCenterness = faceAnimator->getAvgCenterness();
+    //    float avgFaceSize = faceAnimator->getAvgFaceSize();
+    //    //cv::Mat imageMatrix = [self cvMatFromUIImage:src];
+    //    cv::GaussianBlur( src, src, cv::Size(3,3), faceCount*5);
+    float red = [self getAccelertionDataX];
+    float green = [self getAccelertionDataY];
+    float blue = [self getAccelertionDataZ];
+
+    CIImage *ciImage = [CIImage imageWithCGImage:src.CGImage];
+    CIContext *context = [CIContext contextWithOptions:nil];
+    CIFilter *colors = [CIFilter filterWithName:@"CIColorMatrix"];
+    [colors setValue:ciImage forKey:kCIInputImageKey];
+    [colors setValue:[CIVector vectorWithX:red Y:0 Z:0 W:0] forKey:@"inputRVector"];
+    [colors setValue:[CIVector vectorWithX:0 Y:green Z:0 W:0] forKey:@"inputGVector"];
+    [colors setValue:[CIVector vectorWithX:0 Y:0 Z:blue W:0] forKey:@"inputBVector"];
+    [colors setValue:[CIVector vectorWithX:0 Y:0 Z:0 W:0.75] forKey:@"inputAVector"];
+    [colors setValue:[CIVector vectorWithX:0 Y:0 Z:0 W:0.0] forKey:@"inputBiasVector"];
+    CIImage *result = [colors valueForKey:kCIOutputImageKey];
+    CGImageRef cgImage = [context createCGImage:result fromRect:[result extent]];
+    UIImage *res = [UIImage imageWithCGImage:cgImage];
+    //CGImageRelease(cgImage);
+    
+    return res;
+    
+    
+    //CITwirlDistortion
+    //        CIFilter *twirl = [CIFilter filterWithName:@"CITwirlDistortion"];
+    //        [twirl setValue:ciImage forKey:kCIInputImageKey];
+    //        CIVector *vVector = [CIVector vectorWithX:150 Y:150];
+    //        [twirl setValue:vVector forKey:@"inputCenter"];
+    //        [twirl setValue:[NSNumber numberWithFloat:150.0f] forKey:@"inputRadius"];
+    //        [twirl setValue:[NSNumber numberWithFloat:3.14f] forKey:@"inputAngle"];
+    //        CIImage *result = [twirl valueForKey:kCIOutputImageKey];
+    
+
+    
+    
+    src = [UIImage imageWithCIImage:[colors valueForKey:kCIOutputImageKey]];
+    
+//    CGImageRef cgImage = [context createCGImage:result fromRect:[result extent]];
+//    UIImage *imageResult = [UIImage imageWithCGImage:cgImage];
+//
+   // CGImageRelease(ciImage);
+   // return src;
+
 }
 
 -(void)generateCoreEffects: (cv::Mat&)src, int deviceOrientation
@@ -364,11 +443,11 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
 //    }
 //    
 //    [self generateCVEffects:image, orientation];
-    
+
         //faceAnimator->detectAndAnimateFaces(image, 1);
         UIImage *uiImage = MatToUIImage(image);
-        CIImage *ciImage = [CIImage imageWithCGImage:uiImage.CGImage];
-        CIContext *context = [CIContext contextWithOptions:nil];
+
+    
     //    //CIImage *inputImage = [CIImage imageWithCGImage:[[UIImage imageNamed:@"vespa"] CGImage]];
     //
     //     //hue filter
@@ -401,13 +480,13 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     
     
     //CITwirlDistortion
-        CIFilter *twirl = [CIFilter filterWithName:@"CITwirlDistortion"];
-        [twirl setValue:ciImage forKey:kCIInputImageKey];
-        CIVector *vVector = [CIVector vectorWithX:150 Y:150];
-        [twirl setValue:vVector forKey:@"inputCenter"];
-        [twirl setValue:[NSNumber numberWithFloat:300.0f] forKey:@"inputRadius"];
-        [twirl setValue:[NSNumber numberWithFloat:3.14f] forKey:@"inputAngle"];
-        CIImage *result = [twirl valueForKey:kCIOutputImageKey];
+//        CIFilter *twirl = [CIFilter filterWithName:@"CITwirlDistortion"];
+//        [twirl setValue:ciImage forKey:kCIInputImageKey];
+//        CIVector *vVector = [CIVector vectorWithX:150 Y:150];
+//        [twirl setValue:vVector forKey:@"inputCenter"];
+//        [twirl setValue:[NSNumber numberWithFloat:150.0f] forKey:@"inputRadius"];
+//        [twirl setValue:[NSNumber numberWithFloat:3.14f] forKey:@"inputAngle"];
+//        CIImage *result = [twirl valueForKey:kCIOutputImageKey];
     
     
     //bump not in iOS
@@ -420,12 +499,17 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     //    CIImage *result = [kHole valueForKey:kCIOutputImageKey];
     //    CIImage *result = [kHole outputImage];
     
-        CGImageRef cgImage = [context createCGImage:result fromRect:[result extent]];
+       // CGImageRef cgImage = [context createCGImage:result fromRect:[result extent]];
     
-        UIImage *imageResult = [UIImage imageWithCGImage:cgImage];
-        //CGImageRelease(cgImage);
-        UIImageToMat(imageResult, image);
-    cvtColor(image, image, CV_BGR2RGB);
+      //  UIImage *imageResult = [UIImage imageWithCGImage:cgImage];
+       // CGImageRelease(cgImage);
+    
+   UIImage *res = [self generateColors:uiImage];
+    UIImageToMat(res, image);
+
+        //UIImageToMat(imageResult, image);
+    //only with the
+    //cvtColor(image, image, CV_BGR2RGB);
 
    // image = dest;
     int64 timeEnd = cv::getTickCount();

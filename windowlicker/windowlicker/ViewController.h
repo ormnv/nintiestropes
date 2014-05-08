@@ -21,6 +21,9 @@
     double currentMaxAccelX;
     double currentMaxAccelY;
     double currentMaxAccelZ;
+    double currentAccelX;
+    double currentAccelY;
+    double currentAccelZ;
     double currentMaxRotX;
     double currentMaxRotY;
     double currentMaxRotZ;

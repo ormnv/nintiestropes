@@ -216,11 +216,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.m"
-            timestampString = "421184892.067733"
+            timestampString = "421197559.767554"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "201"
-            endingLineNumber = "201"
+            startingLineNumber = "205"
+            endingLineNumber = "205"
             landmarkName = "-outputAccelertionData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -248,11 +248,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.m"
-            timestampString = "421184892.067733"
+            timestampString = "421197559.767554"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "181"
-            endingLineNumber = "181"
+            startingLineNumber = "185"
+            endingLineNumber = "185"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -264,11 +264,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.m"
-            timestampString = "421184892.067733"
+            timestampString = "421197559.767554"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "194"
-            endingLineNumber = "194"
+            startingLineNumber = "198"
+            endingLineNumber = "198"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -280,11 +280,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.m"
-            timestampString = "421184892.067733"
+            timestampString = "421204294.805873"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "331"
-            endingLineNumber = "331"
+            startingLineNumber = "412"
+            endingLineNumber = "412"
             landmarkName = "-processImage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -296,11 +296,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.m"
-            timestampString = "421184892.067733"
+            timestampString = "421204294.805873"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "332"
-            endingLineNumber = "332"
+            startingLineNumber = "413"
+            endingLineNumber = "413"
             landmarkName = "-processImage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -312,11 +312,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.m"
-            timestampString = "421184892.067733"
+            timestampString = "421204294.805873"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "333"
-            endingLineNumber = "333"
+            startingLineNumber = "414"
+            endingLineNumber = "414"
             landmarkName = "-processImage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -328,11 +328,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.m"
-            timestampString = "421184929.892607"
+            timestampString = "421204294.805873"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "368"
-            endingLineNumber = "368"
+            startingLineNumber = "449"
+            endingLineNumber = "449"
             landmarkName = "-processImage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -408,11 +408,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.m"
-            timestampString = "421184892.067733"
+            timestampString = "421197559.767554"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
+            startingLineNumber = "180"
+            endingLineNumber = "180"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -628,11 +628,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.m"
-            timestampString = "421184892.067733"
+            timestampString = "421204294.805873"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "318"
-            endingLineNumber = "318"
+            startingLineNumber = "399"
+            endingLineNumber = "399"
             landmarkName = "@implementation ViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -644,11 +644,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.m"
-            timestampString = "421184892.067733"
+            timestampString = "421197559.767554"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "292"
-            endingLineNumber = "292"
+            startingLineNumber = "316"
+            endingLineNumber = "316"
             landmarkName = "@implementation ViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -660,11 +660,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.h"
-            timestampString = "421179504.8353"
+            timestampString = "421197559.767554"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
             landmarkName = "videoCamera"
             landmarkType = "19">
             <Locations>
@@ -706,11 +706,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.m"
-            timestampString = "421184892.067733"
+            timestampString = "421197559.767554"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -722,11 +722,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.m"
-            timestampString = "421184892.067733"
+            timestampString = "421197559.767554"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "183"
-            endingLineNumber = "183"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -754,11 +754,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.m"
-            timestampString = "421184929.892607"
+            timestampString = "421204294.805873"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "410"
-            endingLineNumber = "410"
+            startingLineNumber = "491"
+            endingLineNumber = "491"
+            landmarkName = "-processImage:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "windowlicker/ViewController.m"
+            timestampString = "421204294.805873"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "514"
+            endingLineNumber = "514"
             landmarkName = "-processImage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -770,11 +786,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.m"
-            timestampString = "421184929.892607"
+            timestampString = "421204294.805873"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "409"
-            endingLineNumber = "409"
+            startingLineNumber = "509"
+            endingLineNumber = "509"
             landmarkName = "-processImage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -786,11 +802,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.m"
-            timestampString = "421184929.892607"
+            timestampString = "421204294.805873"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "408"
-            endingLineNumber = "408"
+            startingLineNumber = "506"
+            endingLineNumber = "506"
             landmarkName = "-processImage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -802,11 +818,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.m"
-            timestampString = "421184929.892607"
+            timestampString = "421204294.805873"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "406"
-            endingLineNumber = "406"
+            startingLineNumber = "504"
+            endingLineNumber = "504"
+            landmarkName = "-processImage:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "windowlicker/ViewController.m"
+            timestampString = "421204294.805873"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "518"
+            endingLineNumber = "518"
             landmarkName = "-processImage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -818,12 +850,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.m"
-            timestampString = "421184929.892607"
+            timestampString = "421204294.805873"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "407"
-            endingLineNumber = "407"
-            landmarkName = "-processImage:"
+            startingLineNumber = "379"
+            endingLineNumber = "379"
+            landmarkName = "-generateColors:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -834,11 +866,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.m"
-            timestampString = "421184929.892607"
+            timestampString = "421204294.805873"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "405"
-            endingLineNumber = "405"
+            startingLineNumber = "512"
+            endingLineNumber = "512"
             landmarkName = "-processImage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -846,80 +878,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "windowlicker/ViewController.m"
-            timestampString = "421184929.892607"
+            timestampString = "421204294.805873"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "427"
-            endingLineNumber = "427"
-            landmarkName = "-processImage:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "windowlicker/ViewController.m"
-            timestampString = "421184929.892607"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "426"
-            endingLineNumber = "426"
-            landmarkName = "-processImage:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "windowlicker/ViewController.m"
-            timestampString = "421184929.892607"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "425"
-            endingLineNumber = "425"
-            landmarkName = "-processImage:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "windowlicker/ViewController.m"
-            timestampString = "421184929.892607"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "423"
-            endingLineNumber = "423"
-            landmarkName = "-processImage:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "windowlicker/ViewController.m"
-            timestampString = "421184929.892607"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "430"
-            endingLineNumber = "430"
-            landmarkName = "-processImage:"
+            startingLineNumber = "359"
+            endingLineNumber = "359"
+            landmarkName = "-generateColors:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
