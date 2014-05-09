@@ -33,6 +33,66 @@
     return UIInterfaceOrientationMaskPortrait;
 }
 
+cv::Mat cvMatFromUIImage(UIImage *image)
+{
+    CGColorSpaceRef colorSpace = CGImageGetColorSpace(image.CGImage);
+    CGFloat cols = image.size.width;
+    CGFloat rows = image.size.height;
+    
+    cv::Mat cvMat(rows, cols, CV_8UC4); // 8 bits per component, 4 channels (color channels + alpha)
+    
+    CGContextRef contextRef = CGBitmapContextCreate(cvMat.data,                 // Pointer to  data
+                                                    cols,                       // Width of bitmap
+                                                    rows,                       // Height of bitmap
+                                                    8,                          // Bits per component
+                                                    cvMat.step[0],              // Bytes per row
+                                                    colorSpace,                 // Colorspace
+                                                    kCGImageAlphaNoneSkipLast |
+                                                    kCGBitmapByteOrderDefault); // Bitmap info flags
+    
+    CGContextDrawImage(contextRef, CGRectMake(0, 0, cols, rows), image.CGImage);
+    CGContextRelease(contextRef);
+    
+    return cvMat;
+}
+
+UIImage * UIImageFromCVMat(cv::Mat cvMat)
+{
+    NSData *data = [NSData dataWithBytes:cvMat.data length:cvMat.elemSize()*cvMat.total()];
+    CGColorSpaceRef colorSpace;
+    
+    if (cvMat.elemSize() == 1) {
+        colorSpace = CGColorSpaceCreateDeviceGray();
+    } else {
+        colorSpace = CGColorSpaceCreateDeviceRGB();
+    }
+    
+    CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)data);
+    
+    // Creating CGImage from cv::Mat
+    CGImageRef imageRef = CGImageCreate(cvMat.cols,                                 //width
+                                        cvMat.rows,                                 //height
+                                        8,                                          //bits per component
+                                        8 * cvMat.elemSize(),                       //bits per pixel
+                                        cvMat.step[0],                            //bytesPerRow
+                                        colorSpace,                                 //colorspace
+                                        kCGImageAlphaNone|kCGBitmapByteOrderDefault,// bitmap info
+                                        provider,                                   //CGDataProviderRef
+                                        NULL,                                       //decode
+                                        false,                                      //should interpolate
+                                        kCGRenderingIntentDefault                   //intent
+                                        );
+    
+    
+    // Getting UIImage from CGImage
+    UIImage *finalImage = [UIImage imageWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+    CGDataProviderRelease(provider);
+    CGColorSpaceRelease(colorSpace);
+    
+    return finalImage;
+}
+
 
 -(void) loadAssets
 {
@@ -73,7 +133,7 @@
     [super viewDidLoad];
     [self loadAssets];
     context = [CIContext contextWithOptions:nil];
-    
+
     currentMaxAccelX = 0;
     currentMaxAccelY = 0;
     currentMaxAccelZ = 0;
@@ -327,7 +387,7 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
 - (void)faceDetect:(cv::Mat&)image
 {
     cv::Mat dest;
-    
+
     
     //    if(deviceOrientation== UIDeviceOrientationPortrait)
     //    {
@@ -362,53 +422,70 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
 - (void)processImage:(cv::Mat&)image
 {
     
-    //    UIDevice *device = [UIDevice currentDevice];
-    //    UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
-    //    int orientation= -1;
+//    UIDevice *device = [UIDevice currentDevice];
+//    UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+//    int orientation= -1;
     
-  //  cv::Mat dest;
+    cv::Mat dest;
     int64 timeStart = cv::getTickCount();
-    float b =[self getAccelertionDataX];
-    float r =[self getAccelertionDataY];
-    float g =[self getAccelertionDataZ];
-    float bx, gy, rz;
+    
     //    [self generateCVEffects:image, orientation];
     
     //faceAnimator->detectAndAnimateFaces(image, 1);
     
-    
-    //        UIImage *uiImage = MatToUIImage(image);
-    //        UIImageToMat(uiImage, image);
-    
-    //cv::
-    
-    cv::Mat new_image = cv::Mat::zeros( image.size(), image.type() );
-    float alpha = 1.5;
-    float beta = 50;
-    
-    for( int y = 0; y < image.rows; y++ )
-    {
-        for( int x = 0; x < image.cols; x++ )
-        {
-            for( int c = 0; c < 3; c++ )
-            {
-                
-                bx = image.at<cv::Vec3b>(y,x)[0]*b;
-                gy = image.at<cv::Vec3b>(y,x)[1]*r;
-                rz = image.at<cv::Vec3b>(y,x)[2]*g;
-            
-                new_image.at<cv::Vec3b>(y,x)[0] = bx;
-                new_image.at<cv::Vec3b>(y,x)[1] = gy;
-                new_image.at<cv::Vec3b>(y,x)[2] = rz;
+    //fixes memory leak in mat to ui method which is given by opencv as an example
+  //  @autoreleasepool {
 
-            }
-        }
-    }
+        UIImage *uiImage = UIImageFromCVMat(image);
     
-    image=new_image;
+        CIImage *ciImage = [CIImage imageWithCGImage: [uiImage CGImage]];
+////
+        //CIContext *context = [CIContext contextWithOptions:nil];
+//
+//        
+//       // CIImage *ciImage = [CIImage imageWithCGImage:[[UIImage imageNamed:@"confused"] CGImage]];
+//        
+//        //hue filter
+        CIFilter *hueFilter = [CIFilter filterWithName:@"CIHueAdjust"];
+        [hueFilter setValue:ciImage forKey:kCIInputImageKey];
+        [hueFilter setValue:[NSNumber numberWithDouble:-2*M_PI/4] forKey:@"inputAngle"];
+        CIImage *result = [hueFilter valueForKey:kCIOutputImageKey];
+        //UIImage *outputImage = [UIImage imageWithCIImage:hueFilter.outputImage];
+        
+        //CITwirlDistortion
+        //        CIImage *ciImage = [CIImage imageWithCGImage:uiImage.CGImage];
+        //        CIContext *context = [CIContext contextWithOptions:nil];
+        //        CIFilter *twirl = [CIFilter filterWithName:@"CITwirlDistortion"];
+        //        [twirl setValue:ciImage forKey:kCIInputImageKey];
+        //        CIVector *vVector = [CIVector vectorWithX:150 Y:150];
+        //        [twirl setValue:vVector forKey:@"inputCenter"];
+        //        [twirl setValue:[NSNumber numberWithFloat:150.0f] forKey:@"inputRadius"];
+        //        [twirl setValue:[NSNumber numberWithFloat:3.14f] forKey:@"inputAngle"];
+        //        CIImage *result = [twirl valueForKey:kCIOutputImageKey];
+        //        CGImageRef cgImage = [context createCGImage:result fromRect:[result extent]];
+        //        UIImage *res = [UIImage imageWithCGImage:cgImage];
+        
+        // UIImage *res = [self generateColors:uiImage];
+        
+//        
+       CGImageRef cgImage = [[CIContext contextWithOptions:nil] createCGImage:result fromRect:[result extent]];
+        UIImage *imageResult = [UIImage imageWithCGImage:cgImage];
+        CGImageRelease(cgImage);
+        //CGImageRelease(ciImage);
+
+        image=cvMatFromUIImage(imageResult);
+      //  CGImageRelease(cgImage);
+
+//
+//        uiImage = nil;
+//        context=nil;
+//        ciImage=nil;
+//        imageResult=nil;
+//        cgImage = nil;
+
+  //  }
     
-    new_image.release();
-    //cvtColor(image, image, CV_BGR2RGB);
+    cvtColor(image, image, CV_BGR2RGB);
     
     int64 timeEnd = cv::getTickCount();
     float durationMs =
