@@ -27,7 +27,8 @@
     double currentMaxRotX;
     double currentMaxRotY;
     double currentMaxRotZ;
-    CIFilter *hueFilter;
+    CIContext *context;
+
 }
 
 

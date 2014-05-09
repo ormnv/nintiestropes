@@ -72,6 +72,7 @@
 {
     [super viewDidLoad];
     [self loadAssets];
+    context = [CIContext contextWithOptions:nil];
     
     currentMaxAccelX = 0;
     currentMaxAccelY = 0;
@@ -326,7 +327,7 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
 - (void)faceDetect:(cv::Mat&)image
 {
     cv::Mat dest;
-
+    
     
     //    if(deviceOrientation== UIDeviceOrientationPortrait)
     //    {
@@ -361,65 +362,52 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
 - (void)processImage:(cv::Mat&)image
 {
     
-//    UIDevice *device = [UIDevice currentDevice];
-//    UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
-//    int orientation= -1;
+    //    UIDevice *device = [UIDevice currentDevice];
+    //    UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+    //    int orientation= -1;
     
-    cv::Mat dest;
+  //  cv::Mat dest;
     int64 timeStart = cv::getTickCount();
-    
+    float b =[self getAccelertionDataX];
+    float r =[self getAccelertionDataY];
+    float g =[self getAccelertionDataZ];
+    float bx, gy, rz;
     //    [self generateCVEffects:image, orientation];
     
     //faceAnimator->detectAndAnimateFaces(image, 1);
     
-    //fixes memory leak in mat to ui method which is given by opencv as an example
-    @autoreleasepool {
     
-        UIImage *uiImage = MatToUIImage(image);
+    //        UIImage *uiImage = MatToUIImage(image);
+    //        UIImageToMat(uiImage, image);
     
-        CIImage *ciImage = [CIImage imageWithCGImage:uiImage.CGImage];
-        
-        CIContext *context = [CIContext contextWithOptions:nil];
-        
-        
-       // CIImage *ciImage = [CIImage imageWithCGImage:[[UIImage imageNamed:@"confused"] CGImage]];
-        
-        //hue filter
-        CIFilter *hueFilter = [CIFilter filterWithName:@"CIHueAdjust"];
-        [hueFilter setValue:ciImage forKey:kCIInputImageKey];
-        [hueFilter setValue:[NSNumber numberWithDouble:-2*M_PI/4] forKey:@"inputAngle"];
-        CIImage *result = [hueFilter outputImage];
-        
-        
-        //CITwirlDistortion
-        //        CIImage *ciImage = [CIImage imageWithCGImage:uiImage.CGImage];
-        //        CIContext *context = [CIContext contextWithOptions:nil];
-        //        CIFilter *twirl = [CIFilter filterWithName:@"CITwirlDistortion"];
-        //        [twirl setValue:ciImage forKey:kCIInputImageKey];
-        //        CIVector *vVector = [CIVector vectorWithX:150 Y:150];
-        //        [twirl setValue:vVector forKey:@"inputCenter"];
-        //        [twirl setValue:[NSNumber numberWithFloat:150.0f] forKey:@"inputRadius"];
-        //        [twirl setValue:[NSNumber numberWithFloat:3.14f] forKey:@"inputAngle"];
-        //        CIImage *result = [twirl valueForKey:kCIOutputImageKey];
-        //        CGImageRef cgImage = [context createCGImage:result fromRect:[result extent]];
-        //        UIImage *res = [UIImage imageWithCGImage:cgImage];
-        
-        // UIImage *res = [self generateColors:uiImage];
-        
-        
-        CGImageRef cgImage = [context createCGImage:result fromRect:[result extent]];
-        UIImage *imageResult = [UIImage imageWithCGImage:cgImage];
-        //CGImageRelease(cgImage);
-        UIImageToMat(imageResult, image);
+    //cv::
     
-        uiImage = nil;
-        context=nil;
-        ciImage=nil;
-        imageResult=nil;
-        cgImage = nil;
+    cv::Mat new_image = cv::Mat::zeros( image.size(), image.type() );
+    float alpha = 1.5;
+    float beta = 50;
+    
+    for( int y = 0; y < image.rows; y++ )
+    {
+        for( int x = 0; x < image.cols; x++ )
+        {
+            for( int c = 0; c < 3; c++ )
+            {
+                
+                bx = image.at<cv::Vec3b>(y,x)[0]*b;
+                gy = image.at<cv::Vec3b>(y,x)[1]*r;
+                rz = image.at<cv::Vec3b>(y,x)[2]*g;
+            
+                new_image.at<cv::Vec3b>(y,x)[0] = bx;
+                new_image.at<cv::Vec3b>(y,x)[1] = gy;
+                new_image.at<cv::Vec3b>(y,x)[2] = rz;
 
+            }
+        }
     }
     
+    image=new_image;
+    
+    new_image.release();
     //cvtColor(image, image, CV_BGR2RGB);
     
     int64 timeEnd = cv::getTickCount();
