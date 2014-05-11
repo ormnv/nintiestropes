@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <opencv2/highgui/cap_ios.h>
 #import "FaceAnimator.hpp"
+#import "OpticalFlow.hpp"
 #import <CoreMotion/CoreMotion.h>
 
 
@@ -18,6 +19,7 @@
     bool isCapturing;
     FaceAnimator::Parameters parameters;
     cv::Ptr<FaceAnimator> faceAnimator;
+    cv::Ptr<OpticalFlow> opticalFlow;
     double currentMaxAccelX;
     double currentMaxAccelY;
     double currentMaxAccelZ;
@@ -27,6 +29,9 @@
     double currentMaxRotX;
     double currentMaxRotY;
     double currentMaxRotZ;
+    double currentRotX;
+    double currentRotY;
+    double currentRotZ;
     CIContext *context;
 
 }

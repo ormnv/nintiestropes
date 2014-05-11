@@ -55,6 +55,7 @@
 		7750E6581913E0910007BF53 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7750E6331913C9DD0007BF53 /* opencv2.framework */; };
 		7750E65A1913E7520007BF53 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7750E6591913E7520007BF53 /* AssetsLibrary.framework */; };
 		7750E65C1913E7650007BF53 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7750E65B1913E7650007BF53 /* QuartzCore.framework */; };
+		77B221E2191DB469002C043C /* OpticalFlow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77B221E1191DB469002C043C /* OpticalFlow.cpp */; };
 		77ED44A0191AAAB20024DC6A /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77ED449F191AAAB20024DC6A /* CoreMotion.framework */; };
 		77ED44A2191ABAF60024DC6A /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77ED44A1191ABAF60024DC6A /* CoreImage.framework */; };
 /* End PBXBuildFile section */
@@ -125,6 +126,8 @@
 		7750E6561913D03E0007BF53 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		7750E6591913E7520007BF53 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		7750E65B1913E7650007BF53 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		77B221E0191DB469002C043C /* OpticalFlow.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpticalFlow.hpp; sourceTree = "<group>"; };
+		77B221E1191DB469002C043C /* OpticalFlow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpticalFlow.cpp; sourceTree = "<group>"; };
 		77ED449F191AAAB20024DC6A /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		77ED44A1191ABAF60024DC6A /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -231,6 +234,8 @@
 		7750E6011913C92F0007BF53 /* windowlicker */ = {
 			isa = PBXGroup;
 			children = (
+				77B221E0191DB469002C043C /* OpticalFlow.hpp */,
+				77B221E1191DB469002C043C /* OpticalFlow.cpp */,
 				7750E6481913CB4D0007BF53 /* FaceAnimator.cpp */,
 				7750E6491913CB4D0007BF53 /* FaceAnimator.hpp */,
 				7750E64F1913CEFD0007BF53 /* Processing_Accelerate.cpp */,
@@ -405,6 +410,7 @@
 				7750E6151913C92F0007BF53 /* ViewController.m in Sources */,
 				7750E60C1913C92F0007BF53 /* AppDelegate.m in Sources */,
 				7750E6081913C92F0007BF53 /* main.m in Sources */,
+				77B221E2191DB469002C043C /* OpticalFlow.cpp in Sources */,
 				7750E6551913CEFD0007BF53 /* Processing.cpp in Sources */,
 				7750E6541913CEFD0007BF53 /* Processing_NEON.cpp in Sources */,
 				7750E64A1913CB4D0007BF53 /* FaceAnimator.cpp in Sources */,

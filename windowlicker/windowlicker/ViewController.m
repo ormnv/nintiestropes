@@ -33,6 +33,7 @@
     return UIInterfaceOrientationMaskPortrait;
 }
 
+//important! Use this method over MatToUIImage and UIImageToMat in ios.h. The other methods cause color space issues or memory leaks.
 cv::Mat cvMatFromUIImage(UIImage *image)
 {
     CGColorSpaceRef colorSpace = CGImageGetColorSpace(image.CGImage);
@@ -93,7 +94,7 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     return finalImage;
 }
 
-
+//load all images that will be used
 -(void) loadAssets
 {
     
@@ -132,8 +133,8 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
 {
     [super viewDidLoad];
     [self loadAssets];
-    context = [CIContext contextWithOptions:nil];
-    
+
+    //rotation and acceleration
     currentMaxAccelX = 0;
     currentMaxAccelY = 0;
     currentMaxAccelZ = 0;
@@ -146,13 +147,17 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     currentMaxRotY = 0;
     currentMaxRotZ = 0;
     
+    currentRotX = 0;
+    currentRotY = 0;
+    currentRotZ = 0;
+    
     self.motionManager = [[CMMotionManager alloc] init];
     self.motionManager.accelerometerUpdateInterval = .2;
     self.motionManager.gyroUpdateInterval = .2;
     
     [self.motionManager startAccelerometerUpdatesToQueue:[NSOperationQueue currentQueue]
                                              withHandler:^(CMAccelerometerData  *accelerometerData, NSError *error) {
-                                                 [self outputAccelertionData:accelerometerData.acceleration];
+                                                 [self setAccelertionData:accelerometerData.acceleration];
                                                  if(error){
                                                      
                                                      NSLog(@"%@", error);
@@ -161,17 +166,15 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     
     [self.motionManager startGyroUpdatesToQueue:[NSOperationQueue currentQueue]
                                     withHandler:^(CMGyroData *gyroData, NSError *error) {
-                                        [self outputRotationData:gyroData.rotationRate];
+                                        [self setRotationData:gyroData.rotationRate];
                                     }];
-    
     
     
     UIDevice *device = [UIDevice currentDevice];
     UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
     [device beginGeneratingDeviceOrientationNotifications];
     
-	// Do any additional setup after loading the view, typically from a nib.
-    
+    //cvvideocamera
     self.videoCamera = [[CvVideoCamera alloc]
                         initWithParentView:imageView];
     self.videoCamera.delegate = self;
@@ -189,9 +192,8 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     
 }
 
--(void)outputAccelertionData:(CMAcceleration)acceleration
+-(void)setAccelertionData:(CMAcceleration)acceleration
 {
-    
     self.accX.text = [NSString stringWithFormat:@" %.2fg",acceleration.x];
     if(fabs(acceleration.x) > fabs(currentMaxAccelX))
     {
@@ -208,18 +210,13 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
         currentMaxAccelZ = acceleration.z;
     }
     
-    self.maxAccX.text = [NSString stringWithFormat:@" %.2f",currentMaxAccelX];
-    self.maxAccY.text = [NSString stringWithFormat:@" %.2f",currentMaxAccelY];
-    self.maxAccZ.text = [NSString stringWithFormat:@" %.2f",currentMaxAccelZ];
-    
     currentAccelX = acceleration.x;
     currentAccelY = acceleration.y;
     currentAccelZ = acceleration.z;
     
-    
 }
 
--(void)outputRotationData:(CMRotationRate)rotation
+-(void)setRotationData:(CMRotationRate)rotation
 {
     
     self.rotX.text = [NSString stringWithFormat:@" %.2fr/s",rotation.x];
@@ -264,6 +261,8 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     isCapturing = TRUE;
     
     faceAnimator = new FaceAnimator(parameters);
+    opticalFlow = new OpticalFlow();
+
 }
 
 -(IBAction)stopCaptureButtonPressed:(id)sender
@@ -290,11 +289,6 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
 	[videoCamera switchCameras];
 }
 
--(IBAction)savevideoButtonPressed:(id)sender
-{
-	//[videoCamera saveVideo];
-}
-
 
 -(void)generateCVEffects: (cv::Mat&)src, int deviceOrientation
 {
@@ -319,15 +313,19 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     currentMaxRotY = 0;
     currentMaxRotZ = 0;
     
+    currentRotX = 0;
+    currentRotY = 0;
+    currentRotZ = 0;
+    
 }
 
--(UIImage*)generateColors: (UIImage*)src
+-(UIImage*)generateColors: (UIImage*)uiImage
 {
     float red = [self getAccelertionDataX];
     float green = [self getAccelertionDataY];
     float blue = [self getAccelertionDataZ];
     
-    CIImage *ciImage = [CIImage imageWithCGImage:src.CGImage];
+    CIImage *ciImage = [CIImage imageWithCGImage:uiImage.CGImage];
     CIFilter *colors = [CIFilter filterWithName:@"CIColorMatrix"];
     [colors setValue:ciImage forKey:kCIInputImageKey];
     [colors setValue:[CIVector vectorWithX:red Y:0 Z:0 W:0] forKey:@"inputRVector"];
@@ -342,11 +340,10 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     return res;
 }
 
--(void)generateTwirl: (UIImage*)uiImage
+-(UIImage*)generateTwirl: (UIImage*)uiImage
 {
     //all twirl code here
     CIImage *ciImage = [CIImage imageWithCGImage:uiImage.CGImage];
-    CIContext *context = [CIContext contextWithOptions:nil];
     CIFilter *twirl = [CIFilter filterWithName:@"CITwirlDistortion"];
     [twirl setValue:ciImage forKey:kCIInputImageKey];
     CIVector *vVector = [CIVector vectorWithX:150 Y:150];
@@ -354,8 +351,8 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     [twirl setValue:[NSNumber numberWithFloat:150.0f] forKey:@"inputRadius"];
     [twirl setValue:[NSNumber numberWithFloat:3.14f] forKey:@"inputAngle"];
     CIImage *result = [twirl valueForKey:kCIOutputImageKey];
-    CGImageRef cgImage = [context createCGImage:result fromRect:[result extent]];
-    UIImage *imageResult = [UIImage imageWithCGImage:cgImage];
+    CGImageRef cgImage = [[CIContext contextWithOptions:nil] createCGImage:result fromRect:[result extent]];
+    UIImage *res = [UIImage imageWithCGImage:cgImage];
     
     //out of the method just here for reference
     //UIImageToMat(imageResult, image);
@@ -363,6 +360,8 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     
     //crashes the app with causes memory leak without
     CGImageRelease(cgImage);
+    return res;
+
 }
 
 
@@ -432,27 +431,23 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     
     //faceAnimator->detectAndAnimateFaces(image, 1);
     
-    UIImage *uiImage = UIImageFromCVMat(image);
     
+    opticalFlow->trackFlow(image, dest);
     
+   // image=dest;
+    
+   // cvtColor(image, image, CV_BGR2RGB);
+    
+    UIImage *uiImage = UIImageFromCVMat(dest);
     
     
     UIImage* imageResult = [self generateColors: uiImage];
     
     
-    
-    
-    
-    
-    
-    
-    
-    
     image=cvMatFromUIImage(imageResult);
     
-    
-    
     cvtColor(image, image, CV_BGR2RGB);
+
     
     int64 timeEnd = cv::getTickCount();
     float durationMs =
