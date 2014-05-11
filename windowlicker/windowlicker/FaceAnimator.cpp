@@ -21,6 +21,7 @@ FaceAnimator::FaceAnimator(Parameters parameters)
     faceCount_=0;
     avgFaceSize_=0;
     avgCenterness_=0;
+    std::vector<cv::Rect> faces;
     ExtractAlpha(parameters_.smileyP, mask_smileyP_);
     ExtractAlpha(parameters_.smileyLL, mask_smileyLL_);
     ExtractAlpha(parameters_.smileyLR, mask_smileyLR_);
@@ -100,6 +101,11 @@ float FaceAnimator::getCenterness(cv::Rect face, float width, float height){
     return centerness;
 }
 
+std::vector<cv::Rect> FaceAnimator::getFaceRects()
+{
+    return faces;
+    
+}
 
 void FaceAnimator::rotate(cv::Mat& src, double angle, cv::Mat& dst)
 {
@@ -110,7 +116,7 @@ void FaceAnimator::rotate(cv::Mat& src, double angle, cv::Mat& dst)
     warpAffine(src, dst, r, cv::Size(src.cols, src.rows));
 }
 
-void FaceAnimator::detectAndAnimateFaces(cv::Mat& frame, cv::Mat& dest, int orientation)
+void FaceAnimator::detectAndAnimateFaces(cv::Mat& frame, int orientation)
 {
     Mat emoji;
     Mat mask;
@@ -122,7 +128,7 @@ void FaceAnimator::detectAndAnimateFaces(cv::Mat& frame, cv::Mat& dest, int orie
     
     // Detect faces
     TS(DetectFaces);
-    std::vector<cv::Rect> faces;
+    //std::vector<cv::Rect> faces;
     parameters_.face_cascade.detectMultiScale(frame_gray, faces, 1.1, 2, 0, cv::Size(100, 100));
     cout << "Found faces: " << faces.size() << endl;
     TE(DetectFaces);
@@ -152,12 +158,12 @@ void FaceAnimator::detectAndAnimateFaces(cv::Mat& frame, cv::Mat& dest, int orie
                 int height = frame.size().height;
                 cv::Rect newFace = cv::Rect(height-currentFace.y-currentFace.height, currentFace.x, currentFace.height, currentFace.width);
 
-                putImage(dest, parameters_.smileyP, mask_smileyP_, newFace, 0.3f);
+                //putImage(dest, parameters_.smileyP, mask_smileyP_, newFace, 0.3f);
                 break;
             }
             case 1: //LandscapeRight/ default
             {
-                putImage(dest, parameters_.smileyLR, mask_smileyLR_, currentFace, 0.3f);
+              //  putImage(dest, parameters_.smileyLR, mask_smileyLR_, currentFace, 0.3f);
                 break;
             }
             case 2: //LandscapeLeft
@@ -176,7 +182,7 @@ void FaceAnimator::detectAndAnimateFaces(cv::Mat& frame, cv::Mat& dest, int orie
                 //TODO: fix this. For some reason, the facial detection works better in Landscape left and detects faces that do not creat acceptable rois for putting the smileys onto.
                 if(currentFace.y>height*.2)
                 {
-                   putImage(dest, parameters_.smileyLL, mask_smileyLL_, newFace, 0.3f);
+               //    putImage(dest, parameters_.smileyLL, mask_smileyLL_, newFace, 0.3f);
                 }
                 break;
             }
@@ -184,7 +190,7 @@ void FaceAnimator::detectAndAnimateFaces(cv::Mat& frame, cv::Mat& dest, int orie
             {
                 cv::Rect newFace = cv::Rect(currentFace.y, width-currentFace.x-currentFace.width, currentFace.height, currentFace.width);
                 
-                putImage(dest, parameters_.smileyPU, mask_smileyPU_, newFace, 0.3f);
+//                putImage(dest, parameters_.smileyPU, mask_smileyPU_, newFace, 0.3f);
                 break;
             }
             default:

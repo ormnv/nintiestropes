@@ -30,10 +30,11 @@ public:
     FaceAnimator(Parameters parameters);
     virtual ~FaceAnimator() {};
     
-    void detectAndAnimateFaces(cv::Mat& frame, cv::Mat& dest, int orientation);
+    void detectAndAnimateFaces(cv::Mat& frame, int orientation);
     int getFaceCount();
     float getAvgFaceSize();
     float getAvgCenterness();
+    std::vector<cv::Rect> getFaceRects();
     float getCenterness(cv::Rect face, float width, float height);
     void rotate(cv::Mat& src, double angle, cv::Mat& dst);
     
@@ -50,6 +51,7 @@ private:
     int faceCount_;
     float avgFaceSize_;
     float avgCenterness_;
+    std::vector<cv::Rect> faces;
     
     void putImage(cv::Mat& frame, const cv::Mat& image, const cv::Mat& alpha,
                   cv::Rect face, float shift);

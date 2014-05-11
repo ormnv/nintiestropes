@@ -21,8 +21,7 @@ public:
     
 //    OpticalFlow(Parameters parameters);
     OpticalFlow();
-
-   // virtual ~OpticalFlow() {};
+//    virtual ~OpticalFlow() {};
     
 //    int getNumPoints();
 //    void setNumPoints(int points);
@@ -36,10 +35,14 @@ public:
     bool trackObject;
     
     //! Processes a frame and returns output image
-    bool getFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame);
+//    bool getFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame);
     
     // set maxcorners
     void setMaxCorners(int maxCorners);
+    float getAvgMagnitude();
+
+    float getAvgSlope();
+
     
     bool trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame);
 
@@ -48,27 +51,6 @@ public:
     void init(cv::Mat& image, // output image
               cv::Mat& image1, // source image
               std::vector<cv::Point2f>& points1); // points array
-    
-    // track optical flow
-    void trackObj(cv::Mat& image, // output image
-               cv::Mat& image1, // input image 1
-               cv::Mat& image2, // input image 2
-               std::vector<cv::Point2f>& points1, // points array 1
-               std::vector<cv::Point2f>& points2, // points array 2
-               cv::vector<uchar>& status, // status array
-               cv::vector<float>& err); // error array
-
-    //! Returns true if this sample requires setting a reference image for latter use
-    virtual bool isReferenceFrameRequired() const;
-    
-    //! Sets the reference frame for latter processing
-    virtual void setReferenceFrame(const cv::Mat& reference);
-    
-    // clears reference frame parameters
-    virtual void resetReferenceFrame();
-    
-    //! Processes a frame and returns output image
-    virtual bool processFrame(const cv::Mat& inputFrame, cv::Mat& outputFrame);
 
     
 private:
@@ -89,6 +71,8 @@ private:
     float avgSpeed;
     float avgVelocity;
     int pointNum;
+    float avgMagnitude;
+    float avgSlope;
     
     //from sample
     

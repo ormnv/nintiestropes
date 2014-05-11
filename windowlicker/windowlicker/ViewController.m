@@ -429,12 +429,12 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     int64 timeStart = cv::getTickCount();
     
     
-    //faceAnimator->detectAndAnimateFaces(image, 1);
+    faceAnimator->detectAndAnimateFaces(image, 1);
     
     
     opticalFlow->trackFlow(image, dest);
     
-   // image=dest;
+    image=dest;
     
    // cvtColor(image, image, CV_BGR2RGB);
     
