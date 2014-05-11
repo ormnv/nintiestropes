@@ -26,21 +26,6 @@ OpticalFlow::OpticalFlow()
     avgVelocity=0;
     pointNum=50;
     avgMagnitude=0;
-    //    maxCorners=200;
-    //    qualityLevel=0.01;
-    //    minDistance=10;
-    //    blockSize=3;
-    //    useHarrisDetector=false;
-    //    cv::Size subPixWinSize(10,10);
-    //    cv::Size winSize(31,31);
-    //    cv::TermCriteria termcrit(CV_TERMCRIT_ITER|CV_TERMCRIT_EPS,20,0.03);
-    //    maxLevel=3;
-    //    flags=0;
-    //    minEigThreshold=0.001;
-    //    computeObject = false;
-    //    detectObject = false;
-    //    trackObject = false;
-    
     //from tracking
     m_detector = cv::FeatureDetector::create("GridFAST");
     
@@ -89,7 +74,7 @@ void OpticalFlow::init(cv::Mat& image, // output image
 }
 
 //! Processes a frame and returns output image
-bool OpticalFlow::trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame)
+bool OpticalFlow::trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame, std::vector<cv::Rect> faces)
 {
     inputFrame.copyTo(outputFrame);
     
@@ -120,14 +105,43 @@ bool OpticalFlow::trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame)
     float slope;
     
     
+
+    
     for (size_t i=0; i<m_status.size(); i++)
     {
         if (m_status[i])
         {
-            trackedPts.push_back(m_nextPts[i]);
+            //don't draw points on faces!
+            if(faces.size()>0)
+            {
+                trackedPts.push_back(m_nextPts[i]);
+//
+                for ( size_t j = 0; j < faces.size(); j++ )
+                {
+                    if (!faces[j].contains(m_nextPts[i]) && !faces[j].contains(m_prevPts[i]) ) {
+                        
+                        cv::circle (m_mask, m_prevPts[i], 15, cv::Scalar(0), CV_FILLED);
+                        cv::line (outputFrame, m_prevPts[i], m_nextPts[i], CV_RGB(255,255,204),3);
+                        cv::circle (outputFrame, m_nextPts[i], 3, CV_RGB(255,255,204), CV_FILLED);
+                       
+                        //            //get line length
+                        float diffX = m_nextPts[i].x-m_prevPts[i].x;
+                        float diffY = m_nextPts[i].y-m_prevPts[i].y;
+                        float diff2 = diffX*diffX+diffY*diffY;
+                        total+=sqrt(diff2);
+                        slope += diffY/diffX;
+                        
+                    }
+                    
+                }
+                
+            }
+            else{
             
+                trackedPts.push_back(m_nextPts[i]);
+
             cv::circle (m_mask, m_prevPts[i], 15, cv::Scalar(0), CV_FILLED);
-            cv::line (outputFrame, m_prevPts[i], m_nextPts[i], CV_RGB(0,250,0));
+            cv::line (outputFrame, m_prevPts[i], m_nextPts[i], CV_RGB(255,255,204),3);
             cv::circle (outputFrame, m_nextPts[i], 3, CV_RGB(255,255,204), CV_FILLED);
             
             //get line length
@@ -136,7 +150,8 @@ bool OpticalFlow::trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame)
             float diff2 = diffX*diffX+diffY*diffY;
             total+=sqrt(diff2);
             slope += diffY/diffX;
-            
+            }
+    
         }
     }
     

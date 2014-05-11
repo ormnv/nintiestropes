@@ -427,26 +427,122 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     
     cv::Mat dest;
     int64 timeStart = cv::getTickCount();
+    int val=5;
+    float magnitude=0;
+    float slope=0;
+    int faceCount=0;
+    float centerness=0;
+    std::vector<cv::Rect> faces;
     
     
-    faceAnimator->detectAndAnimateFaces(image, 1);
+    switch (val) {
+        case 0:
+        {
+            opticalFlow->trackFlow(image, dest, faces);
+            image=dest;
+            cvtColor(image, image, CV_BGR2RGB);
+            magnitude = opticalFlow->getAvgMagnitude();
+            slope=opticalFlow->getAvgSlope();
+
+            break;
+        }
+        case 1:
+        {
+            faceAnimator->detectAndAnimateFaces(image, dest, 1);
+            faceCount=faceAnimator->getFaceCount();
+            centerness=faceAnimator->getAvgCenterness();
+            
+            //image=dest;
+            //cvtColor(image, image, CV_BGR2RGB);
+
+            break;
+        }
+        case 2:
+        {
+            UIImage *uiImage = UIImageFromCVMat(image);
+            
+            
+            UIImage* imageResult = [self generateColors: uiImage];
+            
+            
+            image=cvMatFromUIImage(imageResult);
+            
+            cvtColor(image, image, CV_BGR2RGB);
+
+            break;
+        }
+        case 3:
+        {
+            opticalFlow->trackFlow(image, dest, faces);
+            image=dest;
+            magnitude = opticalFlow->getAvgMagnitude();
+            slope=opticalFlow->getAvgSlope();
+            
+            UIImage *uiImage = UIImageFromCVMat(image);
+            
+            
+            UIImage* imageResult = [self generateColors: uiImage];
+            
+            
+            image=cvMatFromUIImage(imageResult);
+            
+            cvtColor(image, image, CV_BGR2RGB);
+            break;
+        }
+        case 4:
+        {
+            faceAnimator->detectAndAnimateFaces(image, dest, 1);
+            faceCount=faceAnimator->getFaceCount();
+            centerness=faceAnimator->getAvgCenterness();
+            
+            UIImage *uiImage = UIImageFromCVMat(image);
+            
+            UIImage* imageResult = [self generateColors: uiImage];
+            
+            
+            image=cvMatFromUIImage(imageResult);
+            
+            cvtColor(image, image, CV_BGR2RGB);
+
+            break;
+        }
+        case 5:
+        {
+            faceAnimator->detectAndAnimateFaces(image, dest, 1);
+            faceCount=faceAnimator->getFaceCount();
+            centerness=faceAnimator->getAvgCenterness();
+            faces=faceAnimator->getFaceRects();
+            
+            opticalFlow->trackFlow(image, dest, faces);
+            image=dest;
+            magnitude = opticalFlow->getAvgMagnitude();
+            slope=opticalFlow->getAvgSlope();
+            cvtColor(image, image, CV_BGR2RGB);
+
+            break;
+        }
+        default:
+            break;
+    }
+    
+   // faceAnimator->detectAndAnimateFaces(image, 1);
     
     
-    opticalFlow->trackFlow(image, dest);
-    
-    image=dest;
-    
-   // cvtColor(image, image, CV_BGR2RGB);
-    
-    UIImage *uiImage = UIImageFromCVMat(dest);
-    
-    
-    UIImage* imageResult = [self generateColors: uiImage];
-    
-    
-    image=cvMatFromUIImage(imageResult);
-    
-    cvtColor(image, image, CV_BGR2RGB);
+//    opticalFlow->trackFlow(image, dest);
+//    
+//    image=dest;
+//    
+//   // cvtColor(image, image, CV_BGR2RGB);
+//    
+//    UIImage *uiImage = UIImageFromCVMat(dest);
+//    
+//    
+//    UIImage* imageResult = [self generateColors: uiImage];
+//    
+//    
+//    image=cvMatFromUIImage(imageResult);
+//    
+//    cvtColor(image, image, CV_BGR2RGB);
 
     
     int64 timeEnd = cv::getTickCount();

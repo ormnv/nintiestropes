@@ -44,7 +44,7 @@ public:
     float getAvgSlope();
 
     
-    bool trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame);
+    bool trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame, std::vector<cv::Rect> faces);
 
     
     // initialise tracker
