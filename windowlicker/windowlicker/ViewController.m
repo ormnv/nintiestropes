@@ -197,6 +197,7 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     self.videoCamera.recordVideo = NO;
     self.videoCamera.rotateVideo = NO;
     
+    
     isCapturing = FALSE;
     
 }
@@ -330,18 +331,27 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
 
 -(UIImage*)generateColors: (UIImage*)uiImage
 {
-    float red = [self getAccelertionDataX];
-    float green = [self getAccelertionDataY];
+    float green = [self getAccelertionDataX];
+    float red = [self getAccelertionDataY];
     float blue = [self getAccelertionDataZ];
+    float offset=1;
+    float newG=offset+offset*green;
+    float newR=offset+offset*red;
+    float newB=offset+offset*blue;
+    NSLog(@"red X - %f",newR);
+    NSLog(@"green Y - %f",newG);
+    NSLog(@"blue Z - %f",newB);
+    float alpha =1;
+
     
     CIImage *ciImage = [CIImage imageWithCGImage:uiImage.CGImage];
     CIFilter *colors = [CIFilter filterWithName:@"CIColorMatrix"];
     [colors setValue:ciImage forKey:kCIInputImageKey];
-    [colors setValue:[CIVector vectorWithX:red Y:0 Z:0 W:0] forKey:@"inputRVector"];
-    [colors setValue:[CIVector vectorWithX:0 Y:green Z:0 W:0] forKey:@"inputGVector"];
-    [colors setValue:[CIVector vectorWithX:0 Y:0 Z:blue W:0] forKey:@"inputBVector"];
-    [colors setValue:[CIVector vectorWithX:0 Y:0 Z:0 W:0.75] forKey:@"inputAVector"];
-    [colors setValue:[CIVector vectorWithX:0 Y:0 Z:0 W:0.0] forKey:@"inputBiasVector"];
+    [colors setValue:[CIVector vectorWithX:newR Y:0 Z:0 W:0] forKey:@"inputRVector"];
+    [colors setValue:[CIVector vectorWithX:0 Y:newG Z:0 W:0] forKey:@"inputGVector"];
+    [colors setValue:[CIVector vectorWithX:0 Y:0 Z:newB W:0] forKey:@"inputBVector"];
+    [colors setValue:[CIVector vectorWithX:0 Y:0 Z:0 W:alpha] forKey:@"inputAVector"];
+    [colors setValue:[CIVector vectorWithX:1 Y:0 Z:0 W:0.0] forKey:@"inputBiasVector"];
     CIImage *result = [colors valueForKey:kCIOutputImageKey];
     CGImageRef cgImage = [[CIContext contextWithOptions:nil] createCGImage:result fromRect:[result extent]];
     UIImage *res = [UIImage imageWithCGImage:cgImage];
@@ -380,6 +390,36 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
 
 }
 
+
+-(UIImage*)generateHole: (UIImage*)uiImage
+{
+    float centerX=150;
+    float centerY=150;
+    if (tappedX!=0 && tappedY!=0) {
+        centerX=tappedX;
+        centerY=tappedY;
+    }
+    
+    //all twirl code here
+    CIImage *ciImage = [CIImage imageWithCGImage:uiImage.CGImage];
+    CIFilter *hole = [CIFilter filterWithName:@"CIHoleDistortion"];
+    [hole setValue:ciImage forKey:kCIInputImageKey];
+    CIVector *vVector = [CIVector vectorWithX:centerX Y:centerY];
+    [hole setValue:vVector forKey:@"inputCenter"];
+    [hole setValue:[NSNumber numberWithFloat:150.0f] forKey:@"inputRadius"];
+    CIImage *result = [hole valueForKey:kCIOutputImageKey];
+    CGImageRef cgImage = [[CIContext contextWithOptions:nil] createCGImage:result fromRect:[result extent]];
+    UIImage *res = [UIImage imageWithCGImage:cgImage];
+    
+    //out of the method just here for reference
+    //UIImageToMat(imageResult, image);
+    //cvtColor(image, image, CV_BGR2RGB);
+    
+    //crashes the app with causes memory leak without
+    CGImageRelease(cgImage);
+    return res;
+    
+}
 
 -(void)generateCoreEffects: (cv::Mat&)src, int deviceOrientation
 {
@@ -436,14 +476,16 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     
 }
 
+
+
 - (void)processImage:(cv::Mat&)image
 {
     
 
     
     cv::Mat dest;
-    int64 timeStart = cv::getTickCount();
-    int val=6;
+    //int64 timeStart = cv::getTickCount();
+    int val=0;
     float magnitude=0;
     float slope=0;
     int faceCount=0;
@@ -454,7 +496,7 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     switch (val) {
         case 0:
         {
-            opticalFlow->trackFlow(image, dest, faces);
+            opticalFlow->trackFlow(image, dest, faces, currentAccelX, currentAccelY, currentAccelZ, tappedX, tappedY);
             image=dest;
             cvtColor(image, image, CV_BGR2RGB);
             magnitude = opticalFlow->getAvgMagnitude();
@@ -490,7 +532,7 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
         }
         case 3:
         {
-            opticalFlow->trackFlow(image, dest, faces);
+            opticalFlow->trackFlow(image, dest, faces, currentAccelX, currentAccelY, currentAccelZ, tappedX, tappedY);
             image=dest;
             magnitude = opticalFlow->getAvgMagnitude();
             slope=opticalFlow->getAvgSlope();
@@ -532,7 +574,7 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
             centerness=faceAnimator->getAvgCenterness();
             faces=faceAnimator->getFaceRects();
             
-            opticalFlow->trackFlow(image, dest, faces);
+            opticalFlow->trackFlow(image, dest, faces, currentAccelX, currentAccelY, currentAccelZ, tappedX, tappedY);
             image=dest;
             magnitude = opticalFlow->getAvgMagnitude();
             slope=opticalFlow->getAvgSlope();
@@ -546,6 +588,19 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
             
             
             UIImage* imageResult = [self generateTwirl: uiImage];
+            
+            
+            image=cvMatFromUIImage(imageResult);
+            
+            cvtColor(image, image, CV_BGR2RGB);
+            break;
+        }
+        case 7:
+        {
+            UIImage *uiImage = UIImageFromCVMat(image);
+            
+            
+            UIImage* imageResult = [self generateHole: uiImage];
             
             
             image=cvMatFromUIImage(imageResult);
@@ -577,10 +632,12 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
 //    cvtColor(image, image, CV_BGR2RGB);
 
     faceAnimator->clearFaceRects();
-    int64 timeEnd = cv::getTickCount();
-    float durationMs =
-    1000.f * float(timeEnd - timeStart) / cv::getTickFrequency();
-    NSLog(@"Processing time = %.3fms", durationMs);
+    tappedX=0;
+    tappedY=0;
+    ///int64 timeEnd = cv::getTickCount();
+    //float durationMs =
+   // 1000.f * float(timeEnd - timeStart) / cv::getTickFrequency();
+    //NSLog(@"Processing time = %.3fms", durationMs);
 }
 
 - (void)didReceiveMemoryWarning
@@ -645,11 +702,17 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     // Get the location of the gesture
     CGPoint location = [recognizer locationInView:self.view];
     
-    NSLog(@"Tapped X - %f",location.x);
-    NSLog(@"Tapped Y - %f",location.y);
+
+
+    //for iphone. Fix this hardcoding.
+    //w=288, h=352. UImage size is w=320 and h=427.
+    float actualH=427;
+    tappedX=location.x*.9;
+    tappedY=(actualH-location.y)*.82;
     
-    tappedX=location.x;
-    tappedY=location.y;
+    NSLog(@"Tapped X - %f",tappedX);
+    NSLog(@"Tapped Y - %f",tappedY);
+
     
     // Display an image view at that location
     [self drawImageForGestureRecognizer:recognizer atPoint:location];

@@ -69,12 +69,12 @@ void OpticalFlow::init(cv::Mat& image, // output image
     for( i = 0; i < points1.size(); i++ )
     {
         // draw points
-        cv::circle( image, points1[i], 3, cv::Scalar(0,255,0), -1, 8);
+       // cv::circle( image, points1[i], 3, cv::Scalar(0,255,0), -1, 8);
     }
 }
 
 //! Processes a frame and returns output image
-bool OpticalFlow::trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame, std::vector<cv::Rect> faces)
+bool OpticalFlow::trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame, std::vector<cv::Rect> faces, double accelX, double accelY, double accelZ, float tapX, float tapY)
 {
     inputFrame.copyTo(outputFrame);
     
@@ -103,9 +103,17 @@ bool OpticalFlow::trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame, std
     float total;
     float num =trackedPts.size();
     float slope;
+    double offset=127.5;
+    double newR=offset+offset*accelX;
+    double newG=offset+offset*accelY;
+    double newB=offset+offset*accelZ;
     
-    
-
+//    if(tapX!=0){
+//    cv::Point2f newPt( tapY, tapX);
+//    //trackedPts.pop_back();
+//   // trackedPts.push_back(newPt);
+//    cv::circle(outputFrame, newPt, 20, cv::Scalar(255,255,255), -1);
+//    }
     
     for (size_t i=0; i<m_status.size(); i++)
     {
@@ -122,8 +130,8 @@ bool OpticalFlow::trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame, std
                     if (!faces[j].contains(m_nextPts[i]) && !faces[j].contains(m_prevPts[i]) ) {
 
                         cv::circle (m_mask, m_prevPts[i], 15, cv::Scalar(0), CV_FILLED);
-                        cv::line (outputFrame, m_prevPts[i], m_nextPts[i], CV_RGB(255,50,204),3);
-                        cv::circle (outputFrame, m_nextPts[i], 3, CV_RGB(255,50,204), CV_FILLED);
+                        cv::line (outputFrame, m_prevPts[i], m_nextPts[i], CV_RGB(newR,newG,newB),3);
+                        cv::circle (outputFrame, m_nextPts[i], 3, CV_RGB(newR,newG,newB), CV_FILLED);
                        
                         //get line length
                         float diffX = m_nextPts[i].x-m_prevPts[i].x;
@@ -140,11 +148,11 @@ bool OpticalFlow::trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame, std
             }
             else{
             
-                trackedPts.push_back(m_nextPts[i]);
+            trackedPts.push_back(m_nextPts[i]);
 
             cv::circle (m_mask, m_prevPts[i], 15, cv::Scalar(0), CV_FILLED);
-            cv::line (outputFrame, m_prevPts[i], m_nextPts[i], CV_RGB(255,255,204),3);
-            cv::circle (outputFrame, m_nextPts[i], 3, CV_RGB(255,255,204), CV_FILLED);
+            cv::line (outputFrame, m_prevPts[i], m_nextPts[i], CV_RGB(newG,newB,newR),3);
+            cv::circle (outputFrame, m_nextPts[i], 3, CV_RGB(newG,newB,newR), CV_FILLED);
             
             //get line length
             float diffX = m_nextPts[i].x-m_prevPts[i].x;
@@ -153,8 +161,20 @@ bool OpticalFlow::trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame, std
             total+=sqrt(diff2);
             slope += diffY/diffX;
             }
-    
+            
         }
+    }
+    
+    //add custom point
+    if(tapX!=0 && tapY!=0)
+    {
+        cv::Point2f newPt(tapY,tapX);
+        trackedPts.pop_back();
+        trackedPts.push_back(newPt);
+        m_nextPts.push_back(newPt);
+        
+        //                m_nextKeypoints.push_back(cv::KeyPoint(tapX,tapY,4,-1,0,0,-1));
+        cv::circle(outputFrame, newPt, 5, cv::Scalar(255,255,255), CV_FILLED);
     }
     
     avgMagnitude = total/num;
@@ -163,8 +183,10 @@ bool OpticalFlow::trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame, std
     bool needDetectAdditionalPoints = trackedPts.size() < m_maxNumberOfPoints;
     if (needDetectAdditionalPoints)
     {
+        int pointsToDetect = m_maxNumberOfPoints - trackedPts.size();
         m_detector->detect(m_nextImg, m_nextKeypoints, m_mask);
-        int pointsToDetect = m_maxNumberOfPoints -  trackedPts.size();
+        
+        m_detector->detect(m_nextImg, m_nextKeypoints, m_mask);
         
         if (m_nextKeypoints.size() > pointsToDetect)
         {
