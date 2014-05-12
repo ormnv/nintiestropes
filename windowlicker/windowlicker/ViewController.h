@@ -13,7 +13,7 @@
 #import <CoreMotion/CoreMotion.h>
 
 
-@interface ViewController : UIViewController<CvVideoCameraDelegate>
+@interface ViewController : UIViewController<CvVideoCameraDelegate, UIGestureRecognizerDelegate>
 {
     CvVideoCamera* videoCamera;
     bool isCapturing;
@@ -32,7 +32,8 @@
     double currentRotX;
     double currentRotY;
     double currentRotZ;
-    CIContext *context;
+    float tappedX;
+    float tappedY;
 
 }
 
@@ -70,5 +71,14 @@
 -(IBAction)savevideoButtonPressed:(id)sender;
 -(IBAction)recordSwitchFlipped:(id)sender;
 
+@property (nonatomic, strong) IBOutlet UITapGestureRecognizer *tapRecognizer;
+
+
+- (IBAction)handleTap:(UITapGestureRecognizer *)recognizer;
 
 @end
+
+
+
+
+

@@ -170,6 +170,15 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
                                     }];
     
     
+    UITapGestureRecognizer * recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    //recognizer.delegate = self.view;
+    [self.imageView addGestureRecognizer:recognizer];
+    self.imageView.userInteractionEnabled = YES;
+    //self.toolbar.userInteractionEnabled = NO;
+
+    tappedX=0;
+    tappedY=0;
+    
     UIDevice *device = [UIDevice currentDevice];
     UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
     [device beginGeneratingDeviceOrientationNotifications];
@@ -342,11 +351,18 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
 
 -(UIImage*)generateTwirl: (UIImage*)uiImage
 {
+    float centerX=150;
+    float centerY=150;
+    if (tappedX!=0 && tappedY!=0) {
+        centerX=tappedX;
+        centerY=tappedY;
+    }
+    
     //all twirl code here
     CIImage *ciImage = [CIImage imageWithCGImage:uiImage.CGImage];
     CIFilter *twirl = [CIFilter filterWithName:@"CITwirlDistortion"];
     [twirl setValue:ciImage forKey:kCIInputImageKey];
-    CIVector *vVector = [CIVector vectorWithX:150 Y:150];
+    CIVector *vVector = [CIVector vectorWithX:centerX Y:centerY];
     [twirl setValue:vVector forKey:@"inputCenter"];
     [twirl setValue:[NSNumber numberWithFloat:150.0f] forKey:@"inputRadius"];
     [twirl setValue:[NSNumber numberWithFloat:3.14f] forKey:@"inputAngle"];
@@ -383,51 +399,51 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     cv::warpAffine(src, dst, r, cv::Size(src.rows, src.cols));
 }
 
-- (void)faceDetect:(cv::Mat&)image
+-(void)faceDetect:(cv::Mat&) image
 {
-    cv::Mat dest;
+        cv::Mat dest;
+        UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+        int orientation= -1;
     
+        if(deviceOrientation== UIDeviceOrientationPortrait)
+        {
+            rotate(image, 90, dest);
+            orientation =0;
+            faceAnimator->detectAndAnimateFaces(dest, image, orientation);
+            //image=dest;
+        }
+        else if(deviceOrientation== UIDeviceOrientationLandscapeRight)
+        {
+            //LandscapeLeft is default but behavior is wrong
+            orientation =1;
+            faceAnimator->detectAndAnimateFaces(image, image, orientation);
     
-    //    if(deviceOrientation== UIDeviceOrientationPortrait)
-    //    {
-    //        rotate(image, 90, dest);
-    //        faceAnimator->detectAndAnimateFaces(dest, image, 0);
-    //        orientation =0;
-    //    }
-    //    else if(deviceOrientation== UIDeviceOrientationLandscapeRight)
-    //    {
-    //        //LandscapeLeft is default but behavior is wrong
-    //        faceAnimator->detectAndAnimateFaces(image, image, 1);
-    //        orientation =1;
-    //
-    //    }
-    //    else if(deviceOrientation== UIDeviceOrientationLandscapeLeft)
-    //    {
-    //        rotate(image, 180, dest);
-    //        faceAnimator->detectAndAnimateFaces(dest, image, 2);
-    //        orientation =2;
-    //
-    //    }
-    //    else if(deviceOrientation== UIDeviceOrientationPortraitUpsideDown)
-    //    {
-    //        rotate(image, 270, dest);
-    //        faceAnimator->detectAndAnimateFaces(dest, image, 3);
-    //        orientation =3;
-    //    }
-    //
+        }
+        else if(deviceOrientation== UIDeviceOrientationLandscapeLeft)
+        {
+            rotate(image, 180, dest);
+            orientation =2;
+            faceAnimator->detectAndAnimateFaces(dest, image, orientation);
+    
+        }
+        else if(deviceOrientation== UIDeviceOrientationPortraitUpsideDown)
+        {
+            rotate(image, 270, dest);
+            orientation =3;
+            faceAnimator->detectAndAnimateFaces(dest, image, orientation);
+            
+        }
     
 }
 
 - (void)processImage:(cv::Mat&)image
 {
     
-    //    UIDevice *device = [UIDevice currentDevice];
-    //    UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
-    //    int orientation= -1;
+
     
     cv::Mat dest;
     int64 timeStart = cv::getTickCount();
-    int val=5;
+    int val=6;
     float magnitude=0;
     float slope=0;
     int faceCount=0;
@@ -448,7 +464,8 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
         }
         case 1:
         {
-            faceAnimator->detectAndAnimateFaces(image, dest, 1);
+            //faceAnimator->detectAndAnimateFaces(image, dest, 1);
+            [self faceDetect:image];
             faceCount=faceAnimator->getFaceCount();
             centerness=faceAnimator->getAvgCenterness();
             
@@ -491,7 +508,8 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
         }
         case 4:
         {
-            faceAnimator->detectAndAnimateFaces(image, dest, 1);
+            //faceAnimator->detectAndAnimateFaces(image, dest, 1);
+            [self faceDetect:image];
             faceCount=faceAnimator->getFaceCount();
             centerness=faceAnimator->getAvgCenterness();
             
@@ -508,7 +526,8 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
         }
         case 5:
         {
-            faceAnimator->detectAndAnimateFaces(image, dest, 1);
+            //faceAnimator->detectAndAnimateFaces(image, dest, 1);
+            [self faceDetect:image];
             faceCount=faceAnimator->getFaceCount();
             centerness=faceAnimator->getAvgCenterness();
             faces=faceAnimator->getFaceRects();
@@ -518,7 +537,20 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
             magnitude = opticalFlow->getAvgMagnitude();
             slope=opticalFlow->getAvgSlope();
             cvtColor(image, image, CV_BGR2RGB);
-
+            faces.clear();
+            break;
+        }
+        case 6:
+        {
+            UIImage *uiImage = UIImageFromCVMat(image);
+            
+            
+            UIImage* imageResult = [self generateTwirl: uiImage];
+            
+            
+            image=cvMatFromUIImage(imageResult);
+            
+            cvtColor(image, image, CV_BGR2RGB);
             break;
         }
         default:
@@ -544,7 +576,7 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
 //    
 //    cvtColor(image, image, CV_BGR2RGB);
 
-    
+    faceAnimator->clearFaceRects();
     int64 timeEnd = cv::getTickCount();
     float durationMs =
     1000.f * float(timeEnd - timeStart) / cv::getTickFrequency();
@@ -564,4 +596,72 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     }
 }
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    
+    if (touch.view  == self.toolbar) {
+        return NO;
+    }
+    return YES;
+}
+
+- (IBAction)showGestureForSwipeRecognizer:(UISwipeGestureRecognizer *)recognizer {
+    
+    CGPoint location = [recognizer locationInView:self.view];
+    [self drawImageForGestureRecognizer:recognizer atPoint:location];
+    
+//    if (recognizer.direction == UISwipeGestureRecognizerDirectionLeft) {
+//        location.x -= 220.0;
+//    }
+//    else {
+//        location.x += 220.0;
+//    }
+    
+//    [UIView animateWithDuration:0.5 animations:^{
+//        self.imageView.alpha = 0.0;
+//        self.imageView.center = location;
+//    }];
+}
+
+- (void)drawImageForGestureRecognizer:(UIGestureRecognizer *)recognizer atPoint:(CGPoint)centerPoint {
+        
+        NSString *imageName;
+        
+        if ([recognizer isMemberOfClass:[UITapGestureRecognizer class]]) {
+            imageName = @"tap.png";
+        }
+//        else if ([recognizer isMemberOfClass:[UIRotationGestureRecognizer class]]) {
+//            imageName = @"rotation.png";
+//        }
+//        else if ([recognizer isMemberOfClass:[UISwipeGestureRecognizer class]]) {
+//            imageName = @"swipe.png";
+//        }
+    NSLog(@"tapped");
+//        self.imageView.image = [UIImage imageNamed:imageName];
+//        self.imageView.center = centerPoint;
+//        self.imageView.alpha = 1.0; 
+}
+
+- (IBAction)handleTap:(UITapGestureRecognizer *)recognizer {
+    // Get the location of the gesture
+    CGPoint location = [recognizer locationInView:self.view];
+    
+    NSLog(@"Tapped X - %f",location.x);
+    NSLog(@"Tapped Y - %f",location.y);
+    
+    tappedX=location.x;
+    tappedY=location.y;
+    
+    // Display an image view at that location
+    [self drawImageForGestureRecognizer:recognizer atPoint:location];
+    
+//    // Animate the image view so that it fades out
+//    [UIView animateWithDuration:0.5 animations:^{
+//        self.imageView.alpha = 0.0;
+//    }];
+
+}
+
+
 @end
+
+

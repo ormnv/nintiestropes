@@ -107,6 +107,12 @@ std::vector<cv::Rect> FaceAnimator::getFaceRects()
     
 }
 
+void FaceAnimator::clearFaceRects()
+{
+    newFaces.clear();
+    
+}
+
 void FaceAnimator::rotate(cv::Mat& src, double angle, cv::Mat& dst)
 {
     int len = std::max(src.cols, src.rows);
@@ -165,15 +171,16 @@ void FaceAnimator::detectAndAnimateFaces(cv::Mat& frame, cv::Mat& dest, int orie
             case 1: //LandscapeRight/ default
             {
               //  putImage(dest, parameters_.smileyLR, mask_smileyLR_, currentFace, 0.3f);
+                cv::rectangle(frame, cv::Point (currentFace.x, currentFace.y), cv::Point (currentFace.x+currentFace.width,currentFace.y+currentFace.height), cv::Scalar(0,225,255), 4, 8, 0);
                 newFaces.push_back(faces[i]);
                 break;
             }
             case 2: //LandscapeLeft
             {
 
-//                cv::Point upLeftPoint1(width-currentFace.x*.5, height-currentFace.y);
-//                cv::Point bottomRightPoint00 = upLeftPoint1 + cv::Point(-currentFace.width, -currentFace.height);
-//                cv::rectangle (dest, upLeftPoint1, bottomRightPoint00, cv::Scalar(0,225,255), 4, 8, 0);
+                cv::Point upLeftPoint1(width-currentFace.x*.5, height-currentFace.y);
+                cv::Point bottomRightPoint00 = upLeftPoint1 + cv::Point(-currentFace.width, -currentFace.height);
+                cv::rectangle (dest, upLeftPoint1, bottomRightPoint00, cv::Scalar(0,225,255), 4, 8, 0);
 //
 //                cv::Point upLeftPoint1_(currentFace.x, currentFace.y);
 //                cv::Point bottomRightPoint00_ = upLeftPoint1 + cv::Point(currentFace.width, currentFace.height);
@@ -205,8 +212,8 @@ void FaceAnimator::detectAndAnimateFaces(cv::Mat& frame, cv::Mat& dest, int orie
 
     }
     
-    faces.clear();
     avgFaceSize_ = avgSize/faces.size();
     avgCenterness_ = avgCenterness/faces.size();
+    faces.clear();
 
 }

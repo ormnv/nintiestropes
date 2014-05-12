@@ -18,10 +18,14 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gjU-6U-uHz">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="427"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="427" id="yRo-ud-GrO"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="320" id="yn7-e9-tBS"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="afn-kk-XEa" appends="YES" id="ich-RK-KXG"/>
+                                </connections>
                             </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fFI-hA-UHL">
                                 <rect key="frame" x="0.0" y="427" width="320" height="141"/>
@@ -87,11 +91,17 @@
                         <outlet property="imageView" destination="gjU-6U-uHz" id="nst-cF-pIB"/>
                         <outlet property="startCaptureButton" destination="4U3-8j-grf" id="rTX-DY-NHt"/>
                         <outlet property="stopCaptureButton" destination="9Mu-Tc-Pcc" id="X6i-hK-4oL"/>
+                        <outlet property="tapRecognizer" destination="afn-kk-XEa" id="chK-CX-atg"/>
                         <outlet property="toggleCameraButton" destination="tON-AV-CNf" id="bQL-31-21M"/>
                         <outlet property="toolbar" destination="fFI-hA-UHL" id="GRr-BB-nBX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="afn-kk-XEa">
+                    <connections>
+                        <action selector="handleTap:" destination="2" id="SMR-bO-sOP"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
         </scene>
     </scenes>

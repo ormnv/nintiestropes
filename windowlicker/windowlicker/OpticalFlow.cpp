@@ -112,19 +112,20 @@ bool OpticalFlow::trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame, std
         if (m_status[i])
         {
             //don't draw points on faces!
-            if(faces.size()>0)
+            if(faces.size()!=0)
             {
                 trackedPts.push_back(m_nextPts[i]);
-//
-                for ( size_t j = 0; j < faces.size(); j++ )
+
+                for ( int j = 0; j < faces.size(); j++ )
                 {
+                    //not perfect, but generally keeps dots off of faces
                     if (!faces[j].contains(m_nextPts[i]) && !faces[j].contains(m_prevPts[i]) ) {
-                        
+
                         cv::circle (m_mask, m_prevPts[i], 15, cv::Scalar(0), CV_FILLED);
-                        cv::line (outputFrame, m_prevPts[i], m_nextPts[i], CV_RGB(255,255,204),3);
-                        cv::circle (outputFrame, m_nextPts[i], 3, CV_RGB(255,255,204), CV_FILLED);
+                        cv::line (outputFrame, m_prevPts[i], m_nextPts[i], CV_RGB(255,50,204),3);
+                        cv::circle (outputFrame, m_nextPts[i], 3, CV_RGB(255,50,204), CV_FILLED);
                        
-                        //            //get line length
+                        //get line length
                         float diffX = m_nextPts[i].x-m_prevPts[i].x;
                         float diffY = m_nextPts[i].y-m_prevPts[i].y;
                         float diff2 = diffX*diffX+diffY*diffY;
@@ -132,6 +133,7 @@ bool OpticalFlow::trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame, std
                         slope += diffY/diffX;
                         
                     }
+                    
                     
                 }
                 

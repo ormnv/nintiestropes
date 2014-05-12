@@ -35,6 +35,7 @@ public:
     float getAvgFaceSize();
     float getAvgCenterness();
     std::vector<cv::Rect> getFaceRects();
+    void clearFaceRects();
     float getCenterness(cv::Rect face, float width, float height);
     void rotate(cv::Mat& src, double angle, cv::Mat& dst);
     
