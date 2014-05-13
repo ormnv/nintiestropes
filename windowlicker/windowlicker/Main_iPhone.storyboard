@@ -89,7 +89,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
                                     <barButtonItem title="Item" style="plain" id="gA1-Sy-7pE">
-                                        <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="TUX-oZ-kRL">
+                                        <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" id="TUX-oZ-kRL">
                                             <rect key="frame" x="14" y="7" width="79" height="31"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </slider>
@@ -153,14 +153,19 @@
                     </view>
                     <toolbarItems/>
                     <connections>
-                        <outlet property="ColorEffectsButton" destination="dsv-Qn-7HC" id="0IQ-GL-WBS"/>
-                        <outlet property="FaceButton" destination="dsv-Qn-7HC" id="iIY-6f-VTz"/>
-                        <outlet property="OpticalFlowButton" destination="dsv-Qn-7HC" id="KAp-Z4-6NB"/>
+                        <outlet property="BiasYSlider" destination="U77-gG-0J0" id="onv-FX-xmt"/>
+                        <outlet property="BiasZSlider" destination="mPE-cn-6MH" id="KCD-Y4-RHf"/>
+                        <outlet property="ColorEffectsButton" destination="ijP-in-RHg" id="F1W-ug-D30"/>
+                        <outlet property="FaceButton" destination="14q-9j-8Dj" id="gZN-Pa-YQB"/>
+                        <outlet property="OpticalFlowButton" destination="dYO-zG-g8a" id="NbR-VE-0i0"/>
+                        <outlet property="alphaXSlider" destination="TUX-oZ-kRL" id="9UB-2V-Hx9"/>
+                        <outlet property="alphaYSlider" destination="DNS-lT-naW" id="wFG-Rk-Hds"/>
+                        <outlet property="alphaZSlider" destination="YHN-9b-uW2" id="HbX-Ll-4Bt"/>
+                        <outlet property="biasXSlider" destination="hUT-QJ-T1z" id="2HS-zv-yc6"/>
                         <outlet property="imageView" destination="gjU-6U-uHz" id="nst-cF-pIB"/>
                         <outlet property="stopCaptureButton" destination="9Mu-Tc-Pcc" id="X6i-hK-4oL"/>
                         <outlet property="tapRecognizer" destination="afn-kk-XEa" id="chK-CX-atg"/>
                         <outlet property="toggleCameraButton" destination="tON-AV-CNf" id="bQL-31-21M"/>
-                        <outlet property="toolbar" destination="fFI-hA-UHL" id="GRr-BB-nBX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>

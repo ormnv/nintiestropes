@@ -37,6 +37,12 @@
     bool faceOn;
     bool flowOn;
     bool colorsOn;
+    float alphaX;
+    float alphaY;
+    float alphaZ;
+    float biasX;
+    float biasY;
+    float biasZ;
 
 }
 
@@ -78,18 +84,19 @@
 
 - (IBAction)handleTap:(UITapGestureRecognizer *)recognizer;
 
-//@property (weak, nonatomic) IBOutlet UISegmentedControl *buttons;
-//- (IBAction)ButtonsPressed:(id)sender;
-//- (IBAction)FirstPressed:(id)sender;
-//- (IBAction)SecondPressed:(id)sender;
-//- (IBAction)ThirdPressed:(id)sender;
-//- (IBAction)FourthPressed:(id)sender;
-@property (weak, nonatomic) IBOutlet UIToolbar *ColorEffectsButton;
-@property (weak, nonatomic) IBOutlet UIToolbar *OpticalFlowButton;
-@property (weak, nonatomic) IBOutlet UIToolbar *FaceButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *ColorEffectsButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *OpticalFlowButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *FaceButton;
 - (IBAction)FacePressed:(id)sender;
 - (IBAction)OpticalFlowPressed:(id)sender;
 - (IBAction)ColorEffectsPressed:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UISlider *alphaXSlider;
+@property (weak, nonatomic) IBOutlet UISlider *alphaYSlider;
+@property (weak, nonatomic) IBOutlet UISlider *alphaZSlider;
+@property (weak, nonatomic) IBOutlet UISlider *biasXSlider;
+@property (weak, nonatomic) IBOutlet UISlider *BiasYSlider;
+@property (weak, nonatomic) IBOutlet UISlider *BiasZSlider;
 
 @end
 

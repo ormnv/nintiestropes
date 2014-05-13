@@ -28,8 +28,12 @@
 @synthesize ColorEffectsButton;
 @synthesize OpticalFlowButton;
 @synthesize FaceButton;
-
-
+@synthesize alphaXSlider;
+@synthesize alphaYSlider;
+@synthesize alphaZSlider;
+@synthesize biasXSlider;
+@synthesize BiasYSlider;
+@synthesize BiasZSlider;
 
 - (NSInteger)supportedInterfaceOrientations
 {
@@ -282,37 +286,6 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
 {
     return currentAccelZ;
 }
-//
-//-(IBAction)FirstPressed:(id)sender{
-//    UISegmentedControl *buttons = sender;
-//    NSInteger index = [buttons selectedSegmentIndex];
-//    NSLog(@"first");
-//
-////    [videoCamera start];
-////    isCapturing = TRUE;
-////    
-////    faceAnimator = new FaceAnimator(parameters);
-////    opticalFlow = new OpticalFlow();
-//
-//}
-
-//
-//-(IBAction)ButtonsPressed:(id)sender
-//{
-//    //UISegmentedControl *buttons = sender;
-//    NSInteger index = [buttons selectedSegmentIndex];
-//    NSLog(@"buttons");
-//    
-//    //    [videoCamera start];
-//    //    isCapturing = TRUE;
-//    //
-//    //    faceAnimator = new FaceAnimator(parameters);
-//    //    opticalFlow = new OpticalFlow();
-//    NSString* label= [buttons titleForSegmentAtIndex: [buttons selectedSegmentIndex]];
-//    NSLog(label);
-//    
-//    
-//}
 
 -(IBAction)startCaptureButtonPressed:(id)sender
 {
@@ -391,6 +364,13 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     NSLog(@"green Y - %f",newG);
     NSLog(@"blue Z - %f",newB);
     float alpha =1;
+    
+    float aX=alphaXSlider.value;
+    float aY=alphaYSlider.value;
+    float aZ=alphaZSlider.value;
+    float bX=biasXSlider.value;
+    float bY=BiasYSlider.value;
+    float bZ=BiasZSlider.value;
 
     
     CIImage *ciImage = [CIImage imageWithCGImage:uiImage.CGImage];
@@ -400,7 +380,7 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     [colors setValue:[CIVector vectorWithX:0 Y:newG Z:0 W:0] forKey:@"inputGVector"];
     [colors setValue:[CIVector vectorWithX:0 Y:0 Z:newB W:0] forKey:@"inputBVector"];
     [colors setValue:[CIVector vectorWithX:0 Y:0 Z:0 W:alpha] forKey:@"inputAVector"];
-    [colors setValue:[CIVector vectorWithX:1 Y:0 Z:0 W:0.0] forKey:@"inputBiasVector"];
+    [colors setValue:[CIVector vectorWithX:0 Y:0 Z:0 W:0.0] forKey:@"inputBiasVector"];
     CIImage *result = [colors valueForKey:kCIOutputImageKey];
     CGImageRef cgImage = [[CIContext contextWithOptions:nil] createCGImage:result fromRect:[result extent]];
     UIImage *res = [UIImage imageWithCGImage:cgImage];
