@@ -25,6 +25,9 @@
 @synthesize videoCamera;
 @synthesize toggleCameraButton;
 @synthesize savevideoButton;
+@synthesize ColorEffectsButton;
+@synthesize OpticalFlowButton;
+@synthesize FaceButton;
 
 
 
@@ -494,20 +497,33 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
         faceAnimator = new FaceAnimator(parameters);
         opticalFlow = new OpticalFlow();
         faceOn=true;
+        FaceButton.tintColor= [UIColor greenColor];
+        
     }
     //if on, turn off only face
     else if(faceOn==true && (flowOn==true || colorsOn==true))
     {
         faceOn=false;
+        FaceButton.tintColor= [UIColor whiteColor];
+
     }
     //dont turn on the face
     else if(flowOn==true && colorsOn==true)
     {
         faceOn=false;
+        FaceButton.tintColor= [UIColor whiteColor];
+
     }
     else if(flowOn==true || colorsOn==true)
     {
         faceOn=true;
+        FaceButton.tintColor= [UIColor greenColor];
+    }
+    else{
+        faceOn=false;
+//        [videoCamera stop];
+//        isCapturing=FALSE;
+        FaceButton.tintColor= [UIColor whiteColor];
     }
 }
 
@@ -520,20 +536,34 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
         
         opticalFlow = new OpticalFlow();
         flowOn=true;
+        OpticalFlowButton.tintColor= [UIColor greenColor];
+
     }
     //if on, turn off only flow
     else if(flowOn==true && (faceOn==true || colorsOn==true))
     {
         flowOn=false;
+        OpticalFlowButton.tintColor= [UIColor whiteColor];
+
     }
     //don't turn on the 3rd
     else if(faceOn==true && colorsOn==true)
     {
         flowOn=false;
+        OpticalFlowButton.tintColor= [UIColor whiteColor];
+
     }
     else if(faceOn==true || colorsOn==true)
     {
         flowOn=true;
+        OpticalFlowButton.tintColor= [UIColor greenColor];
+
+    }
+    else{
+        flowOn=false;
+//        [videoCamera stop];
+//        isCapturing=FALSE;
+        OpticalFlowButton.tintColor= [UIColor whiteColor];
     }
 }
 
@@ -543,21 +573,33 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     if(isCapturing==false){
         [videoCamera start];
         isCapturing = TRUE;
-        
         colorsOn=true;
+        ColorEffectsButton.tintColor= [UIColor greenColor];
+
     }
     //if on, turn off only face
     else if(colorsOn ==true && (faceOn==true || flowOn==true))
     {
         colorsOn=false;
+        ColorEffectsButton.tintColor= [UIColor whiteColor];
+
     }
     else if(faceOn==true && flowOn==true)
     {
         colorsOn=false;
+        ColorEffectsButton.tintColor= [UIColor whiteColor];
+
     }
     else if(faceOn==true || flowOn==true)
     {
         colorsOn=true;
+        ColorEffectsButton.tintColor= [UIColor greenColor];
+    }
+    else{
+        colorsOn=false;
+//        [videoCamera stop];
+//        isCapturing=FALSE;
+        ColorEffectsButton.tintColor= [UIColor whiteColor];
     }
 }
 
@@ -602,9 +644,6 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
 
 - (void)processImage:(cv::Mat&)image
 {
-    
-
-    
     cv::Mat dest;
     //int64 timeStart = cv::getTickCount();
     int val=0;
@@ -614,20 +653,19 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     float centerness=0;
     std::vector<cv::Rect> faces;
     
-    
-    if(faceOn==true){
+    if(faceOn==true && colorsOn==false && flowOn==false){
         [self faceDetect:image];
         faceCount=faceAnimator->getFaceCount();
         centerness=faceAnimator->getAvgCenterness();
         faceAnimator->clearFaceRects();
     }
-    else if(colorsOn==true){
+    else if(colorsOn==true && faceOn==false && flowOn==false){
         UIImage *uiImage = UIImageFromCVMat(image);
         UIImage* imageResult = [self generateColors: uiImage];
         image=cvMatFromUIImage(imageResult);
         cvtColor(image, image, CV_BGR2RGB);
     }
-    else if(flowOn==true){
+    else if(flowOn==true && faceOn==false && colorsOn==false){
         opticalFlow->trackFlow(image, dest, faces, currentAccelX, currentAccelY, currentAccelZ, tappedX, tappedY);
         image=dest;
         cvtColor(image, image, CV_BGR2RGB);
@@ -635,7 +673,7 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
         slope=opticalFlow->getAvgSlope();
         
     }
-    else if(faceOn==true && flowOn==true){
+    else if(faceOn==true && flowOn==true && colorsOn==false){
         [self faceDetect:image];
         faceCount=faceAnimator->getFaceCount();
         centerness=faceAnimator->getAvgCenterness();
@@ -648,7 +686,7 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
         //faces.clear();
         faceAnimator->clearFaceRects();
     }
-    else if(colorsOn==true && faceOn==true){
+    else if(colorsOn==true && faceOn==true && flowOn==false){
         [self faceDetect:image];
         faceCount=faceAnimator->getFaceCount();
         centerness=faceAnimator->getAvgCenterness();
@@ -658,7 +696,7 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
         cvtColor(image, image, CV_BGR2RGB);
         faceAnimator->clearFaceRects();
     }
-    else if(colorsOn==true && flowOn==true){
+    else if(colorsOn==true && flowOn==true && faceOn==false){
         opticalFlow->trackFlow(image, dest, faces, currentAccelX, currentAccelY, currentAccelZ, tappedX, tappedY);
         image=dest;
         magnitude = opticalFlow->getAvgMagnitude();

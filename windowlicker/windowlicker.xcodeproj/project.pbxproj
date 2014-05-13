@@ -70,6 +70,10 @@
 		77CDCA9A1921E00300E9ED34 /* face_recognition_scan-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CDCA971921E00300E9ED34 /* face_recognition_scan-25.png */; };
 		77CDCA9D1921E26F00E9ED34 /* about-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CDCA9B1921E26F00E9ED34 /* about-25.png */; };
 		77CDCA9E1921E26F00E9ED34 /* about-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CDCA9C1921E26F00E9ED34 /* about-32.png */; };
+		77CDCAA31921F70F00E9ED34 /* background_color-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CDCA9F1921F70F00E9ED34 /* background_color-50.png */; };
+		77CDCAA41921F70F00E9ED34 /* about-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CDCAA01921F70F00E9ED34 /* about-50.png */; };
+		77CDCAA51921F70F00E9ED34 /* centre_of_gravity-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CDCAA11921F70F00E9ED34 /* centre_of_gravity-50.png */; };
+		77CDCAA61921F70F00E9ED34 /* face_recognition_scan-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CDCAA21921F70F00E9ED34 /* face_recognition_scan-50.png */; };
 		77ED44A0191AAAB20024DC6A /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77ED449F191AAAB20024DC6A /* CoreMotion.framework */; };
 		77ED44A2191ABAF60024DC6A /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77ED44A1191ABAF60024DC6A /* CoreImage.framework */; };
 /* End PBXBuildFile section */
@@ -156,6 +160,10 @@
 		77CDCA971921E00300E9ED34 /* face_recognition_scan-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "face_recognition_scan-25.png"; sourceTree = "<group>"; };
 		77CDCA9B1921E26F00E9ED34 /* about-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-25.png"; sourceTree = "<group>"; };
 		77CDCA9C1921E26F00E9ED34 /* about-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-32.png"; sourceTree = "<group>"; };
+		77CDCA9F1921F70F00E9ED34 /* background_color-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background_color-50.png"; sourceTree = "<group>"; };
+		77CDCAA01921F70F00E9ED34 /* about-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-50.png"; sourceTree = "<group>"; };
+		77CDCAA11921F70F00E9ED34 /* centre_of_gravity-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "centre_of_gravity-50.png"; sourceTree = "<group>"; };
+		77CDCAA21921F70F00E9ED34 /* face_recognition_scan-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "face_recognition_scan-50.png"; sourceTree = "<group>"; };
 		77ED449F191AAAB20024DC6A /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		77ED44A1191ABAF60024DC6A /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -197,6 +205,10 @@
 		772833FF19140F82004963F7 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				77CDCA9F1921F70F00E9ED34 /* background_color-50.png */,
+				77CDCAA01921F70F00E9ED34 /* about-50.png */,
+				77CDCAA11921F70F00E9ED34 /* centre_of_gravity-50.png */,
+				77CDCAA21921F70F00E9ED34 /* face_recognition_scan-50.png */,
 				77CDCA9B1921E26F00E9ED34 /* about-25.png */,
 				77CDCA9C1921E26F00E9ED34 /* about-32.png */,
 				77CDCA951921E00300E9ED34 /* centre_of_gravity-25.png */,
@@ -414,15 +426,18 @@
 				7742B1D61919629E0068D09D /* smileyLL.png in Resources */,
 				7742B1D81919629E0068D09D /* smileyP.png in Resources */,
 				77CDCA8A1921BDCB00E9ED34 /* info.png in Resources */,
+				77CDCAA51921F70F00E9ED34 /* centre_of_gravity-50.png in Resources */,
 				7750E6431913CB200007BF53 /* glasses.png in Resources */,
 				77CDCA9D1921E26F00E9ED34 /* about-25.png in Resources */,
 				7750E6171913C92F0007BF53 /* Images.xcassets in Resources */,
 				772833F219140F76004963F7 /* confused.png in Resources */,
 				7742B1D71919629E0068D09D /* smileyLR.png in Resources */,
 				7750E64E1913CE740007BF53 /* Main_iPhone.storyboard in Resources */,
+				77CDCAA61921F70F00E9ED34 /* face_recognition_scan-50.png in Resources */,
 				7750E64D1913CE740007BF53 /* Main_iPad.storyboard in Resources */,
 				772833F519140F76004963F7 /* heartseyes.png in Resources */,
 				7750E6441913CB200007BF53 /* haarcascade_mcs_eyepair_big.xml in Resources */,
+				77CDCAA31921F70F00E9ED34 /* background_color-50.png in Resources */,
 				772833F719140F76004963F7 /* mustache.png in Resources */,
 				772833F619140F76004963F7 /* laughcry.png in Resources */,
 				772833F319140F76004963F7 /* glasses.png in Resources */,
@@ -439,6 +454,7 @@
 				772899EB19208F8F0066120D /* tap.png in Resources */,
 				772833FD19140F76004963F7 /* winktounge.png in Resources */,
 				77CDCA8C1921BDCB00E9ED34 /* camera.png in Resources */,
+				77CDCAA41921F70F00E9ED34 /* about-50.png in Resources */,
 				7750E6471913CB200007BF53 /* mustache.png in Resources */,
 				77CDCA9A1921E00300E9ED34 /* face_recognition_scan-25.png in Resources */,
 				77CDCA9E1921E26F00E9ED34 /* about-32.png in Resources */,
