@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gjU-6U-uHz">
-                                <rect key="frame" x="0.0" y="44" width="320" height="388"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="392"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="427" id="yRo-ud-GrO"/>
@@ -27,11 +27,23 @@
                                     <outletCollection property="gestureRecognizers" destination="afn-kk-XEa" appends="YES" id="ich-RK-KXG"/>
                                 </connections>
                             </imageView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fFI-hA-UHL">
-                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" barStyle="black" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u3e-Z1-a3q">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="barTintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="cognizance" id="dwO-Xd-Yl5"/>
+                                </items>
+                            </navigationBar>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fFI-hA-UHL">
+                                <rect key="frame" x="0.0" y="427" width="320" height="141"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
                                     <barButtonItem image="face_recognition_scan-32.png" style="plain" id="14q-9j-8Dj">
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <action selector="FacePressed:" destination="2" id="20T-US-zgJ"/>
                                         </connections>
@@ -50,20 +62,20 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="MYb-ki-Eq6"/>
-                                    <barButtonItem style="plain" systemItem="camera" id="tON-AV-CNf">
+                                    <barButtonItem systemItem="camera" id="tON-AV-CNf">
                                         <connections>
                                             <action selector="toggleCameraButtonPressed:" destination="2" eventType="touchUpInside" id="g6j-DX-oOS"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="58m-8V-904"/>
                                     <barButtonItem systemItem="stop" id="9Mu-Tc-Pcc">
-                                        <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <action selector="stopCaptureButtonPressed:" destination="2" id="QAG-gJ-aHZ"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="fQp-ml-l2J"/>
-                                    <barButtonItem title="Start" id="4U3-8j-grf">
+                                    <barButtonItem image="about-32.png" id="4U3-8j-grf">
                                         <connections>
                                             <action selector="startCaptureButtonPressed:" destination="2" id="jbk-ok-E34"/>
                                         </connections>
@@ -71,19 +83,8 @@
                                 </items>
                                 <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
                             </toolbar>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" barStyle="black" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u3e-Z1-a3q">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <color key="barTintColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <textAttributes key="titleTextAttributes">
-                                    <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
-                                </textAttributes>
-                                <items>
-                                    <navigationItem title="cognizance" id="dwO-Xd-Yl5"/>
-                                </items>
-                            </navigationBar>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" barStyle="black" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xfy-5u-O3d">
-                                <rect key="frame" x="0.0" y="480" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="427" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
@@ -110,10 +111,10 @@
                                 </items>
                                 <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
                             </toolbar>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dsv-Qn-7HC">
-                                <rect key="frame" x="0.0" y="436" width="320" height="44"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" barStyle="black" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dsv-Qn-7HC">
+                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
                                     <barButtonItem style="plain" id="ohg-6e-bGJ">
                                         <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="hUT-QJ-T1z">
@@ -139,6 +140,7 @@
                                 <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
                             </toolbar>
                         </subviews>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="fFI-hA-UHL" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="16p-24-ArT"/>
                             <constraint firstItem="fFI-hA-UHL" firstAttribute="top" secondItem="gjU-6U-uHz" secondAttribute="bottom" id="3wA-jh-LfQ"/>
@@ -150,7 +152,6 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="ColorEffectsButton" destination="dsv-Qn-7HC" id="0IQ-GL-WBS"/>
                         <outlet property="FaceButton" destination="dsv-Qn-7HC" id="iIY-6f-VTz"/>
@@ -173,6 +174,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="about-32.png" width="32" height="32"/>
         <image name="background_color-32.png" width="32" height="32"/>
         <image name="centre_of_gravity-32.png" width="32" height="32"/>
         <image name="face_recognition_scan-32.png" width="32" height="32"/>

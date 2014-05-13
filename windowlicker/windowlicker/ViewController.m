@@ -186,6 +186,9 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     tappedX=0;
     tappedY=0;
     
+    self.navigationController.toolbarHidden = NO;
+
+
     UIDevice *device = [UIDevice currentDevice];
     UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
     [device beginGeneratingDeviceOrientationNotifications];
@@ -207,6 +210,11 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     
     isCapturing = FALSE;
     
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
 }
 
 -(void)setAccelertionData:(CMAcceleration)acceleration
