@@ -480,7 +480,6 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
 {
     cv::Mat dest;
     //int64 timeStart = cv::getTickCount();
-    int val=0;
     float magnitude=0;
     float slope=0;
     int faceCount=0;
@@ -590,7 +589,7 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     float frameW=self.view.frame.size.width;
     
     //iphone
-    if(frameH<500){
+    if(frameH<700){
         float actualH=427;
         tappedX=location.x*.9;
         tappedY=(actualH-location.y)*.82;
