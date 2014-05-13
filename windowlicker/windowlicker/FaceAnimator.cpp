@@ -166,6 +166,9 @@ void FaceAnimator::detectAndAnimateFaces(cv::Mat& frame, cv::Mat& dest, int orie
                 cv::Rect newFace = cv::Rect(height-currentFace.y-currentFace.height, currentFace.x, currentFace.height, currentFace.width);
                 newFaces.push_back(newFace);
                 //putImage(dest, parameters_.smileyP, mask_smileyP_, newFace, 0.3f);
+                cv::Point upLeftPoint1(height-currentFace.y, currentFace.x);
+                cv::Point bottomRightPoint00 = upLeftPoint1 + cv::Point(-currentFace.height, currentFace.width);
+                cv::rectangle (dest, upLeftPoint1, bottomRightPoint00, cv::Scalar(0,225,255), 4, 8, 0);
                 break;
             }
             case 1: //LandscapeRight/ default
@@ -191,7 +194,7 @@ void FaceAnimator::detectAndAnimateFaces(cv::Mat& frame, cv::Mat& dest, int orie
                 //TODO: fix this. For some reason, the facial detection works better in Landscape left and detects faces that do not creat acceptable rois for putting the smileys onto.
                 if(currentFace.y>height*.2)
                 {
-               //    putImage(dest, parameters_.smileyLL, mask_smileyLL_, newFace, 0.3f);
+                   //putImage(dest, parameters_.smileyLL, mask_smileyLL_, newFace, 0.3f);
                 }
                 newFaces.push_back(newFace);
                 break;
@@ -200,8 +203,11 @@ void FaceAnimator::detectAndAnimateFaces(cv::Mat& frame, cv::Mat& dest, int orie
             {
                 cv::Rect newFace = cv::Rect(currentFace.y, width-currentFace.x-currentFace.width, currentFace.height, currentFace.width);
                 
-//                putImage(dest, parameters_.smileyPU, mask_smileyPU_, newFace, 0.3f);
+                //putImage(dest, parameters_.smileyPU, mask_smileyPU_, newFace, 0.3f);
                 newFaces.push_back(newFace);
+//                 cv::Point upLeftPoint1(height-currentFace.y, currentFace.x);
+//                cv::Point bottomRightPoint00 = upLeftPoint1 + cv::Point(-currentFace.height, currentFace.width);
+//                cv::rectangle (dest, upLeftPoint1, bottomRightPoint00, cv::Scalar(0,225,255), 4, 8, 0);
                 break;
             }
             default:

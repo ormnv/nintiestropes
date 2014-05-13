@@ -47,38 +47,17 @@
 }
 
 
-@property (strong, nonatomic) IBOutlet UILabel *accX;
-@property (strong, nonatomic) IBOutlet UILabel *accY;
-@property (strong, nonatomic) IBOutlet UILabel *accZ;
-
-@property (strong, nonatomic) IBOutlet UILabel *maxAccX;
-@property (strong, nonatomic) IBOutlet UILabel *maxAccY;
-@property (strong, nonatomic) IBOutlet UILabel *maxAccZ;
-
-@property (strong, nonatomic) IBOutlet UILabel *faceon;
-@property (strong, nonatomic) IBOutlet UILabel *flowon;
-@property (strong, nonatomic) IBOutlet UILabel *coloron;
-
-@property (strong, nonatomic) IBOutlet UILabel *maxRotX;
-@property (strong, nonatomic) IBOutlet UILabel *maxRotY;
-@property (strong, nonatomic) IBOutlet UILabel *maxRotZ;
-
 @property (nonatomic, retain) CvVideoCamera* videoCamera;
 @property (nonatomic, retain) IBOutlet UIImageView *imageView;
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *startCaptureButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *stopCaptureButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toggleCameraButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *savevideoButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *recordSwitch;
 @property (strong, nonatomic) CMMotionManager *motionManager;
 
-- (IBAction)resetMaxValues:(id)sender;
 -(IBAction)startCaptureButtonPressed:(id)sender;
 -(IBAction)stopCaptureButtonPressed:(id)sender;
 -(IBAction)toggleCameraButtonPressed:(id)sender;
--(IBAction)savevideoButtonPressed:(id)sender;
--(IBAction)recordSwitchFlipped:(id)sender;
 
 @property (nonatomic, strong) IBOutlet UITapGestureRecognizer *tapRecognizer;
 

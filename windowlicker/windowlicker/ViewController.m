@@ -24,7 +24,6 @@
 @synthesize toolbar;
 @synthesize videoCamera;
 @synthesize toggleCameraButton;
-@synthesize savevideoButton;
 @synthesize ColorEffectsButton;
 @synthesize OpticalFlowButton;
 @synthesize FaceButton;
@@ -179,12 +178,7 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
                                                  }
                                              }];
     
-//    [self.motionManager startGyroUpdatesToQueue:[NSOperationQueue currentQueue]
-//                                    withHandler:^(CMGyroData *gyroData, NSError *error) {
-//                                        [self setRotationData:gyroData.rotationRate];
-//                                    }];
-    
-    
+
     UITapGestureRecognizer * recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     //recognizer.delegate = self.view;
     [self.imageView addGestureRecognizer:recognizer];
@@ -226,26 +220,9 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
 
 -(void)setAccelertionData:(CMAcceleration)acceleration
 {
-    self.accX.text = [NSString stringWithFormat:@" %.2fg",acceleration.x];
-    if(fabs(acceleration.x) > fabs(currentMaxAccelX))
-    {
-        currentMaxAccelX = acceleration.x;
-    }
-    self.accY.text = [NSString stringWithFormat:@" %.2fg",acceleration.y];
-    if(fabs(acceleration.y) > fabs(currentMaxAccelY))
-    {
-        currentMaxAccelY = acceleration.y;
-    }
-    self.accZ.text = [NSString stringWithFormat:@" %.2fg",acceleration.z];
-    if(fabs(acceleration.z) > fabs(currentMaxAccelZ))
-    {
-        currentMaxAccelZ = acceleration.z;
-    }
-    
     currentAccelX = acceleration.x;
     currentAccelY = acceleration.y;
     currentAccelZ = acceleration.z;
-    
 }
 
 -(void)updateBools
