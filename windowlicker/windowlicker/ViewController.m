@@ -21,6 +21,7 @@
 
 @synthesize imageView;
 @synthesize toolbar;
+@synthesize videoCamera;
 @synthesize toggleCameraButton;
 @synthesize ColorEffectsButton;
 @synthesize OpticalFlowButton;
@@ -194,14 +195,9 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     NSString * flowString = (flowOn) ? @"flowYes" : @"flowNo";
     NSString * colorString = (colorsOn) ? @"colorYes" : @"colorNo";
     
-    
-    //    self.faceon.text = faceString;
-    //    self.flowon.text =flowString;
-    //    self.coloron.text = colorString;
-    
-    NSLog(faceString);
-    NSLog(flowString);
-    NSLog(colorString);
+//    NSLog(faceString);
+//    NSLog(flowString);
+//    NSLog(colorString);
     
 }
 
@@ -586,9 +582,26 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     
     //for iphone. Fix this hardcoding.
     //w=288, h=352. UImage size is w=320 and h=427.
-    float actualH=427;
-    tappedX=location.x*.9;
-    tappedY=(actualH-location.y)*.82;
+//    float actualH=427;
+//    tappedX=location.x*.9;
+//    tappedY=(actualH-location.y)*.82;
+    
+    float frameH=self.view.frame.size.height;
+    float frameW=self.view.frame.size.width;
+    
+    //iphone
+    if(frameH<500){
+        float actualH=427;
+        tappedX=location.x*.9;
+        tappedY=(actualH-location.y)*.82;
+    }
+    //ipad
+    else{
+        float actualH=807;
+        tappedX=location.x*.375;
+        tappedY=(actualH-location.y)*.43;
+    }
+
     
     NSLog(@"Tapped X - %f",tappedX);
     NSLog(@"Tapped Y - %f",tappedY);

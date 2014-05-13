@@ -165,6 +165,7 @@ bool OpticalFlow::trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame, std
         trackedPts.pop_back();
         trackedPts.push_back(newPt);
         m_nextPts.push_back(newPt);
+        NSLog(@"points");
         cv::circle(outputFrame, newPt, 5, cv::Scalar(255,255,255), CV_FILLED);
     }
     
@@ -190,7 +191,7 @@ bool OpticalFlow::trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame, std
         for (size_t i=0; i<m_nextKeypoints.size(); i++)
         {
             trackedPts.push_back(m_nextKeypoints[i].pt);
-            cv::circle(outputFrame, m_nextKeypoints[i].pt, 5, cv::Scalar(255,0,255), -1);
+            cv::circle(outputFrame, m_nextKeypoints[i].pt, 5, cv::Scalar(0,255,0), -1);
         }
     }
     

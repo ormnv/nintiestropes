@@ -27,7 +27,7 @@
                                     <outletCollection property="gestureRecognizers" destination="afn-kk-XEa" appends="YES" id="ich-RK-KXG"/>
                                 </connections>
                             </imageView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fFI-hA-UHL">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fFI-hA-UHL">
                                 <rect key="frame" x="0.0" y="895" width="768" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
