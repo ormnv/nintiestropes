@@ -25,7 +25,6 @@
 @synthesize videoCamera;
 @synthesize toggleCameraButton;
 @synthesize savevideoButton;
-@synthesize buttons;
 
 
 
@@ -135,6 +134,12 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
 {
     [super viewDidLoad];
     [self loadAssets];
+   // [UIBarButtonItem barbuttonitem
+
+    //current effects
+    faceOn=false;
+    flowOn=false;
+    colorsOn=false;
 
     //rotation and acceleration
     currentMaxAccelX = 0;
@@ -280,23 +285,23 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
 //
 //}
 
-
--(IBAction)ButtonsPressed:(id)sender
-{
-    //UISegmentedControl *buttons = sender;
-    NSInteger index = [buttons selectedSegmentIndex];
-    NSLog(@"buttons");
-    
-    //    [videoCamera start];
-    //    isCapturing = TRUE;
-    //
-    //    faceAnimator = new FaceAnimator(parameters);
-    //    opticalFlow = new OpticalFlow();
-    NSString* label= [buttons titleForSegmentAtIndex: [buttons selectedSegmentIndex]];
-    NSLog(label);
-    
-    
-}
+//
+//-(IBAction)ButtonsPressed:(id)sender
+//{
+//    //UISegmentedControl *buttons = sender;
+//    NSInteger index = [buttons selectedSegmentIndex];
+//    NSLog(@"buttons");
+//    
+//    //    [videoCamera start];
+//    //    isCapturing = TRUE;
+//    //
+//    //    faceAnimator = new FaceAnimator(parameters);
+//    //    opticalFlow = new OpticalFlow();
+//    NSString* label= [buttons titleForSegmentAtIndex: [buttons selectedSegmentIndex]];
+//    NSLog(label);
+//    
+//    
+//}
 
 -(IBAction)startCaptureButtonPressed:(id)sender
 {
@@ -472,6 +477,82 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     cv::warpAffine(src, dst, r, cv::Size(src.rows, src.cols));
 }
 
+- (IBAction)FacePressed:(id)sender {
+    
+    //if off, turn on!
+    if(isCapturing==false){
+        [videoCamera start];
+        isCapturing = TRUE;
+        faceAnimator = new FaceAnimator(parameters);
+        opticalFlow = new OpticalFlow();
+        faceOn=true;
+    }
+    //if on, turn off only face
+    else if(faceOn==true && (flowOn==true || colorsOn==true))
+    {
+        faceOn=false;
+    }
+    //dont turn on the face
+    else if(flowOn==true && colorsOn==true)
+    {
+        faceOn=false;
+    }
+    else if(flowOn==true || colorsOn==true)
+    {
+        faceOn=true;
+    }
+}
+
+- (IBAction)OpticalFlowPressed:(id)sender {
+    
+    //if off, turn on!
+    if(isCapturing==false){
+        [videoCamera start];
+        isCapturing = TRUE;
+        
+        opticalFlow = new OpticalFlow();
+        flowOn=true;
+    }
+    //if on, turn off only flow
+    else if(flowOn==true && (faceOn==true || colorsOn==true))
+    {
+        flowOn=false;
+    }
+    //don't turn on the 3rd
+    else if(faceOn==true && colorsOn==true)
+    {
+        flowOn=false;
+    }
+    else if(faceOn==true || colorsOn==true)
+    {
+        flowOn=true;
+    }
+}
+
+- (IBAction)ColorEffectsPressed:(id)sender {
+    
+    //if off, turn on!
+    if(isCapturing==false){
+        [videoCamera start];
+        isCapturing = TRUE;
+        
+        colorsOn=true;
+    }
+    //if on, turn off only face
+    else if(colorsOn ==true && (faceOn==true || flowOn==true))
+    {
+        colorsOn=false;
+    }
+    else if(faceOn==true && flowOn==true)
+    {
+        colorsOn=false;
+    }
+    else if(faceOn==true || flowOn==true)
+    {
+        colorsOn=true;
+    }
+}
+
 -(void)faceDetect:(cv::Mat&) image
 {
         cv::Mat dest;
@@ -526,124 +607,179 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     std::vector<cv::Rect> faces;
     
     
-    switch (val) {
-        case 0:
-        {
-            opticalFlow->trackFlow(image, dest, faces, currentAccelX, currentAccelY, currentAccelZ, tappedX, tappedY);
-            image=dest;
-            cvtColor(image, image, CV_BGR2RGB);
-            magnitude = opticalFlow->getAvgMagnitude();
-            slope=opticalFlow->getAvgSlope();
-
-            break;
-        }
-        case 1:
-        {
-            //faceAnimator->detectAndAnimateFaces(image, dest, 1);
-            [self faceDetect:image];
-            faceCount=faceAnimator->getFaceCount();
-            centerness=faceAnimator->getAvgCenterness();
-            
-            //image=dest;
-            //cvtColor(image, image, CV_BGR2RGB);
-
-            break;
-        }
-        case 2:
-        {
-            UIImage *uiImage = UIImageFromCVMat(image);
-            
-            
-            UIImage* imageResult = [self generateColors: uiImage];
-            
-            
-            image=cvMatFromUIImage(imageResult);
-            
-            cvtColor(image, image, CV_BGR2RGB);
-
-            break;
-        }
-        case 3:
-        {
-            opticalFlow->trackFlow(image, dest, faces, currentAccelX, currentAccelY, currentAccelZ, tappedX, tappedY);
-            image=dest;
-            magnitude = opticalFlow->getAvgMagnitude();
-            slope=opticalFlow->getAvgSlope();
-            
-            UIImage *uiImage = UIImageFromCVMat(image);
-            
-            
-            UIImage* imageResult = [self generateColors: uiImage];
-            
-            
-            image=cvMatFromUIImage(imageResult);
-            
-            cvtColor(image, image, CV_BGR2RGB);
-            break;
-        }
-        case 4:
-        {
-            //faceAnimator->detectAndAnimateFaces(image, dest, 1);
-            [self faceDetect:image];
-            faceCount=faceAnimator->getFaceCount();
-            centerness=faceAnimator->getAvgCenterness();
-            
-            UIImage *uiImage = UIImageFromCVMat(image);
-            
-            UIImage* imageResult = [self generateColors: uiImage];
-            
-            
-            image=cvMatFromUIImage(imageResult);
-            
-            cvtColor(image, image, CV_BGR2RGB);
-
-            break;
-        }
-        case 5:
-        {
-            //faceAnimator->detectAndAnimateFaces(image, dest, 1);
-            [self faceDetect:image];
-            faceCount=faceAnimator->getFaceCount();
-            centerness=faceAnimator->getAvgCenterness();
-            faces=faceAnimator->getFaceRects();
-            
-            opticalFlow->trackFlow(image, dest, faces, currentAccelX, currentAccelY, currentAccelZ, tappedX, tappedY);
-            image=dest;
-            magnitude = opticalFlow->getAvgMagnitude();
-            slope=opticalFlow->getAvgSlope();
-            cvtColor(image, image, CV_BGR2RGB);
-            faces.clear();
-            break;
-        }
-        case 6:
-        {
-            UIImage *uiImage = UIImageFromCVMat(image);
-            
-            
-            UIImage* imageResult = [self generateTwirl: uiImage];
-            
-            
-            image=cvMatFromUIImage(imageResult);
-            
-            cvtColor(image, image, CV_BGR2RGB);
-            break;
-        }
-        case 7:
-        {
-            UIImage *uiImage = UIImageFromCVMat(image);
-            
-            
-            UIImage* imageResult = [self generateHole: uiImage];
-            
-            
-            image=cvMatFromUIImage(imageResult);
-            
-            cvtColor(image, image, CV_BGR2RGB);
-            break;
-        }
-        default:
-            break;
+    if(faceOn==true){
+        [self faceDetect:image];
+        faceCount=faceAnimator->getFaceCount();
+        centerness=faceAnimator->getAvgCenterness();
+        faceAnimator->clearFaceRects();
     }
+    else if(colorsOn==true){
+        UIImage *uiImage = UIImageFromCVMat(image);
+        UIImage* imageResult = [self generateColors: uiImage];
+        image=cvMatFromUIImage(imageResult);
+        cvtColor(image, image, CV_BGR2RGB);
+    }
+    else if(flowOn==true){
+        opticalFlow->trackFlow(image, dest, faces, currentAccelX, currentAccelY, currentAccelZ, tappedX, tappedY);
+        image=dest;
+        cvtColor(image, image, CV_BGR2RGB);
+        magnitude = opticalFlow->getAvgMagnitude();
+        slope=opticalFlow->getAvgSlope();
+        
+    }
+    else if(faceOn==true && flowOn==true){
+        [self faceDetect:image];
+        faceCount=faceAnimator->getFaceCount();
+        centerness=faceAnimator->getAvgCenterness();
+        faces=faceAnimator->getFaceRects();
+        opticalFlow->trackFlow(image, dest, faces, currentAccelX, currentAccelY, currentAccelZ, tappedX, tappedY);
+        image=dest;
+        magnitude = opticalFlow->getAvgMagnitude();
+        slope=opticalFlow->getAvgSlope();
+        cvtColor(image, image, CV_BGR2RGB);
+        //faces.clear();
+        faceAnimator->clearFaceRects();
+    }
+    else if(colorsOn==true && faceOn==true){
+        [self faceDetect:image];
+        faceCount=faceAnimator->getFaceCount();
+        centerness=faceAnimator->getAvgCenterness();
+        UIImage *uiImage = UIImageFromCVMat(image);
+        UIImage* imageResult = [self generateColors: uiImage];
+        image=cvMatFromUIImage(imageResult);
+        cvtColor(image, image, CV_BGR2RGB);
+        faceAnimator->clearFaceRects();
+    }
+    else if(colorsOn==true && flowOn==true){
+        opticalFlow->trackFlow(image, dest, faces, currentAccelX, currentAccelY, currentAccelZ, tappedX, tappedY);
+        image=dest;
+        magnitude = opticalFlow->getAvgMagnitude();
+        slope=opticalFlow->getAvgSlope();
+        UIImage *uiImage = UIImageFromCVMat(image);
+        UIImage* imageResult = [self generateColors: uiImage];
+        image=cvMatFromUIImage(imageResult);
+        cvtColor(image, image, CV_BGR2RGB);
+    }
+    else{
+    
+    }
+    
+    
+    
+//    switch (val) {
+//        case 0:
+//        {
+//
+//
+//            break;
+//        }
+//        case 1:
+//        {
+//            //faceAnimator->detectAndAnimateFaces(image, dest, 1);
+//            [self faceDetect:image];
+//            faceCount=faceAnimator->getFaceCount();
+//            centerness=faceAnimator->getAvgCenterness();
+//            
+//            //image=dest;
+//            //cvtColor(image, image, CV_BGR2RGB);
+//
+//            break;
+//        }
+//        case 2:
+//        {
+//            UIImage *uiImage = UIImageFromCVMat(image);
+//            
+//            
+//            UIImage* imageResult = [self generateColors: uiImage];
+//            
+//            
+//            image=cvMatFromUIImage(imageResult);
+//            
+//            cvtColor(image, image, CV_BGR2RGB);
+//
+//            break;
+//        }
+//        case 3:
+//        {
+//            opticalFlow->trackFlow(image, dest, faces, currentAccelX, currentAccelY, currentAccelZ, tappedX, tappedY);
+//            image=dest;
+//            magnitude = opticalFlow->getAvgMagnitude();
+//            slope=opticalFlow->getAvgSlope();
+//            
+//            UIImage *uiImage = UIImageFromCVMat(image);
+//            
+//            
+//            UIImage* imageResult = [self generateColors: uiImage];
+//            
+//            
+//            image=cvMatFromUIImage(imageResult);
+//            
+//            cvtColor(image, image, CV_BGR2RGB);
+//            break;
+//        }
+//        case 4:
+//        {
+//            //faceAnimator->detectAndAnimateFaces(image, dest, 1);
+//            [self faceDetect:image];
+//            faceCount=faceAnimator->getFaceCount();
+//            centerness=faceAnimator->getAvgCenterness();
+//            
+//            UIImage *uiImage = UIImageFromCVMat(image);
+//            
+//            UIImage* imageResult = [self generateColors: uiImage];
+//            
+//            
+//            image=cvMatFromUIImage(imageResult);
+//            
+//            cvtColor(image, image, CV_BGR2RGB);
+//
+//            break;
+//        }
+//        case 5:
+//        {
+//            //faceAnimator->detectAndAnimateFaces(image, dest, 1);
+//            [self faceDetect:image];
+//            faceCount=faceAnimator->getFaceCount();
+//            centerness=faceAnimator->getAvgCenterness();
+//            faces=faceAnimator->getFaceRects();
+//            
+//            opticalFlow->trackFlow(image, dest, faces, currentAccelX, currentAccelY, currentAccelZ, tappedX, tappedY);
+//            image=dest;
+//            magnitude = opticalFlow->getAvgMagnitude();
+//            slope=opticalFlow->getAvgSlope();
+//            cvtColor(image, image, CV_BGR2RGB);
+//            faces.clear();
+//            break;
+//        }
+//        case 6:
+//        {
+//            UIImage *uiImage = UIImageFromCVMat(image);
+//            
+//            
+//            UIImage* imageResult = [self generateTwirl: uiImage];
+//            
+//            
+//            image=cvMatFromUIImage(imageResult);
+//            
+//            cvtColor(image, image, CV_BGR2RGB);
+//            break;
+//        }
+//        case 7:
+//        {
+//            UIImage *uiImage = UIImageFromCVMat(image);
+//            
+//            
+//            UIImage* imageResult = [self generateHole: uiImage];
+//            
+//            
+//            image=cvMatFromUIImage(imageResult);
+//            
+//            cvtColor(image, image, CV_BGR2RGB);
+//            break;
+//        }
+//        default:
+//            break;
+  //  }
     
    // faceAnimator->detectAndAnimateFaces(image, 1);
     
@@ -664,7 +800,6 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
 //    
 //    cvtColor(image, image, CV_BGR2RGB);
 
-    faceAnimator->clearFaceRects();
     tappedX=0;
     tappedY=0;
     ///int64 timeEnd = cv::getTickCount();
@@ -684,6 +819,9 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     if (isCapturing) {
         [videoCamera stop];
     }
+    faceOn=false;
+    flowOn=false;
+    colorsOn=false;
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
@@ -756,6 +894,7 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
 //    }];
 
 }
+
 
 @end
 

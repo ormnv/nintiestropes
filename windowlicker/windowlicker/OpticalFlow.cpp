@@ -209,4 +209,3 @@ bool OpticalFlow::trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame, std
     
     return true;
 }
-

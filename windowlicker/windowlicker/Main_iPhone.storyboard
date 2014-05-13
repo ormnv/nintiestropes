@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gjU-6U-uHz">
-                                <rect key="frame" x="0.0" y="39" width="320" height="388"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="388"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="427" id="yRo-ud-GrO"/>
@@ -27,26 +27,49 @@
                                     <outletCollection property="gestureRecognizers" destination="afn-kk-XEa" appends="YES" id="ich-RK-KXG"/>
                                 </connections>
                             </imageView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fFI-hA-UHL">
-                                <rect key="frame" x="0.0" y="427" width="320" height="141"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fFI-hA-UHL">
+                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
+                                    <barButtonItem image="face_recognition_scan-32.png" style="plain" id="14q-9j-8Dj">
+                                        <connections>
+                                            <action selector="FacePressed:" destination="2" id="20T-US-zgJ"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="nHp-Pf-FWu"/>
+                                    <barButtonItem image="centre_of_gravity-32.png" id="dYO-zG-g8a">
+                                        <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <connections>
+                                            <action selector="OpticalFlowPressed:" destination="2" id="taj-gi-Yh2"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="yIv-yc-qBY"/>
+                                    <barButtonItem image="background_color-32.png" id="ijP-in-RHg">
+                                        <connections>
+                                            <action selector="ColorEffectsPressed:" destination="2" id="H9E-5s-2Df"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="MYb-ki-Eq6"/>
+                                    <barButtonItem style="plain" systemItem="camera" id="tON-AV-CNf">
+                                        <connections>
+                                            <action selector="toggleCameraButtonPressed:" destination="2" eventType="touchUpInside" id="g6j-DX-oOS"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="58m-8V-904"/>
+                                    <barButtonItem systemItem="stop" id="9Mu-Tc-Pcc">
+                                        <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <connections>
+                                            <action selector="stopCaptureButtonPressed:" destination="2" id="QAG-gJ-aHZ"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="fQp-ml-l2J"/>
                                     <barButtonItem title="Start" id="4U3-8j-grf">
                                         <connections>
                                             <action selector="startCaptureButtonPressed:" destination="2" id="jbk-ok-E34"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Stop" id="9Mu-Tc-Pcc">
-                                        <connections>
-                                            <action selector="stopCaptureButtonPressed:" destination="2" id="QAG-gJ-aHZ"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Flip" style="plain" id="tON-AV-CNf">
-                                        <connections>
-                                            <action selector="toggleCameraButtonPressed:" destination="2" eventType="touchUpInside" id="g6j-DX-oOS"/>
-                                        </connections>
-                                    </barButtonItem>
                                 </items>
+                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
                             </toolbar>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" barStyle="black" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u3e-Z1-a3q">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -59,59 +82,63 @@
                                     <navigationItem title="cognizance" id="dwO-Xd-Yl5"/>
                                 </items>
                             </navigationBar>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" barStyle="black" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bNg-aB-FtA">
-                                <rect key="frame" x="0.0" y="427" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <items>
-                                    <barButtonItem style="plain" id="n0g-DV-5WS">
-                                        <segmentedControl key="customView" opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="NWY-mL-jp8">
-                                            <rect key="frame" x="16" y="7" width="289" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <segments>
-                                                <segment title="First"/>
-                                                <segment title="Second"/>
-                                                <segment title="Third"/>
-                                                <segment title="Fourth"/>
-                                            </segments>
-                                            <connections>
-                                                <action selector="ButtonsPressed:" destination="2" eventType="valueChanged" id="mpH-1K-09D"/>
-                                            </connections>
-                                        </segmentedControl>
-                                        <connections>
-                                            <action selector="FourthPressed:" destination="2" id="Oe8-m1-Zd8"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
-                            </toolbar>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" barStyle="black" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xfy-5u-O3d">
-                                <rect key="frame" x="0.0" y="471" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="480" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
-                                    <barButtonItem style="plain" id="gA1-Sy-7pE">
+                                    <barButtonItem title="Item" style="plain" id="gA1-Sy-7pE">
                                         <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="TUX-oZ-kRL">
                                             <rect key="frame" x="14" y="7" width="79" height="31"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </slider>
                                     </barButtonItem>
-                                    <barButtonItem style="plain" id="B13-Wk-TO4">
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="JXz-m4-j6l"/>
+                                    <barButtonItem title="Item" style="plain" id="B13-Wk-TO4">
                                         <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="DNS-lT-naW">
-                                            <rect key="frame" x="103" y="7" width="79" height="30"/>
+                                            <rect key="frame" x="120" y="7" width="79" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </slider>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="t5Z-pR-m5a"/>
                                     <barButtonItem style="plain" id="W5L-bO-CHO">
                                         <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="YHN-9b-uW2">
-                                            <rect key="frame" x="192" y="7" width="79" height="30"/>
+                                            <rect key="frame" x="227" y="7" width="79" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </slider>
                                     </barButtonItem>
                                 </items>
+                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                            </toolbar>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dsv-Qn-7HC">
+                                <rect key="frame" x="0.0" y="436" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <items>
+                                    <barButtonItem style="plain" id="ohg-6e-bGJ">
+                                        <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="hUT-QJ-T1z">
+                                            <rect key="frame" x="14" y="7" width="79" height="31"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </slider>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="KJV-8q-Kfi"/>
+                                    <barButtonItem style="plain" id="LDL-6i-zWv">
+                                        <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="U77-gG-0J0">
+                                            <rect key="frame" x="120" y="7" width="79" height="31"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </slider>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="7PQ-eV-nxe"/>
+                                    <barButtonItem style="plain" id="b5c-hV-tNF">
+                                        <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="mPE-cn-6MH">
+                                            <rect key="frame" x="227" y="7" width="79" height="31"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </slider>
+                                    </barButtonItem>
+                                </items>
+                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
                             </toolbar>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="fFI-hA-UHL" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="16p-24-ArT"/>
                             <constraint firstItem="fFI-hA-UHL" firstAttribute="top" secondItem="gjU-6U-uHz" secondAttribute="bottom" id="3wA-jh-LfQ"/>
@@ -122,10 +149,13 @@
                             <constraint firstItem="gjU-6U-uHz" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="hsN-xO-h1P"/>
                         </constraints>
                     </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="buttons" destination="NWY-mL-jp8" id="oxy-Pu-iwL"/>
+                        <outlet property="ColorEffectsButton" destination="dsv-Qn-7HC" id="0IQ-GL-WBS"/>
+                        <outlet property="FaceButton" destination="dsv-Qn-7HC" id="iIY-6f-VTz"/>
+                        <outlet property="OpticalFlowButton" destination="dsv-Qn-7HC" id="KAp-Z4-6NB"/>
                         <outlet property="imageView" destination="gjU-6U-uHz" id="nst-cF-pIB"/>
-                        <outlet property="startCaptureButton" destination="n0g-DV-5WS" id="Im2-r3-kzY"/>
                         <outlet property="stopCaptureButton" destination="9Mu-Tc-Pcc" id="X6i-hK-4oL"/>
                         <outlet property="tapRecognizer" destination="afn-kk-XEa" id="chK-CX-atg"/>
                         <outlet property="toggleCameraButton" destination="tON-AV-CNf" id="bQL-31-21M"/>
@@ -142,6 +172,11 @@
             <point key="canvasLocation" x="139" y="115"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="background_color-32.png" width="32" height="32"/>
+        <image name="centre_of_gravity-32.png" width="32" height="32"/>
+        <image name="face_recognition_scan-32.png" width="32" height="32"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

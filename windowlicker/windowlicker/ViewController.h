@@ -34,6 +34,9 @@
     double currentRotZ;
     float tappedX;
     float tappedY;
+    bool faceOn;
+    bool flowOn;
+    bool colorsOn;
 
 }
 
@@ -75,12 +78,18 @@
 
 - (IBAction)handleTap:(UITapGestureRecognizer *)recognizer;
 
-@property (weak, nonatomic) IBOutlet UISegmentedControl *buttons;
-- (IBAction)ButtonsPressed:(id)sender;
+//@property (weak, nonatomic) IBOutlet UISegmentedControl *buttons;
+//- (IBAction)ButtonsPressed:(id)sender;
 //- (IBAction)FirstPressed:(id)sender;
 //- (IBAction)SecondPressed:(id)sender;
 //- (IBAction)ThirdPressed:(id)sender;
 //- (IBAction)FourthPressed:(id)sender;
+@property (weak, nonatomic) IBOutlet UIToolbar *ColorEffectsButton;
+@property (weak, nonatomic) IBOutlet UIToolbar *OpticalFlowButton;
+@property (weak, nonatomic) IBOutlet UIToolbar *FaceButton;
+- (IBAction)FacePressed:(id)sender;
+- (IBAction)OpticalFlowPressed:(id)sender;
+- (IBAction)ColorEffectsPressed:(id)sender;
 
 @end
 
