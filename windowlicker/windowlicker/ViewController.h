@@ -73,8 +73,14 @@
 
 @property (nonatomic, strong) IBOutlet UITapGestureRecognizer *tapRecognizer;
 
-
 - (IBAction)handleTap:(UITapGestureRecognizer *)recognizer;
+
+@property (weak, nonatomic) IBOutlet UISegmentedControl *buttons;
+- (IBAction)ButtonsPressed:(id)sender;
+//- (IBAction)FirstPressed:(id)sender;
+//- (IBAction)SecondPressed:(id)sender;
+//- (IBAction)ThirdPressed:(id)sender;
+//- (IBAction)FourthPressed:(id)sender;
 
 @end
 

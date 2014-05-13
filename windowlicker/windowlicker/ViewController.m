@@ -25,6 +25,8 @@
 @synthesize videoCamera;
 @synthesize toggleCameraButton;
 @synthesize savevideoButton;
+@synthesize buttons;
+
 
 
 - (NSInteger)supportedInterfaceOrientations
@@ -263,6 +265,37 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
 -(float) getAccelertionDataZ
 {
     return currentAccelZ;
+}
+//
+//-(IBAction)FirstPressed:(id)sender{
+//    UISegmentedControl *buttons = sender;
+//    NSInteger index = [buttons selectedSegmentIndex];
+//    NSLog(@"first");
+//
+////    [videoCamera start];
+////    isCapturing = TRUE;
+////    
+////    faceAnimator = new FaceAnimator(parameters);
+////    opticalFlow = new OpticalFlow();
+//
+//}
+
+
+-(IBAction)ButtonsPressed:(id)sender
+{
+    //UISegmentedControl *buttons = sender;
+    NSInteger index = [buttons selectedSegmentIndex];
+    NSLog(@"buttons");
+    
+    //    [videoCamera start];
+    //    isCapturing = TRUE;
+    //
+    //    faceAnimator = new FaceAnimator(parameters);
+    //    opticalFlow = new OpticalFlow();
+    NSString* label= [buttons titleForSegmentAtIndex: [buttons selectedSegmentIndex]];
+    NSLog(label);
+    
+    
 }
 
 -(IBAction)startCaptureButtonPressed:(id)sender
@@ -723,7 +756,6 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
 //    }];
 
 }
-
 
 @end
 
