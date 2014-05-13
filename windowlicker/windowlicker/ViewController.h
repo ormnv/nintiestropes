@@ -55,9 +55,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *maxAccY;
 @property (strong, nonatomic) IBOutlet UILabel *maxAccZ;
 
-@property (strong, nonatomic) IBOutlet UILabel *rotX;
-@property (strong, nonatomic) IBOutlet UILabel *rotY;
-@property (strong, nonatomic) IBOutlet UILabel *rotZ;
+@property (strong, nonatomic) IBOutlet UILabel *faceon;
+@property (strong, nonatomic) IBOutlet UILabel *flowon;
+@property (strong, nonatomic) IBOutlet UILabel *coloron;
 
 @property (strong, nonatomic) IBOutlet UILabel *maxRotX;
 @property (strong, nonatomic) IBOutlet UILabel *maxRotY;

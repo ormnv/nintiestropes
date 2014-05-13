@@ -78,7 +78,7 @@ bool OpticalFlow::trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame, std
 {
     inputFrame.copyTo(outputFrame);
     
-    cv::cvtColor(inputFrame, m_nextImg, CV_BGRA2GRAY);
+   cv::cvtColor(inputFrame, m_nextImg, CV_BGRA2GRAY);
     
     //reset avgMagnitude and avgSlope
     avgMagnitude = 0;

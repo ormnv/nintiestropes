@@ -147,6 +147,7 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     faceOn=false;
     flowOn=false;
     colorsOn=false;
+    [self updateBools];
 
     //rotation and acceleration
     currentMaxAccelX = 0;
@@ -178,10 +179,10 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
                                                  }
                                              }];
     
-    [self.motionManager startGyroUpdatesToQueue:[NSOperationQueue currentQueue]
-                                    withHandler:^(CMGyroData *gyroData, NSError *error) {
-                                        [self setRotationData:gyroData.rotationRate];
-                                    }];
+//    [self.motionManager startGyroUpdatesToQueue:[NSOperationQueue currentQueue]
+//                                    withHandler:^(CMGyroData *gyroData, NSError *error) {
+//                                        [self setRotationData:gyroData.rotationRate];
+//                                    }];
     
     
     UITapGestureRecognizer * recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
@@ -213,7 +214,6 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     self.videoCamera.defaultFPS = 30;
     self.videoCamera.recordVideo = NO;
     self.videoCamera.rotateVideo = NO;
-    
     
     isCapturing = FALSE;
     
@@ -248,28 +248,22 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     
 }
 
--(void)setRotationData:(CMRotationRate)rotation
+-(void)updateBools
 {
     
-    self.rotX.text = [NSString stringWithFormat:@" %.2fr/s",rotation.x];
-    if(fabs(rotation.x) > fabs(currentMaxRotX))
-    {
-        currentMaxRotX = rotation.x;
-    }
-    self.rotY.text = [NSString stringWithFormat:@" %.2fr/s",rotation.y];
-    if(fabs(rotation.y) > fabs(currentMaxRotY))
-    {
-        currentMaxRotY = rotation.y;
-    }
-    self.rotZ.text = [NSString stringWithFormat:@" %.2fr/s",rotation.z];
-    if(fabs(rotation.z) > fabs(currentMaxRotZ))
-    {
-        currentMaxRotZ = rotation.z;
-    }
+    NSString * faceString = (faceOn) ? @"faceYes" : @"faceNo";
+    NSString * flowString = (flowOn) ? @"flowYes" : @"flowNo";
+    NSString * colorString = (colorsOn) ? @"colorYes" : @"colorNo";
+
+
+//    self.faceon.text = faceString;
+//    self.flowon.text =flowString;
+//    self.coloron.text = colorString;
     
-    self.maxRotX.text = [NSString stringWithFormat:@" %.2f",currentMaxRotX];
-    self.maxRotY.text = [NSString stringWithFormat:@" %.2f",currentMaxRotY];
-    self.maxRotZ.text = [NSString stringWithFormat:@" %.2f",currentMaxRotZ];
+    NSLog(faceString);
+    NSLog(flowString);
+    NSLog(colorString);
+
 }
 
 -(float) getAccelertionDataX
@@ -312,7 +306,13 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     //                   cancelButtonTitle:@"Continue"
     //                   otherButtonTitles:nil];
     //        [alert show];
-    
+    faceOn=false;
+    flowOn=false;
+    colorsOn=false;
+    ColorEffectsButton.tintColor= [UIColor whiteColor];
+    OpticalFlowButton.tintColor= [UIColor whiteColor];
+    FaceButton.tintColor= [UIColor whiteColor];
+
     isCapturing = FALSE;
 }
 
@@ -321,15 +321,6 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
 	[videoCamera switchCameras];
 }
 
-
--(void)generateCVEffects: (cv::Mat&)src, int deviceOrientation
-{
-    float faceCount = faceAnimator->getFaceCount();
-    float avgCenterness = faceAnimator->getAvgCenterness();
-    float avgFaceSize = faceAnimator->getAvgFaceSize();
-    //cv::Mat imageMatrix = [self cvMatFromUIImage:src];
-    cv::GaussianBlur( src, src, cv::Size(3,3), faceCount*3, 0);
-}
 
 - (IBAction)resetMaxValues:(id)sender {
     
@@ -379,8 +370,8 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     [colors setValue:[CIVector vectorWithX:newR Y:0 Z:0 W:0] forKey:@"inputRVector"];
     [colors setValue:[CIVector vectorWithX:0 Y:newG Z:0 W:0] forKey:@"inputGVector"];
     [colors setValue:[CIVector vectorWithX:0 Y:0 Z:newB W:0] forKey:@"inputBVector"];
-    [colors setValue:[CIVector vectorWithX:0 Y:0 Z:0 W:alpha] forKey:@"inputAVector"];
-    [colors setValue:[CIVector vectorWithX:0 Y:0 Z:0 W:0.0] forKey:@"inputBiasVector"];
+    [colors setValue:[CIVector vectorWithX:aX Y:aY Z:aZ W:alpha] forKey:@"inputAVector"];
+    [colors setValue:[CIVector vectorWithX:aZ Y:aY Z:aZ W:0.0] forKey:@"inputBiasVector"];
     CIImage *result = [colors valueForKey:kCIOutputImageKey];
     CGImageRef cgImage = [[CIContext contextWithOptions:nil] createCGImage:result fromRect:[result extent]];
     UIImage *res = [UIImage imageWithCGImage:cgImage];
@@ -388,77 +379,6 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     return res;
 }
 
--(UIImage*)generateTwirl: (UIImage*)uiImage
-{
-    float centerX=150;
-    float centerY=150;
-    if (tappedX!=0 && tappedY!=0) {
-        centerX=tappedX;
-        centerY=tappedY;
-    }
-    
-    //all twirl code here
-    CIImage *ciImage = [CIImage imageWithCGImage:uiImage.CGImage];
-    CIFilter *twirl = [CIFilter filterWithName:@"CITwirlDistortion"];
-    [twirl setValue:ciImage forKey:kCIInputImageKey];
-    CIVector *vVector = [CIVector vectorWithX:centerX Y:centerY];
-    [twirl setValue:vVector forKey:@"inputCenter"];
-    [twirl setValue:[NSNumber numberWithFloat:150.0f] forKey:@"inputRadius"];
-    [twirl setValue:[NSNumber numberWithFloat:3.14f] forKey:@"inputAngle"];
-    CIImage *result = [twirl valueForKey:kCIOutputImageKey];
-    CGImageRef cgImage = [[CIContext contextWithOptions:nil] createCGImage:result fromRect:[result extent]];
-    UIImage *res = [UIImage imageWithCGImage:cgImage];
-    
-    //out of the method just here for reference
-    //UIImageToMat(imageResult, image);
-    //cvtColor(image, image, CV_BGR2RGB);
-    
-    //crashes the app with causes memory leak without
-    CGImageRelease(cgImage);
-    return res;
-
-}
-
-
--(UIImage*)generateHole: (UIImage*)uiImage
-{
-    float centerX=150;
-    float centerY=150;
-    if (tappedX!=0 && tappedY!=0) {
-        centerX=tappedX;
-        centerY=tappedY;
-    }
-    
-    //all twirl code here
-    CIImage *ciImage = [CIImage imageWithCGImage:uiImage.CGImage];
-    CIFilter *hole = [CIFilter filterWithName:@"CIHoleDistortion"];
-    [hole setValue:ciImage forKey:kCIInputImageKey];
-    CIVector *vVector = [CIVector vectorWithX:centerX Y:centerY];
-    [hole setValue:vVector forKey:@"inputCenter"];
-    [hole setValue:[NSNumber numberWithFloat:150.0f] forKey:@"inputRadius"];
-    CIImage *result = [hole valueForKey:kCIOutputImageKey];
-    CGImageRef cgImage = [[CIContext contextWithOptions:nil] createCGImage:result fromRect:[result extent]];
-    UIImage *res = [UIImage imageWithCGImage:cgImage];
-    
-    //out of the method just here for reference
-    //UIImageToMat(imageResult, image);
-    //cvtColor(image, image, CV_BGR2RGB);
-    
-    //crashes the app with causes memory leak without
-    CGImageRelease(cgImage);
-    return res;
-    
-}
-
--(void)generateCoreEffects: (cv::Mat&)src, int deviceOrientation
-{
-    //    float faceCount = faceAnimator->getFaceCount();
-    //    float avgCenterness = faceAnimator->getAvgCenterness();
-    //    float avgFaceSize = faceAnimator->getAvgFaceSize();
-    //    //cv::Mat imageMatrix = [self cvMatFromUIImage:src];
-    //    cv::GaussianBlur( src, src, cv::Size(3,3), faceCount*5);
-    
-}
 
 void rotate(cv::Mat& src, double angle, cv::Mat& dst)
 {
@@ -499,6 +419,11 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
         faceOn=true;
         FaceButton.tintColor= [UIColor greenColor];
     }
+    else if(faceOn==false && flowOn==false && colorsOn==false)
+    {
+        faceOn=true;
+        FaceButton.tintColor= [UIColor greenColor];
+    }
     else{
         faceOn=false;
 //        [videoCamera stop];
@@ -513,9 +438,8 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     if(isCapturing==false){
         [videoCamera start];
         isCapturing = TRUE;
-        
-        opticalFlow = new OpticalFlow();
-        flowOn=true;
+        faceAnimator = new FaceAnimator(parameters);
+        opticalFlow = new OpticalFlow();        flowOn=true;
         OpticalFlowButton.tintColor= [UIColor greenColor];
 
     }
@@ -539,6 +463,11 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
         OpticalFlowButton.tintColor= [UIColor greenColor];
 
     }
+    else if(faceOn==false && flowOn==false && colorsOn==false)
+    {
+        flowOn=true;
+        OpticalFlowButton.tintColor= [UIColor greenColor];
+    }
     else{
         flowOn=false;
 //        [videoCamera stop];
@@ -555,6 +484,8 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
         isCapturing = TRUE;
         colorsOn=true;
         ColorEffectsButton.tintColor= [UIColor greenColor];
+        faceAnimator = new FaceAnimator(parameters);
+        opticalFlow = new OpticalFlow();
 
     }
     //if on, turn off only face
@@ -571,6 +502,11 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
 
     }
     else if(faceOn==true || flowOn==true)
+    {
+        colorsOn=true;
+        ColorEffectsButton.tintColor= [UIColor greenColor];
+    }
+    else if(faceOn==false && flowOn==false && colorsOn==false)
     {
         colorsOn=true;
         ColorEffectsButton.tintColor= [UIColor greenColor];
@@ -620,8 +556,6 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     
 }
 
-
-
 - (void)processImage:(cv::Mat&)image
 {
     cv::Mat dest;
@@ -632,6 +566,7 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     int faceCount=0;
     float centerness=0;
     std::vector<cv::Rect> faces;
+    [self updateBools];
     
     if(faceOn==true && colorsOn==false && flowOn==false){
         [self faceDetect:image];
@@ -677,6 +612,8 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
         faceAnimator->clearFaceRects();
     }
     else if(colorsOn==true && flowOn==true && faceOn==false){
+        //cvtColor(image, image, CV_BGR2RGB);
+
         opticalFlow->trackFlow(image, dest, faces, currentAccelX, currentAccelY, currentAccelZ, tappedX, tappedY);
         image=dest;
         magnitude = opticalFlow->getAvgMagnitude();
@@ -687,151 +624,12 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
         cvtColor(image, image, CV_BGR2RGB);
     }
     else{
-    
+        int i=1;
     }
-    
-    
-    
-//    switch (val) {
-//        case 0:
-//        {
-//
-//
-//            break;
-//        }
-//        case 1:
-//        {
-//            //faceAnimator->detectAndAnimateFaces(image, dest, 1);
-//            [self faceDetect:image];
-//            faceCount=faceAnimator->getFaceCount();
-//            centerness=faceAnimator->getAvgCenterness();
-//            
-//            //image=dest;
-//            //cvtColor(image, image, CV_BGR2RGB);
-//
-//            break;
-//        }
-//        case 2:
-//        {
-//            UIImage *uiImage = UIImageFromCVMat(image);
-//            
-//            
-//            UIImage* imageResult = [self generateColors: uiImage];
-//            
-//            
-//            image=cvMatFromUIImage(imageResult);
-//            
-//            cvtColor(image, image, CV_BGR2RGB);
-//
-//            break;
-//        }
-//        case 3:
-//        {
-//            opticalFlow->trackFlow(image, dest, faces, currentAccelX, currentAccelY, currentAccelZ, tappedX, tappedY);
-//            image=dest;
-//            magnitude = opticalFlow->getAvgMagnitude();
-//            slope=opticalFlow->getAvgSlope();
-//            
-//            UIImage *uiImage = UIImageFromCVMat(image);
-//            
-//            
-//            UIImage* imageResult = [self generateColors: uiImage];
-//            
-//            
-//            image=cvMatFromUIImage(imageResult);
-//            
-//            cvtColor(image, image, CV_BGR2RGB);
-//            break;
-//        }
-//        case 4:
-//        {
-//            //faceAnimator->detectAndAnimateFaces(image, dest, 1);
-//            [self faceDetect:image];
-//            faceCount=faceAnimator->getFaceCount();
-//            centerness=faceAnimator->getAvgCenterness();
-//            
-//            UIImage *uiImage = UIImageFromCVMat(image);
-//            
-//            UIImage* imageResult = [self generateColors: uiImage];
-//            
-//            
-//            image=cvMatFromUIImage(imageResult);
-//            
-//            cvtColor(image, image, CV_BGR2RGB);
-//
-//            break;
-//        }
-//        case 5:
-//        {
-//            //faceAnimator->detectAndAnimateFaces(image, dest, 1);
-//            [self faceDetect:image];
-//            faceCount=faceAnimator->getFaceCount();
-//            centerness=faceAnimator->getAvgCenterness();
-//            faces=faceAnimator->getFaceRects();
-//            
-//            opticalFlow->trackFlow(image, dest, faces, currentAccelX, currentAccelY, currentAccelZ, tappedX, tappedY);
-//            image=dest;
-//            magnitude = opticalFlow->getAvgMagnitude();
-//            slope=opticalFlow->getAvgSlope();
-//            cvtColor(image, image, CV_BGR2RGB);
-//            faces.clear();
-//            break;
-//        }
-//        case 6:
-//        {
-//            UIImage *uiImage = UIImageFromCVMat(image);
-//            
-//            
-//            UIImage* imageResult = [self generateTwirl: uiImage];
-//            
-//            
-//            image=cvMatFromUIImage(imageResult);
-//            
-//            cvtColor(image, image, CV_BGR2RGB);
-//            break;
-//        }
-//        case 7:
-//        {
-//            UIImage *uiImage = UIImageFromCVMat(image);
-//            
-//            
-//            UIImage* imageResult = [self generateHole: uiImage];
-//            
-//            
-//            image=cvMatFromUIImage(imageResult);
-//            
-//            cvtColor(image, image, CV_BGR2RGB);
-//            break;
-//        }
-//        default:
-//            break;
-  //  }
-    
-   // faceAnimator->detectAndAnimateFaces(image, 1);
-    
-    
-//    opticalFlow->trackFlow(image, dest);
-//    
-//    image=dest;
-//    
-//   // cvtColor(image, image, CV_BGR2RGB);
-//    
-//    UIImage *uiImage = UIImageFromCVMat(dest);
-//    
-//    
-//    UIImage* imageResult = [self generateColors: uiImage];
-//    
-//    
-//    image=cvMatFromUIImage(imageResult);
-//    
-//    cvtColor(image, image, CV_BGR2RGB);
-
+   
     tappedX=0;
     tappedY=0;
-    ///int64 timeEnd = cv::getTickCount();
-    //float durationMs =
-   // 1000.f * float(timeEnd - timeStart) / cv::getTickFrequency();
-    //NSLog(@"Processing time = %.3fms", durationMs);
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -858,49 +656,10 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     return YES;
 }
 
-- (IBAction)showGestureForSwipeRecognizer:(UISwipeGestureRecognizer *)recognizer {
-    
-    CGPoint location = [recognizer locationInView:self.view];
-    [self drawImageForGestureRecognizer:recognizer atPoint:location];
-    
-//    if (recognizer.direction == UISwipeGestureRecognizerDirectionLeft) {
-//        location.x -= 220.0;
-//    }
-//    else {
-//        location.x += 220.0;
-//    }
-    
-//    [UIView animateWithDuration:0.5 animations:^{
-//        self.imageView.alpha = 0.0;
-//        self.imageView.center = location;
-//    }];
-}
-
-- (void)drawImageForGestureRecognizer:(UIGestureRecognizer *)recognizer atPoint:(CGPoint)centerPoint {
-        
-        NSString *imageName;
-        
-        if ([recognizer isMemberOfClass:[UITapGestureRecognizer class]]) {
-            imageName = @"tap.png";
-        }
-//        else if ([recognizer isMemberOfClass:[UIRotationGestureRecognizer class]]) {
-//            imageName = @"rotation.png";
-//        }
-//        else if ([recognizer isMemberOfClass:[UISwipeGestureRecognizer class]]) {
-//            imageName = @"swipe.png";
-//        }
-    NSLog(@"tapped");
-//        self.imageView.image = [UIImage imageNamed:imageName];
-//        self.imageView.center = centerPoint;
-//        self.imageView.alpha = 1.0; 
-}
-
 - (IBAction)handleTap:(UITapGestureRecognizer *)recognizer {
     // Get the location of the gesture
     CGPoint location = [recognizer locationInView:self.view];
     
-
-
     //for iphone. Fix this hardcoding.
     //w=288, h=352. UImage size is w=320 and h=427.
     float actualH=427;
@@ -909,15 +668,6 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     
     NSLog(@"Tapped X - %f",tappedX);
     NSLog(@"Tapped Y - %f",tappedY);
-
-    
-    // Display an image view at that location
-    [self drawImageForGestureRecognizer:recognizer atPoint:location];
-    
-//    // Animate the image view so that it fades out
-//    [UIView animateWithDuration:0.5 animations:^{
-//        self.imageView.alpha = 0.0;
-//    }];
 
 }
 

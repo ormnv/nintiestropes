@@ -73,13 +73,6 @@
                                             <action selector="stopCaptureButtonPressed:" destination="2" id="QAG-gJ-aHZ"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="fQp-ml-l2J"/>
-                                    <barButtonItem image="about-32.png" id="4U3-8j-grf">
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <connections>
-                                            <action selector="startCaptureButtonPressed:" destination="2" id="jbk-ok-E34"/>
-                                        </connections>
-                                    </barButtonItem>
                                 </items>
                                 <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
                             </toolbar>
@@ -89,21 +82,21 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
                                     <barButtonItem title="Item" style="plain" id="gA1-Sy-7pE">
-                                        <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" id="TUX-oZ-kRL">
+                                        <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" id="TUX-oZ-kRL">
                                             <rect key="frame" x="14" y="7" width="79" height="31"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </slider>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="JXz-m4-j6l"/>
                                     <barButtonItem title="Item" style="plain" id="B13-Wk-TO4">
-                                        <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="DNS-lT-naW">
+                                        <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.5" maxValue="1" id="DNS-lT-naW">
                                             <rect key="frame" x="120" y="7" width="79" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </slider>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="t5Z-pR-m5a"/>
                                     <barButtonItem style="plain" id="W5L-bO-CHO">
-                                        <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="YHN-9b-uW2">
+                                        <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" id="YHN-9b-uW2">
                                             <rect key="frame" x="227" y="7" width="79" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </slider>
@@ -117,21 +110,21 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
                                     <barButtonItem style="plain" id="ohg-6e-bGJ">
-                                        <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="hUT-QJ-T1z">
+                                        <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" id="hUT-QJ-T1z">
                                             <rect key="frame" x="14" y="7" width="79" height="31"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </slider>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="KJV-8q-Kfi"/>
                                     <barButtonItem style="plain" id="LDL-6i-zWv">
-                                        <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="U77-gG-0J0">
+                                        <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" id="U77-gG-0J0">
                                             <rect key="frame" x="120" y="7" width="79" height="31"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </slider>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="7PQ-eV-nxe"/>
                                     <barButtonItem style="plain" id="b5c-hV-tNF">
-                                        <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="mPE-cn-6MH">
+                                        <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" id="mPE-cn-6MH">
                                             <rect key="frame" x="227" y="7" width="79" height="31"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </slider>
@@ -139,6 +132,25 @@
                                 </items>
                                 <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
                             </toolbar>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZJ6-T2-KV2">
+                                <rect key="frame" x="240" y="315" width="0.0" height="0.0"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tN8-ln-nWT">
+                                <rect key="frame" x="235" y="344" width="0.0" height="0.0"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Up1-Tq-RUC">
+                                <rect key="frame" x="240" y="380" width="0.0" height="0.0"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -162,6 +174,9 @@
                         <outlet property="alphaYSlider" destination="DNS-lT-naW" id="wFG-Rk-Hds"/>
                         <outlet property="alphaZSlider" destination="YHN-9b-uW2" id="HbX-Ll-4Bt"/>
                         <outlet property="biasXSlider" destination="hUT-QJ-T1z" id="2HS-zv-yc6"/>
+                        <outlet property="coloron" destination="Up1-Tq-RUC" id="L5e-PF-B7Z"/>
+                        <outlet property="faceon" destination="ZJ6-T2-KV2" id="elT-Qq-X2k"/>
+                        <outlet property="flowon" destination="tN8-ln-nWT" id="T1A-Ta-qrM"/>
                         <outlet property="imageView" destination="gjU-6U-uHz" id="nst-cF-pIB"/>
                         <outlet property="stopCaptureButton" destination="9Mu-Tc-Pcc" id="X6i-hK-4oL"/>
                         <outlet property="tapRecognizer" destination="afn-kk-XEa" id="chK-CX-atg"/>
@@ -179,7 +194,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="about-32.png" width="32" height="32"/>
         <image name="background_color-32.png" width="32" height="32"/>
         <image name="centre_of_gravity-32.png" width="32" height="32"/>
         <image name="face_recognition_scan-32.png" width="32" height="32"/>
