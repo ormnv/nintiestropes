@@ -20,18 +20,9 @@
     FaceAnimator::Parameters parameters;
     cv::Ptr<FaceAnimator> faceAnimator;
     cv::Ptr<OpticalFlow> opticalFlow;
-    double currentMaxAccelX;
-    double currentMaxAccelY;
-    double currentMaxAccelZ;
     double currentAccelX;
     double currentAccelY;
     double currentAccelZ;
-    double currentMaxRotX;
-    double currentMaxRotY;
-    double currentMaxRotZ;
-    double currentRotX;
-    double currentRotY;
-    double currentRotZ;
     float tappedX;
     float tappedY;
     bool faceOn;
@@ -50,7 +41,6 @@
 @property (nonatomic, retain) CvVideoCamera* videoCamera;
 @property (nonatomic, retain) IBOutlet UIImageView *imageView;
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *startCaptureButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *stopCaptureButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toggleCameraButton;
 @property (strong, nonatomic) CMMotionManager *motionManager;

@@ -20,9 +20,7 @@
 @implementation ViewController
 
 @synthesize imageView;
-@synthesize startCaptureButton;
 @synthesize toolbar;
-@synthesize videoCamera;
 @synthesize toggleCameraButton;
 @synthesize ColorEffectsButton;
 @synthesize OpticalFlowButton;
@@ -105,30 +103,6 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
 -(void) loadAssets
 {
     
-    NSString* filePath = [[NSBundle mainBundle]
-                          pathForResource:@"smileyP" ofType:@"png"];
-    UIImage* resImage = [UIImage imageWithContentsOfFile:filePath];
-    UIImageToMat(resImage, parameters.smileyP, true);
-    cvtColor(parameters.smileyP, parameters.smileyP, CV_BGRA2RGBA);
-    
-    filePath = [[NSBundle mainBundle]
-                pathForResource:@"smileyLL" ofType:@"png"];
-    resImage = [UIImage imageWithContentsOfFile:filePath];
-    UIImageToMat(resImage, parameters.smileyLL, true);
-    cvtColor(parameters.smileyLL, parameters.smileyLL, CV_BGRA2RGBA);
-    
-    filePath = [[NSBundle mainBundle]
-                pathForResource:@"smileyLR" ofType:@"png"];
-    resImage = [UIImage imageWithContentsOfFile:filePath];
-    UIImageToMat(resImage, parameters.smileyLR, true);
-    cvtColor(parameters.smileyLR, parameters.smileyLR, CV_BGRA2RGBA);
-    
-    filePath = [[NSBundle mainBundle]
-                pathForResource:@"smileyPU" ofType:@"png"];
-    resImage = [UIImage imageWithContentsOfFile:filePath];
-    UIImageToMat(resImage, parameters.smileyPU, true);
-    cvtColor(parameters.smileyPU, parameters.smileyPU, CV_BGRA2RGBA);
-    
     //Load Cascade Classisiers
     NSString* filename = [[NSBundle mainBundle]
                           pathForResource:@"lbpcascade_frontalface" ofType:@"xml"];
@@ -140,30 +114,18 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
 {
     [super viewDidLoad];
     [self loadAssets];
-   // [UIBarButtonItem barbuttonitem
-
+    // [UIBarButtonItem barbuttonitem
+    
     //current effects
     faceOn=false;
     flowOn=false;
     colorsOn=false;
     [self updateBools];
-
-    //rotation and acceleration
-    currentMaxAccelX = 0;
-    currentMaxAccelY = 0;
-    currentMaxAccelZ = 0;
     
+    //acceleration
     currentAccelX = 0;
     currentAccelY = 0;
     currentAccelZ = 0;
-    
-    currentMaxRotX = 0;
-    currentMaxRotY = 0;
-    currentMaxRotZ = 0;
-    
-    currentRotX = 0;
-    currentRotY = 0;
-    currentRotZ = 0;
     
     self.motionManager = [[CMMotionManager alloc] init];
     self.motionManager.accelerometerUpdateInterval = .2;
@@ -178,19 +140,19 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
                                                  }
                                              }];
     
-
+    
     UITapGestureRecognizer * recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     //recognizer.delegate = self.view;
     [self.imageView addGestureRecognizer:recognizer];
     self.imageView.userInteractionEnabled = YES;
     //self.toolbar.userInteractionEnabled = NO;
-
+    
     tappedX=0;
     tappedY=0;
     
     self.navigationController.toolbarHidden = NO;
-
-
+    
+    
     UIDevice *device = [UIDevice currentDevice];
     UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
     [device beginGeneratingDeviceOrientationNotifications];
@@ -231,16 +193,16 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     NSString * faceString = (faceOn) ? @"faceYes" : @"faceNo";
     NSString * flowString = (flowOn) ? @"flowYes" : @"flowNo";
     NSString * colorString = (colorsOn) ? @"colorYes" : @"colorNo";
-
-
-//    self.faceon.text = faceString;
-//    self.flowon.text =flowString;
-//    self.coloron.text = colorString;
+    
+    
+    //    self.faceon.text = faceString;
+    //    self.flowon.text =flowString;
+    //    self.coloron.text = colorString;
     
     NSLog(faceString);
     NSLog(flowString);
     NSLog(colorString);
-
+    
 }
 
 -(float) getAccelertionDataX
@@ -258,15 +220,14 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     return currentAccelZ;
 }
 
--(IBAction)startCaptureButtonPressed:(id)sender
-{
-    [videoCamera start];
-    isCapturing = TRUE;
-    
-    faceAnimator = new FaceAnimator(parameters);
-    opticalFlow = new OpticalFlow();
-
-}
+//-(IBAction)startCaptureButtonPressed:(id)sender
+//{
+//    [videoCamera start];
+//    isCapturing = TRUE;
+//    
+//    faceAnimator = new FaceAnimator(parameters);
+//    opticalFlow = new OpticalFlow();
+//}
 
 -(IBAction)stopCaptureButtonPressed:(id)sender
 {
@@ -289,7 +250,7 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     ColorEffectsButton.tintColor= [UIColor whiteColor];
     OpticalFlowButton.tintColor= [UIColor whiteColor];
     FaceButton.tintColor= [UIColor whiteColor];
-
+    
     isCapturing = FALSE;
 }
 
@@ -298,24 +259,11 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
 	[videoCamera switchCameras];
 }
 
-
 - (IBAction)resetMaxValues:(id)sender {
-    
-    currentMaxAccelX = 0;
-    currentMaxAccelY = 0;
-    currentMaxAccelZ = 0;
-    
+
     currentAccelX = 0;
     currentAccelY = 0;
     currentAccelZ = 0;
-    
-    currentMaxRotX = 0;
-    currentMaxRotY = 0;
-    currentMaxRotZ = 0;
-    
-    currentRotX = 0;
-    currentRotY = 0;
-    currentRotZ = 0;
     
 }
 
@@ -339,7 +287,6 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     float bX=biasXSlider.value;
     float bY=BiasYSlider.value;
     float bZ=BiasZSlider.value;
-
     
     CIImage *ciImage = [CIImage imageWithCGImage:uiImage.CGImage];
     CIFilter *colors = [CIFilter filterWithName:@"CIColorMatrix"];
@@ -348,7 +295,7 @@ UIImage * UIImageFromCVMat(cv::Mat cvMat)
     [colors setValue:[CIVector vectorWithX:0 Y:newG Z:0 W:0] forKey:@"inputGVector"];
     [colors setValue:[CIVector vectorWithX:0 Y:0 Z:newB W:0] forKey:@"inputBVector"];
     [colors setValue:[CIVector vectorWithX:aX Y:aY Z:aZ W:alpha] forKey:@"inputAVector"];
-    [colors setValue:[CIVector vectorWithX:aZ Y:aY Z:aZ W:0.0] forKey:@"inputBiasVector"];
+    [colors setValue:[CIVector vectorWithX:bX Y:bY Z:bZ W:0.0] forKey:@"inputBiasVector"];
     CIImage *result = [colors valueForKey:kCIOutputImageKey];
     CGImageRef cgImage = [[CIContext contextWithOptions:nil] createCGImage:result fromRect:[result extent]];
     UIImage *res = [UIImage imageWithCGImage:cgImage];
@@ -382,14 +329,14 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     {
         faceOn=false;
         FaceButton.tintColor= [UIColor whiteColor];
-
+        
     }
     //dont turn on the face
     else if(flowOn==true && colorsOn==true)
     {
         faceOn=false;
         FaceButton.tintColor= [UIColor whiteColor];
-
+        
     }
     else if(flowOn==true || colorsOn==true)
     {
@@ -403,8 +350,8 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     }
     else{
         faceOn=false;
-//        [videoCamera stop];
-//        isCapturing=FALSE;
+        //        [videoCamera stop];
+        //        isCapturing=FALSE;
         FaceButton.tintColor= [UIColor whiteColor];
     }
 }
@@ -418,27 +365,27 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
         faceAnimator = new FaceAnimator(parameters);
         opticalFlow = new OpticalFlow();        flowOn=true;
         OpticalFlowButton.tintColor= [UIColor greenColor];
-
+        
     }
     //if on, turn off only flow
     else if(flowOn==true && (faceOn==true || colorsOn==true))
     {
         flowOn=false;
         OpticalFlowButton.tintColor= [UIColor whiteColor];
-
+        
     }
     //don't turn on the 3rd
     else if(faceOn==true && colorsOn==true)
     {
         flowOn=false;
         OpticalFlowButton.tintColor= [UIColor whiteColor];
-
+        
     }
     else if(faceOn==true || colorsOn==true)
     {
         flowOn=true;
         OpticalFlowButton.tintColor= [UIColor greenColor];
-
+        
     }
     else if(faceOn==false && flowOn==false && colorsOn==false)
     {
@@ -447,8 +394,8 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     }
     else{
         flowOn=false;
-//        [videoCamera stop];
-//        isCapturing=FALSE;
+        //        [videoCamera stop];
+        //        isCapturing=FALSE;
         OpticalFlowButton.tintColor= [UIColor whiteColor];
     }
 }
@@ -463,20 +410,20 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
         ColorEffectsButton.tintColor= [UIColor greenColor];
         faceAnimator = new FaceAnimator(parameters);
         opticalFlow = new OpticalFlow();
-
+        
     }
     //if on, turn off only face
     else if(colorsOn ==true && (faceOn==true || flowOn==true))
     {
         colorsOn=false;
         ColorEffectsButton.tintColor= [UIColor whiteColor];
-
+        
     }
     else if(faceOn==true && flowOn==true)
     {
         colorsOn=false;
         ColorEffectsButton.tintColor= [UIColor whiteColor];
-
+        
     }
     else if(faceOn==true || flowOn==true)
     {
@@ -490,46 +437,46 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     }
     else{
         colorsOn=false;
-//        [videoCamera stop];
-//        isCapturing=FALSE;
+        //        [videoCamera stop];
+        //        isCapturing=FALSE;
         ColorEffectsButton.tintColor= [UIColor whiteColor];
     }
 }
 
 -(void)faceDetect:(cv::Mat&) image
 {
-        cv::Mat dest;
-        UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
-        int orientation= -1;
+    cv::Mat dest;
+    UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+    int orientation= -1;
     
-        if(deviceOrientation== UIDeviceOrientationPortrait)
-        {
-            rotate(image, 90, dest);
-            orientation =0;
-            faceAnimator->detectAndAnimateFaces(dest, image, orientation);
-            //image=dest;
-        }
-        else if(deviceOrientation== UIDeviceOrientationLandscapeRight)
-        {
-            //LandscapeLeft is default but behavior is wrong
-            orientation =1;
-            faceAnimator->detectAndAnimateFaces(image, image, orientation);
-    
-        }
-        else if(deviceOrientation== UIDeviceOrientationLandscapeLeft)
-        {
-            rotate(image, 180, dest);
-            orientation =2;
-            faceAnimator->detectAndAnimateFaces(dest, image, orientation);
-    
-        }
-        else if(deviceOrientation== UIDeviceOrientationPortraitUpsideDown)
-        {
-            rotate(image, 270, dest);
-            orientation =3;
-            faceAnimator->detectAndAnimateFaces(dest, image, orientation);
-            
-        }
+    if(deviceOrientation== UIDeviceOrientationPortrait)
+    {
+        rotate(image, 90, dest);
+        orientation =0;
+        faceAnimator->detectAndAnimateFaces(dest, image, orientation);
+        //image=dest;
+    }
+    else if(deviceOrientation== UIDeviceOrientationLandscapeRight)
+    {
+        //LandscapeLeft is default but behavior is wrong
+        orientation =1;
+        faceAnimator->detectAndAnimateFaces(image, image, orientation);
+        
+    }
+    else if(deviceOrientation== UIDeviceOrientationLandscapeLeft)
+    {
+        rotate(image, 180, dest);
+        orientation =2;
+        faceAnimator->detectAndAnimateFaces(dest, image, orientation);
+        
+    }
+    else if(deviceOrientation== UIDeviceOrientationPortraitUpsideDown)
+    {
+        rotate(image, 270, dest);
+        orientation =3;
+        faceAnimator->detectAndAnimateFaces(dest, image, orientation);
+        
+    }
     
 }
 
@@ -590,7 +537,7 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     }
     else if(colorsOn==true && flowOn==true && faceOn==false){
         //cvtColor(image, image, CV_BGR2RGB);
-
+        
         opticalFlow->trackFlow(image, dest, faces, currentAccelX, currentAccelY, currentAccelZ, tappedX, tappedY);
         image=dest;
         magnitude = opticalFlow->getAvgMagnitude();
@@ -603,10 +550,10 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     else{
         int i=1;
     }
-   
+    
     tappedX=0;
     tappedY=0;
-
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -645,7 +592,7 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     
     NSLog(@"Tapped X - %f",tappedX);
     NSLog(@"Tapped Y - %f",tappedY);
-
+    
 }
 
 

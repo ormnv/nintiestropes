@@ -69,7 +69,7 @@ void OpticalFlow::init(cv::Mat& image, // output image
     for( i = 0; i < points1.size(); i++ )
     {
         // draw points
-       // cv::circle( image, points1[i], 3, cv::Scalar(0,255,0), -1, 8);
+         cv::circle( image, points1[i], 3, cv::Scalar(0,255,0), -1, 8);
     }
 }
 
@@ -78,7 +78,7 @@ bool OpticalFlow::trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame, std
 {
     inputFrame.copyTo(outputFrame);
     
-   cv::cvtColor(inputFrame, m_nextImg, CV_BGRA2GRAY);
+    cv::cvtColor(inputFrame, m_nextImg, CV_BGRA2GRAY);
     
     //reset avgMagnitude and avgSlope
     avgMagnitude = 0;
@@ -108,13 +108,6 @@ bool OpticalFlow::trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame, std
     double newG=offset+offset*accelY;
     double newB=offset+offset*accelZ;
     
-//    if(tapX!=0){
-//    cv::Point2f newPt( tapY, tapX);
-//    //trackedPts.pop_back();
-//   // trackedPts.push_back(newPt);
-//    cv::circle(outputFrame, newPt, 20, cv::Scalar(255,255,255), -1);
-//    }
-    
     for (size_t i=0; i<m_status.size(); i++)
     {
         if (m_status[i])
@@ -123,16 +116,16 @@ bool OpticalFlow::trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame, std
             if(faces.size()!=0)
             {
                 trackedPts.push_back(m_nextPts[i]);
-
+                
                 for ( int j = 0; j < faces.size(); j++ )
                 {
                     //not perfect, but generally keeps dots off of faces
                     if (!faces[j].contains(m_nextPts[i]) && !faces[j].contains(m_prevPts[i]) ) {
-
+                        
                         cv::circle (m_mask, m_prevPts[i], 15, cv::Scalar(0), CV_FILLED);
                         cv::line (outputFrame, m_prevPts[i], m_nextPts[i], CV_RGB(newR,newG,newB),3);
                         cv::circle (outputFrame, m_nextPts[i], 3, CV_RGB(newR,newG,newB), CV_FILLED);
-                       
+                        
                         //get line length
                         float diffX = m_nextPts[i].x-m_prevPts[i].x;
                         float diffY = m_nextPts[i].y-m_prevPts[i].y;
@@ -142,27 +135,27 @@ bool OpticalFlow::trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame, std
                         
                     }
                     
-                    
                 }
                 
             }
             else{
-            
-            trackedPts.push_back(m_nextPts[i]);
-
-            cv::circle (m_mask, m_prevPts[i], 15, cv::Scalar(0), CV_FILLED);
-            cv::line (outputFrame, m_prevPts[i], m_nextPts[i], CV_RGB(newG,newB,newR),3);
-            cv::circle (outputFrame, m_nextPts[i], 3, CV_RGB(newG,newB,newR), CV_FILLED);
-            
-            //get line length
-            float diffX = m_nextPts[i].x-m_prevPts[i].x;
-            float diffY = m_nextPts[i].y-m_prevPts[i].y;
-            float diff2 = diffX*diffX+diffY*diffY;
-            total+=sqrt(diff2);
-            slope += diffY/diffX;
+                
+                trackedPts.push_back(m_nextPts[i]);
+                
+                cv::circle (m_mask, m_prevPts[i], 15, cv::Scalar(0), CV_FILLED);
+                cv::line (outputFrame, m_prevPts[i], m_nextPts[i], CV_RGB(newG,newB,newR),3);
+                cv::circle (outputFrame, m_nextPts[i], 3, CV_RGB(newG,newB,newR), CV_FILLED);
+                
+                //get line length
+                float diffX = m_nextPts[i].x-m_prevPts[i].x;
+                float diffY = m_nextPts[i].y-m_prevPts[i].y;
+                float diff2 = diffX*diffX+diffY*diffY;
+                total+=sqrt(diff2);
+                slope += diffY/diffX;
             }
             
         }
+        
     }
     
     //add custom point
@@ -172,8 +165,6 @@ bool OpticalFlow::trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame, std
         trackedPts.pop_back();
         trackedPts.push_back(newPt);
         m_nextPts.push_back(newPt);
-        
-        //                m_nextKeypoints.push_back(cv::KeyPoint(tapX,tapY,4,-1,0,0,-1));
         cv::circle(outputFrame, newPt, 5, cv::Scalar(255,255,255), CV_FILLED);
     }
     

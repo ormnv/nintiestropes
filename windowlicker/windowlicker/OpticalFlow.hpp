@@ -14,13 +14,8 @@
 class OpticalFlow
 {
 public:
-//    struct Parameters
-//    {
-//
-//    };
-    
-//    OpticalFlow(Parameters parameters);
-    OpticalFlow();
+
+     OpticalFlow();
 //    virtual ~OpticalFlow() {};
     
 //    int getNumPoints();
@@ -43,10 +38,8 @@ public:
 
     float getAvgSlope();
 
-    
     bool trackFlow(const cv::Mat& inputFrame, cv::Mat& outputFrame, std::vector<cv::Rect> faces, double accelX, double accelY, double accelZ, float tapX, float tapY);
 
-    
     // initialise tracker
     void init(cv::Mat& image, // output image
               cv::Mat& image1, // source image
